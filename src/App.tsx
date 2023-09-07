@@ -1,22 +1,13 @@
-// import { useState } from "react";
-
+import { Routes, Route } from "react-router-dom";
+import { Homepage } from "./pages/";
 import "./App.css";
 
-function App() {
-  interface Hello {
-    statement: string;
-  }
-
-  const showCards = (number: number, statement: Hello): string => {
-    return number + 1 + statement.statement;
-  };
-
-  let helloObj = { statement: "Hiya" };
-
+function App(): JSX.Element {
   return (
-    <>
-      <p>{showCards(1, helloObj)}</p>
-    </>
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+      {/* <Route path="/summary" element={<FinalPage />} /> */}
+    </Routes>
   );
 }
 
