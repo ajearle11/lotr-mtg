@@ -6,7 +6,7 @@ interface ApiResponseData {
   image: string;
 }
 
-const Homepage = () => {
+const Homepage = (): JSX.Element => {
   const [cards, setCards] = useState<Array<ApiResponseData>>([]);
 
   const grabData = async (): Promise<void> => {
@@ -16,11 +16,23 @@ const Homepage = () => {
     setCards(data);
   };
 
+  const mapCards = (cards: Array<ApiResponseData>): JSX.Element[] => {
+    return cards.map((card: ApiResponseData): JSX.Element => {
+      return (
+        <>
+          <p>{card.name}</p>
+          <p>{card.id}</p>
+          <img src={card.image} />
+        </>
+      );
+    });
+  };
+
   useEffect(() => {
     grabData();
   }, []);
 
-  return <pre>{JSON.stringify(cards, null, 4)}</pre>;
+  return <h1>{cards.length !== 0 ? mapCards(cards) : null}</h1>;
 };
 
 export default Homepage;
