@@ -23,6 +23,7 @@ const Homepage = (): JSX.Element => {
           <p>{card.name}</p>
           <p>{card.id}</p>
           <img src={card.image} />
+          <hr />
         </>
       );
     });
