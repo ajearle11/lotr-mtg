@@ -11,7 +11,8 @@ const Homepage = () => {
 
   const grabData = async (): Promise<void> => {
     const response = await fetch("http://localhost:3001/cards");
-    const data: Array<ApiResponseData> = await response.json();
+    const data: ApiResponseData[] = await response.json();
+
     setCards(data);
   };
 
@@ -19,7 +20,7 @@ const Homepage = () => {
     grabData();
   }, []);
 
-  return <div>Hey</div>;
+  return <pre>{JSON.stringify(cards, null, 4)}</pre>;
 };
 
 export default Homepage;
