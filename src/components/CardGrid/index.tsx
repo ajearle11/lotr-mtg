@@ -8,8 +8,12 @@ import "./index.css";
 // const CardGrid = ({ stringVarProp, numberVarProp, booleanVarProp }: SomeInterfaceType) => {
 
 const CardGrid: React.FC<{ cards: ApiResponseDataArray }> = ({ cards }) => {
+  const x = 10;
+  const y = 19;
+  //if we wanted to treat it like a binder etc.
+
   const mapCards = (cards: ApiResponseDataArray): JSX.Element[] => {
-    return cards.map((card: ApiResponseData): JSX.Element => {
+    return cards.slice(x, y).map((card: ApiResponseData): JSX.Element => {
       return <Card key={card.id} card={card} />;
     });
   };
