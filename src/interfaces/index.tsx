@@ -8,4 +8,10 @@ interface ApiResponseData {
 type ApiResponseDataArray = ApiResponseData[];
 // interface ApiResponseDataArray extends Array<ApiResponseData> {}
 
-export { type ApiResponseData, type ApiResponseDataArray };
+interface ButtonProps {
+  text: string;
+  onClick: React.MouseEventHandler;
+  isClicked?: boolean;
+}
+
+export { type ApiResponseData, type ApiResponseDataArray, type ButtonProps };

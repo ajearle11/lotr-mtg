@@ -9,4 +9,11 @@
 
 .card-image {
   width: 200px;
+  transition: all 0.3s ease;
+}
+
+.card-image:hover {
+  width: 200px;
+  cursor: pointer;
+  transform: scale(1.05);
 }

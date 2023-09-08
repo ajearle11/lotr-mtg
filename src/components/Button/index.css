@@ -1,0 +1,30 @@
+.button {
+  width: 25%;
+  padding: 16px;
+  margin: 10px;
+  background-color: silver;
+  color: black;
+  outline: none;
+  border: none;
+}
+
+.active {
+  background-color: #ccafa5;
+  /* outline: solid 5px black;
+  outline-offset: -5px;
+} */
+}
+
+.button:hover {
+  background-color: #e5dace;
+  border: none;
+}
+
+.button:active {
+  outline: none;
+  background-color: #e5dace;
+}
+
+.button:focus {
+  outline: none;
+}

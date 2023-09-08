@@ -2,5 +2,6 @@
   justify-content: center;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 18rem);
+  margin: 20px 0;
+  grid-template-columns: repeat(3, 20rem);
 }

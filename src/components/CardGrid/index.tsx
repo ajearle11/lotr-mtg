@@ -7,20 +7,42 @@ import "./index.css";
 //if you were to destrcuture:
 // const CardGrid = ({ stringVarProp, numberVarProp, booleanVarProp }: SomeInterfaceType) => {
 
-const CardGrid: React.FC<{ cards: ApiResponseDataArray }> = ({ cards }) => {
-  const x = 10;
-  const y = 19;
+const CardGrid: React.FC<{
+  cards: ApiResponseDataArray;
+  collectedCardsArray: Array<number>;
+  filterHave: boolean;
+  filterHaveNot: boolean;
+}> = ({ cards, collectedCardsArray, filterHave, filterHaveNot }) => {
+  //   const x = 10;
+  //   const y = 19;
   //if we wanted to treat it like a binder etc.
 
-  const mapCards = (cards: ApiResponseDataArray): JSX.Element[] => {
-    return cards.slice(x, y).map((card: ApiResponseData): JSX.Element => {
-      return <Card key={card.id} card={card} />;
-    });
+  const mapCards = (
+    cards: ApiResponseDataArray,
+    filterHave: boolean,
+    filterHaveNot: boolean
+  ): (JSX.Element | undefined)[] => {
+    // return cards.slice(x, y).map((card: ApiResponseData): JSX.Element => {
+    return cards.map(
+      (card: ApiResponseData, x: number): JSX.Element | undefined => {
+        if (!filterHave && !filterHaveNot) {
+          return <Card key={card.id} card={card} />;
+        } else if (filterHave) {
+          if (collectedCardsArray.includes(x)) {
+            return <Card key={card.id} card={card} />;
+          }
+        } else {
+          if (!collectedCardsArray.includes(x)) {
+            return <Card key={card.id} card={card} />;
+          }
+        }
+      }
+    );
   };
 
   return (
     <div className="card-grid">
-      {cards.length !== 0 ? mapCards(cards) : null}
+      {cards.length !== 0 ? mapCards(cards, filterHave, filterHaveNot) : null}
     </div>
   );
 };
