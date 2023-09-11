@@ -5,3 +5,27 @@
   margin: 20px 0;
   grid-template-columns: repeat(3, 20rem);
 }
+
+@media (max-width: 1000px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 20rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 17rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(1, 20rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .card-grid {
+    grid-template-columns: repeat(1, 17rem);
+  }
+}

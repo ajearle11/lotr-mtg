@@ -47,16 +47,18 @@ const Homepage = (): JSX.Element => {
       <h3>
         Cards left to collect: {cards.length - collectedCardsArray.length}
       </h3>
-      <Button
-        text="Owned Cards"
-        onClick={() => handleOwnedCardsFilter(filterHave)}
-        isClicked={filterHave}
-      />
-      <Button
-        text="Unowned Cards"
-        onClick={() => handleNotOwnedCardsFilter(filterHaveNot)}
-        isClicked={filterHaveNot}
-      />
+      <div className="button-container">
+        <Button
+          text="Owned Cards"
+          onClick={() => handleOwnedCardsFilter(filterHave)}
+          isClicked={filterHave}
+        />
+        <Button
+          text="Unowned Cards"
+          onClick={() => handleNotOwnedCardsFilter(filterHaveNot)}
+          isClicked={filterHaveNot}
+        />
+      </div>
       <CardGrid
         cards={cards}
         collectedCardsArray={collectedCardsArray}

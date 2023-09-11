@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import { Homepage } from "./pages/";
+import { Homepage, IndividualCardPage } from "./pages/";
 import "./App.css";
 
 function App(): JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      {/* <Route path="/summary" element={<FinalPage />} /> */}
+      <Route path="/:id" element={<IndividualCardPage />} />
     </Routes>
   );
 }
