@@ -8,6 +8,7 @@
 }
 
 .card-image {
+  border-radius: 10px;
   width: 200px;
   transition: all 0.3s ease;
 }
