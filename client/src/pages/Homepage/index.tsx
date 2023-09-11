@@ -9,7 +9,7 @@ const Homepage = (): JSX.Element => {
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
 
   const grabData = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3001/cards");
+    const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
     setCards(data);
   };
