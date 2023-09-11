@@ -48,6 +48,7 @@ const login = async (req, res) => {
       id: user._id,
       username: user.username,
       cards: user.cards,
+      token: accessToken,
     });
   } catch (err) {
     res.status(500).send({ error: err.message });
