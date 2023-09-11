@@ -24,10 +24,11 @@ const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    console.log(username, password);
     const user = await User.findOneByUsername(username);
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
+    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
 
     const accessToken = jwt.sign(
       {
@@ -38,23 +39,29 @@ const login = async (req, res) => {
       { expiresIn: 600 }
     );
 
-    const dataToSecure = {
-      dataToSecure: accessToken,
-    };
-
-    res.cookie("AuthCookieLogin", JSON.stringify(dataToSecure), {
-      // secure: process.env.NODE_ENV !== "development",
-      sameSite: "strict",
-      path: "/users",
-      httpOnly: true,
-      expires: dayjs().add(30, "days").toDate(),
-    });
+    req.session.token = accessToken;
+    req.session.name = username;
+    console.log(req.session);
 
     res.status(200).send({
       auth: true,
-      token: accessToken,
-      user: user,
-      // refreshToken: refreshToken,
+      id: user._id,
+      username: user.username,
+      cards: user.cards,
+    });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(400).send("unable to log out");
+      } else {
+        res.send("successful logout");
+      }
     });
   } catch (err) {
     res.status(500).send({ error: err.message });
@@ -69,4 +76,33 @@ const checkAuth = async (req, res) => {
   }
 };
 
-module.exports = { register, login, checkAuth };
+const getUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOneByUsername(username);
+    console.log(user);
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+};
+
+const updateCards = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const { newCard } = req.body;
+    const user = await User.findOneByUsername(username);
+
+    if (user.cards.includes(newCard)) {
+      user.cards = user.cards.filter((id) => id !== newCard);
+    } else {
+      user.cards.push(newCard);
+    }
+    await user.save();
+    res.status(200).send(user.cards);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+};
+
+module.exports = { register, login, checkAuth, getUser, logout, updateCards };
