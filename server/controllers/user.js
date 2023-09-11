@@ -24,7 +24,6 @@ const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    console.log(username, password);
     const user = await User.findOneByUsername(username);
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -36,11 +35,12 @@ const login = async (req, res) => {
         username: user.username,
       },
       process.env.JWT_SECRET,
-      { expiresIn: 600 }
+      { expiresIn: 6000 }
     );
 
     req.session.token = accessToken;
     req.session.name = username;
+
     console.log(req.session);
 
     res.status(200).send({
@@ -48,7 +48,7 @@ const login = async (req, res) => {
       id: user._id,
       username: user.username,
       cards: user.cards,
-      token: accessToken,
+      token: req.session.token,
     });
   } catch (err) {
     res.status(500).send({ error: err.message });
@@ -71,6 +71,7 @@ const logout = async (req, res) => {
 
 const checkAuth = async (req, res) => {
   try {
+    console.log(req.user);
     res.send({ auth: true, user: req.user });
   } catch (err) {
     res.status(500).json({ error: err.message });

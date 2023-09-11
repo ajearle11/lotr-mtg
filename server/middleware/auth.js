@@ -4,6 +4,7 @@ const verifyToken = async (req, res, next) => {
   try {
     //retrieve the cookie from the session (req.session.token)
     let token = req.session.token;
+
     // let token = req.headers["Set-Cookie"];
     console.log(req.session);
 
