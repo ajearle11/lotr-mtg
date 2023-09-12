@@ -32,6 +32,10 @@ interface LoginResponseData {
   cards: [];
 }
 
+interface ErrorResponseData {
+  error: string;
+}
+
 export {
   type ApiResponseData,
   type ApiResponseDataArray,
@@ -39,4 +43,5 @@ export {
   type FormProps,
   type LoginFormData,
   type LoginResponseData,
+  type ErrorResponseData,
 };
