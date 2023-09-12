@@ -3,10 +3,8 @@ const jwt = require("jsonwebtoken");
 const verifyToken = async (req, res, next) => {
   try {
     //retrieve the cookie from the session (req.session.token)
-    let token = req.session.token;
-
-    // let token = req.headers["Set-Cookie"];
     console.log(req.session);
+    let token = req.session.token;
 
     if (!token) {
       return res.status(403).send("Access Denied");
@@ -24,8 +22,6 @@ const verifyToken = async (req, res, next) => {
       req.session.cookie.expires = 3600000 * 480;
       next();
     });
-
-    next();
   } catch (err) {
     res.status(500).json({ auth: false, error: err.message });
   }

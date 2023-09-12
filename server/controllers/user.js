@@ -41,8 +41,6 @@ const login = async (req, res) => {
     req.session.token = accessToken;
     req.session.name = username;
 
-    console.log(req.session);
-
     res.status(200).send({
       auth: true,
       id: user._id,
@@ -71,7 +69,6 @@ const logout = async (req, res) => {
 
 const checkAuth = async (req, res) => {
   try {
-    console.log(req.user);
     res.send({ auth: true, user: req.user });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -82,7 +79,6 @@ const getUser = async (req, res) => {
   try {
     const { username } = req.params;
     const user = await User.findOneByUsername(username);
-    console.log(user);
     res.status(200).send(user);
   } catch (error) {
     res.status(404).send({ message: error.message });
