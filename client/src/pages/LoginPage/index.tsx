@@ -15,6 +15,7 @@ const LoginPage = () => {
   const onSubmitHandler = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<LoginResponseData | ErrorResponseData> => {
+    //could add void instead- depends what we do with the data
     event.preventDefault();
     responseBody.username = email;
     responseBody.password = password;
