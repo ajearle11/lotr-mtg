@@ -10,8 +10,33 @@ type ApiResponseDataArray = ApiResponseData[];
 
 interface ButtonProps {
   text: string;
-  onClick: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler;
   isClicked?: boolean;
 }
 
-export { type ApiResponseData, type ApiResponseDataArray, type ButtonProps };
+interface FormProps {
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  handleEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+interface LoginFormData {
+  username: string;
+  password: string;
+}
+
+interface LoginResponseData {
+  auth: boolean;
+  id: string;
+  name: string;
+  cards: [];
+}
+
+export {
+  type ApiResponseData,
+  type ApiResponseDataArray,
+  type ButtonProps,
+  type FormProps,
+  type LoginFormData,
+  type LoginResponseData,
+};
