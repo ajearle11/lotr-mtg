@@ -18,3 +18,9 @@
   cursor: pointer;
   transform: scale(1.05);
 }
+
+.name-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
