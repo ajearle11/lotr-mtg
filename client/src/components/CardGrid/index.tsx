@@ -13,15 +13,14 @@ const CardGrid: React.FC<{
   filterHave: boolean;
   filterHaveNot: boolean;
 }> = ({ cards, collectedCardsArray, filterHave, filterHaveNot }) => {
-  //   const x = 10;
-  //   const y = 19;
-  //if we wanted to treat it like a binder etc.
-
   const mapCards = (
     cards: ApiResponseDataArray,
     filterHave: boolean,
     filterHaveNot: boolean
   ): (JSX.Element | undefined)[] => {
+    //   const x = 10;
+    //   const y = 19;
+    //if we wanted to treat it like a binder etc.
     // return cards.slice(x, y).map((card: ApiResponseData): JSX.Element => {
     return cards.map(
       (card: ApiResponseData, x: number): JSX.Element | undefined => {

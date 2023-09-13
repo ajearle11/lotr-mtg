@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { CardGrid, Button } from "../../components/";
 import { ApiResponseDataArray } from "../../interfaces/";
+import { useAppContext } from "../../contexts/";
 
 const Homepage = (): JSX.Element => {
-  const [cards, setCards] = useState<ApiResponseDataArray>([]);
+  const { cards, setCards } = useAppContext();
   const [collectedCardsArray, setCollectedCardsArray] = useState<number[]>([]);
   const [filterHave, setFilterHave] = useState<boolean>(false);
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
