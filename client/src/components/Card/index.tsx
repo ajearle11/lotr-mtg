@@ -24,7 +24,7 @@ const Card: React.FC<{ card: ApiResponseData; hasGot: boolean }> = ({
       </div>
       <img
         onClick={() => navigate(`${card.id}`)}
-        className="card-image"
+        className={hasGot ? "card-image" : "card-image-greyscale"}
         src={card.image}
       />
     </div>

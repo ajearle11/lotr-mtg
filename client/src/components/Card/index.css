@@ -13,7 +13,16 @@
   transition: all 0.3s ease;
 }
 
-.card-image:hover {
+.card-image-greyscale {
+  border-radius: 10px;
+  width: 200px;
+  transition: all 0.3s ease;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.card-image:hover,
+.card-image-greyscale:hover {
   width: 200px;
   cursor: pointer;
   transform: scale(1.05);

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { CardGrid, Button } from "../../components/";
-import { ApiResponseDataArray } from "../../interfaces/";
+import { ApiResponseDataArray, getUserData } from "../../interfaces/";
 import { useAppContext } from "../../contexts/";
 
 const Homepage = (): JSX.Element => {
-  const { cards, setCards } = useAppContext();
-  const [collectedCardsArray, setCollectedCardsArray] = useState<number[]>([]);
+  const { cards, setCards, user, setUser } = useAppContext();
   const [filterHave, setFilterHave] = useState<boolean>(false);
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
 
@@ -13,6 +12,12 @@ const Homepage = (): JSX.Element => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
     setCards(data);
+  };
+
+  const grabUserData = async (): Promise<void> => {
+    const response = await fetch("http://localhost:3000/users/stinkyAl");
+    const data: getUserData = await response.json();
+    setUser(data);
   };
 
   const handleOwnedCardsFilter = (filterHave: boolean): void => {
@@ -35,7 +40,7 @@ const Homepage = (): JSX.Element => {
 
   useEffect(() => {
     grabData();
-    setCollectedCardsArray([0, 1, 3]);
+    grabUserData();
     setFilterHave(false);
     setFilterHaveNot(false);
   }, []);
@@ -43,11 +48,9 @@ const Homepage = (): JSX.Element => {
   return (
     <>
       <h3>
-        Cards owned: {collectedCardsArray.length}/{cards.length}
+        Cards owned: {user.cards.length}/{cards.length}
       </h3>
-      <h3>
-        Cards left to collect: {cards.length - collectedCardsArray.length}
-      </h3>
+      <h3>Cards left to collect: {cards.length - user.cards.length}</h3>
       <div className="button-container">
         <Button
           text="Owned Cards"
@@ -62,7 +65,7 @@ const Homepage = (): JSX.Element => {
       </div>
       <CardGrid
         cards={cards}
-        collectedCardsArray={collectedCardsArray}
+        collectedCardsArray={user.cards}
         filterHave={filterHave}
         filterHaveNot={filterHaveNot}
       />

@@ -42,12 +42,21 @@ interface ErrorResponseData {
   error: string;
 }
 
+interface getUserData {
+  _id: string;
+  username: string;
+  password: string;
+  cards: Array<number>;
+  __v: number;
+}
+
 export {
   type ApiResponseData,
   type ApiResponseDataArray,
   type ButtonProps,
   type FormProps,
   type LoginFormData,
+  type getUserData,
   type LoginResponseData,
   type ErrorResponseData,
 };

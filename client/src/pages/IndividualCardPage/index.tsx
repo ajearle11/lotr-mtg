@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiResponseDataArray, ApiResponseData } from "../../interfaces/";
 import { useParams } from "react-router-dom";
+import { Button } from "../../components/";
 import {
   addToString,
   convertColor,
@@ -11,11 +12,10 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const IndividualCardPage = () => {
-  const { cards } = useAppContext();
+  const { cards, setCards, user, setUser } = useAppContext();
   let { id } = useParams();
   const [cardData, setCardData] = useState<ApiResponseDataArray>([]);
   //will be in the data you get from the api for individual users. Need redux or context
-  const [collectedCardsArray, setCollectedCardsArray] = useState<number[]>([]);
 
   const grabData = async (id: string | undefined): Promise<void> => {
     const response = await fetch(
@@ -23,7 +23,12 @@ const IndividualCardPage = () => {
     );
     const data: ApiResponseDataArray = await response.json();
     setCardData(data);
-    setCollectedCardsArray([0, 1, 3]);
+  };
+
+  const grabAllCardData = async (): Promise<void> => {
+    const response = await fetch("https://magicapi-r777.onrender.com/cards");
+    const data: ApiResponseDataArray = await response.json();
+    setCards(data);
   };
 
   const mapCards = (
@@ -32,18 +37,105 @@ const IndividualCardPage = () => {
     return cards.map(
       (card: ApiResponseData, x: number): JSX.Element | undefined => {
         if (cardData[0].id === card.id) {
-          if (collectedCardsArray.includes(x)) {
-            return <CheckCircleOutlineIcon style={{ color: "#49b265" }} />;
+          if (user.cards.includes(x)) {
+            return (
+              <CheckCircleOutlineIcon
+                id="check"
+                key={card.id}
+                style={{ color: "#49b265" }}
+              />
+            );
           } else {
-            return <CancelIcon style={{ color: "#781f19" }} />;
+            return (
+              <CancelIcon
+                id="cross"
+                key={card.id}
+                style={{ color: "#781f19" }}
+              />
+            );
           }
         }
       }
     );
   };
 
+  const mapImage = (
+    cards: ApiResponseDataArray
+  ): (JSX.Element | undefined)[] => {
+    return cards.map(
+      (card: ApiResponseData, x: number): JSX.Element | undefined => {
+        if (cardData[0].id === card.id) {
+          if (user.cards.includes(x)) {
+            return (
+              <img
+                className="individual-card-image"
+                key={card.id}
+                src={cardData[0].image}
+              />
+            );
+          } else {
+            return (
+              <img
+                className="individual-card-image-greyscale"
+                key={card.id}
+                src={cardData[0].image}
+              />
+            );
+          }
+        }
+      }
+    );
+  };
+
+  const mapButton = (
+    cards: ApiResponseDataArray
+  ): (JSX.Element | undefined)[] => {
+    return cards.map(
+      (card: ApiResponseData, x: number): JSX.Element | undefined => {
+        if (cardData[0].id === card.id) {
+          if (user.cards.includes(x)) {
+            return (
+              <Button text="Remove" key={card.id} onClick={addCardToUser} />
+            );
+          } else {
+            return <Button text="Add" key={card.id} onClick={addCardToUser} />;
+          }
+        }
+      }
+    );
+  };
+
+  const addCardToUser = async (): Promise<void> => {
+    let numberToSend;
+
+    cards.forEach(
+      (card: ApiResponseData, x: number): void | number | undefined => {
+        if (cardData[0].id === card.id) {
+          numberToSend = x;
+        }
+      }
+    );
+
+    const options: RequestInit = {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify({ newCard: numberToSend }),
+    };
+
+    const response = await fetch(
+      "http://localhost:3000/users/stinkyAl",
+      options
+    );
+    const data: Array<number> = await response.json();
+    console.log(data);
+    setUser({ ...user, cards: data });
+  };
+
   useEffect(() => {
     grabData(id);
+    grabAllCardData();
   }, []);
 
   return (
@@ -63,7 +155,7 @@ const IndividualCardPage = () => {
             <p>Colourless</p>
           )}
           <div className="individual-card-image-container">
-            <img className="individual-card-image" src={cardData[0].image} />
+            {mapImage(cards)}
             <div className="individual-card-image-stats-container">
               <p>{cardData[0].text}</p>
               <p>
@@ -74,6 +166,7 @@ const IndividualCardPage = () => {
               </p>
             </div>
           </div>
+          {mapButton(cards)}
         </>
       ) : (
         //improve this
