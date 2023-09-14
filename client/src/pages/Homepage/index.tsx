@@ -15,7 +15,7 @@ const Homepage = (): JSX.Element => {
   };
 
   const grabUserData = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/stinkyAl");
+    const response = await fetch("http://localhost:3000/users/Alex");
     const data: getUserData = await response.json();
     setUser(data);
   };

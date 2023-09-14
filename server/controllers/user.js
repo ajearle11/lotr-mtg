@@ -90,12 +90,24 @@ const updateCards = async (req, res) => {
     const { newCard } = req.body;
     const user = await User.findOneByUsername(username);
 
-    if (user.cards.includes(newCard)) {
-      console.log(newCard);
-      user.cards = user.cards.filter((id) => id !== newCard);
+    if (typeof newCard == "number") {
+      if (user.cards.includes(newCard)) {
+        user.cards = user.cards.filter((id) => id !== newCard);
+      } else {
+        user.cards.push(newCard);
+      }
+    } else if (newCard.length === undefined) {
+      res.status(404).send({ message: error.message });
     } else {
-      user.cards.push(newCard);
+      for (let i = 0; i < newCard.length; i++) {
+        if (user.cards.includes(newCard[i])) {
+          user.cards = user.cards.filter((id) => id !== newCard[i]);
+        } else {
+          user.cards.push(newCard[i]);
+        }
+      }
     }
+
     await user.save();
     res.status(200).send(user.cards);
   } catch (error) {
