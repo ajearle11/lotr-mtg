@@ -5,6 +5,7 @@ const verifyToken = async (req, res, next) => {
     //retrieve the cookie from the session (req.session.token)
     console.log(req.session);
     let token = req.session.token;
+    console.log(token);
 
     if (!token) {
       return res.status(403).send("Access Denied");

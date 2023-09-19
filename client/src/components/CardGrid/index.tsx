@@ -26,17 +26,17 @@ const CardGrid: React.FC<{
       (card: ApiResponseData, x: number): JSX.Element | undefined => {
         if (!filterHave && !filterHaveNot) {
           if (collectedCardsArray.includes(x)) {
-            return <Card key={card.id} card={card} hasGot={true} />;
+            return <Card key={card.id} x={x} card={card} hasGot={true} />;
           } else {
-            return <Card key={card.id} card={card} hasGot={false} />;
+            return <Card key={card.id} x={x} card={card} hasGot={false} />;
           }
         } else if (filterHave) {
           if (collectedCardsArray.includes(x)) {
-            return <Card key={card.id} card={card} hasGot={true} />;
+            return <Card key={card.id} x={x} card={card} hasGot={true} />;
           }
         } else {
           if (!collectedCardsArray.includes(x)) {
-            return <Card key={card.id} card={card} hasGot={false} />;
+            return <Card key={card.id} x={x} card={card} hasGot={false} />;
           }
         }
       }

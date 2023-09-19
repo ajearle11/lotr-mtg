@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { CardGrid, Button } from "../../components/";
+import { CardGrid, Button, UpdateModal } from "../../components/";
 import { ApiResponseDataArray, getUserData } from "../../interfaces/";
 import { useAppContext } from "../../contexts/";
 
 const Homepage = (): JSX.Element => {
-  const { cards, setCards, user, setUser } = useAppContext();
+  const { cards, setCards, user, setUser, multiClickArray } = useAppContext();
   const [filterHave, setFilterHave] = useState<boolean>(false);
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
 
@@ -18,6 +18,13 @@ const Homepage = (): JSX.Element => {
     const response = await fetch("http://localhost:3000/users/Alex");
     const data: getUserData = await response.json();
     setUser(data);
+  };
+
+  const isUserAuth = async (): Promise<void> => {
+    const response = await fetch("http://localhost:3000/users/isUserAuth");
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
   };
 
   const handleOwnedCardsFilter = (filterHave: boolean): void => {
@@ -43,10 +50,12 @@ const Homepage = (): JSX.Element => {
     grabUserData();
     setFilterHave(false);
     setFilterHaveNot(false);
+    isUserAuth();
   }, []);
 
   return (
     <>
+      {multiClickArray.length === 0 ? null : <UpdateModal />}
       <h3>
         Cards owned: {user.cards.length}/{cards.length}
       </h3>

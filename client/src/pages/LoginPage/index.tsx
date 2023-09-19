@@ -30,6 +30,7 @@ const LoginPage = () => {
 
     const response = await fetch("http://localhost:3000/users/login", options);
     const data = await response.json();
+    console.log(data);
     return data;
   };
 
