@@ -14,17 +14,22 @@ const Homepage = (): JSX.Element => {
     setCards(data);
   };
 
-  const grabUserData = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/Alex");
+  const grabUserData = async (username: string): Promise<void> => {
+    const response = await fetch(`http://localhost:3000/users/${username}`, {
+      credentials: "include",
+    });
     const data: getUserData = await response.json();
     setUser(data);
   };
 
   const isUserAuth = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/isUserAuth");
+    const response = await fetch("http://localhost:3000/users/isUserAuth", {
+      credentials: "include",
+    });
     console.log(response);
     const data = await response.json();
-    console.log(data);
+    setUser({ ...user, username: data.user.username });
+    await grabUserData(data.user.username);
   };
 
   const handleOwnedCardsFilter = (filterHave: boolean): void => {
@@ -47,7 +52,6 @@ const Homepage = (): JSX.Element => {
 
   useEffect(() => {
     grabData();
-    grabUserData();
     setFilterHave(false);
     setFilterHaveNot(false);
     isUserAuth();

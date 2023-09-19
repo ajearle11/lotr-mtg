@@ -1,25 +1,30 @@
-// import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Homepage, IndividualCardPage, LoginPage } from "./pages/";
+import { Nav } from "./components/";
 import "./App.css";
 
 function App(): JSX.Element {
-  // const checkAuth = async (): Promise<void> => {
-  //   const response = await fetch("http://localhost:3000/users/isUserAuth");
-  //   const data = await response.json();
-  //   console.log(data);
-  // };
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const checkAuth = async (): Promise<void> => {
+    const response = await fetch("http://localhost:3000/users/isUserAuth", {
+      credentials: "include",
+    });
+    response.status === 200 ? setIsAuth(true) : setIsAuth(false);
+  };
 
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      {/* <Route path="/register" element={<RegisterPage />} /> */}
-      <Route path="/" element={<Homepage />} />
-      <Route path="/:id" element={<IndividualCardPage />} />
+      <Route path="/" element={<Nav />}>
+        <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/register" element={<RegisterPage />} /> */}
+        <Route index element={isAuth ? <Homepage /> : <LoginPage />} />
+        <Route path="/:id" element={<IndividualCardPage />} />
+      </Route>
     </Routes>
   );
 }

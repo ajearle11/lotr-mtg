@@ -35,8 +35,20 @@ const IndividualCardPage = () => {
     setCards(data);
   };
 
-  const grabUserData = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/Alex");
+  const isUserAuth = async (): Promise<void> => {
+    const response = await fetch("http://localhost:3000/users/isUserAuth", {
+      credentials: "include",
+    });
+    console.log(response);
+    const data = await response.json();
+    setUser({ ...user, username: data.user.username });
+    await grabUserData(data.user.username);
+  };
+
+  const grabUserData = async (username: string): Promise<void> => {
+    const response = await fetch(`http://localhost:3000/users/${username}`, {
+      credentials: "include",
+    });
     const data: getUserData = await response.json();
     setUser(data);
   };
@@ -114,6 +126,7 @@ const IndividualCardPage = () => {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
+      credentials: "include",
       body: JSON.stringify({ newCard: numberToSend }),
     };
 
@@ -125,7 +138,7 @@ const IndividualCardPage = () => {
   useEffect(() => {
     grabData(id);
     grabAllCardData();
-    grabUserData();
+    isUserAuth();
   }, []);
 
   return (

@@ -12,10 +12,14 @@ const UpdateModal = () => {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
+      credentials: "include",
       body: JSON.stringify({ newCard: multiClickArray }),
     };
 
-    const response = await fetch("http://localhost:3000/users/Alex", options);
+    const response = await fetch(
+      `http://localhost:3000/users/${user.username}`,
+      options
+    );
     const data: Array<number> = await response.json();
     setUser({ ...user, cards: data });
 

@@ -8,8 +8,8 @@ const userRouter = Router();
 userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
 userRouter.get("/isUserAuth", verifyToken, userController.checkAuth);
-userRouter.get("/:username", userController.getUser);
+userRouter.get("/:username", verifyToken, userController.getUser);
 userRouter.delete("/logout", verifyToken, userController.logout);
-userRouter.patch("/:username", userController.updateCards);
+userRouter.patch("/:username", verifyToken, userController.updateCards);
 
 module.exports = userRouter;

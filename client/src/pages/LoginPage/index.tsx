@@ -25,6 +25,7 @@ const LoginPage = () => {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
+      credentials: "include",
       body: JSON.stringify(responseBody),
     };
 
