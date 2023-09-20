@@ -58,7 +58,7 @@ const logout = async (req, res) => {
       if (err) {
         res.status(400).send("unable to log out");
       } else {
-        res.send("successful logout");
+        res.json({ success: "successful logout" });
       }
     });
   } catch (err) {

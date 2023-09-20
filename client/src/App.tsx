@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Homepage, IndividualCardPage, LoginPage } from "./pages/";
+import {
+  Homepage,
+  IndividualCardPage,
+  LoginPage,
+  RegisterPage,
+} from "./pages/";
 import { Nav } from "./components/";
 import "./App.css";
 
@@ -20,10 +25,13 @@ function App(): JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Nav />}>
-        <Route path="/login" element={<LoginPage />} />
         {/* <Route path="/register" element={<RegisterPage />} /> */}
         <Route index element={isAuth ? <Homepage /> : <LoginPage />} />
-        <Route path="/:id" element={<IndividualCardPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/:id"
+          element={isAuth ? <IndividualCardPage /> : <LoginPage />}
+        />
       </Route>
     </Routes>
   );

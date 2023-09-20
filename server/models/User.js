@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.statics.createUser = function createUser(data, hash) {
   const newUser = new User({
-    username: data.username,
+    username: data.username.toLowerCase(),
     password: hash,
     cards: data.cards,
   });
@@ -28,7 +28,7 @@ UserSchema.statics.createUser = function createUser(data, hash) {
 };
 
 UserSchema.statics.findOneByUsername = function findOneByUsername(username) {
-  const user = User.findOne({ username: username });
+  const user = User.findOne({ username: username.toLowerCase() });
   if (!user) throw new Error({ msg: "User does not exist. " });
   return user;
 };

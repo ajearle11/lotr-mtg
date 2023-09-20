@@ -12,31 +12,46 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import TalesOfMidEarth from "../../../src/public/lotrtome.png";
 
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window?: () => Window;
+  mobWindow?: () => Window;
 }
 
 const drawerWidth = 240;
 const navItems = ["Home", "Logout"];
 
 export default function Nav(props: Props) {
-  const { window } = props;
+  const navigate = useNavigate();
+  const { mobWindow } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const logUserOut = async (): Promise<void> => {
+    const response = await fetch("http://localhost:3000/users/logout", {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log(data);
+    console.log(response.status);
+    if (response.status === 200) {
+      window.location.reload();
+    }
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MTG
+        <img style={{ width: "150px" }} src={TalesOfMidEarth} />
       </Typography>
       <Divider />
       <List>
@@ -44,9 +59,7 @@ export default function Nav(props: Props) {
           <ListItem key={item} disablePadding>
             <ListItemButton
               onClick={
-                item === "Logout"
-                  ? () => console.log("Hey")
-                  : () => console.log("no")
+                item === "Logout" ? () => logUserOut() : () => navigate("/")
               }
               sx={{ textAlign: "center" }}
             >
@@ -59,36 +72,52 @@ export default function Nav(props: Props) {
   );
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    mobWindow !== undefined ? () => mobWindow().document.body : undefined;
 
   return (
     <>
-      <AppBar style={{ backgroundColor: "#0A2D27" }} component="nav">
+      <AppBar
+        style={{
+          backgroundColor: "#0A2D27",
+          textAlign: "center",
+        }}
+        component="nav"
+      >
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ ml: 1, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button
-                key={item}
-                onClick={
-                  item === "Logout"
-                    ? () => console.log("Hey")
-                    : () => console.log("no")
-                }
-                sx={{ color: "#fff" }}
-              >
-                {item}
-              </Button>
-            ))}
+          <Box
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              textAlign: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <div style={{ width: "50%" }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item}
+                  onClick={
+                    item === "Logout" ? () => logUserOut() : () => navigate("/")
+                  }
+                  sx={{ color: "#fff", mr: 4 }}
+                >
+                  {item}
+                </Button>
+              ))}
+            </div>
+            <div style={{ width: "50%" }}>
+              <img style={{ width: "150px" }} src={TalesOfMidEarth} />
+            </div>
           </Box>
         </Toolbar>
       </AppBar>

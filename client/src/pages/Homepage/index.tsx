@@ -26,7 +26,6 @@ const Homepage = (): JSX.Element => {
     const response = await fetch("http://localhost:3000/users/isUserAuth", {
       credentials: "include",
     });
-    console.log(response);
     const data = await response.json();
     setUser({ ...user, username: data.user.username });
     await grabUserData(data.user.username);
@@ -60,6 +59,7 @@ const Homepage = (): JSX.Element => {
   return (
     <>
       {multiClickArray.length === 0 ? null : <UpdateModal />}
+      <h3>{user.username}'s collection</h3>
       <h3>
         Cards owned: {user.cards.length}/{cards.length}
       </h3>

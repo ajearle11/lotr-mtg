@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { InputForm } from "../../components/";
+import { LoginFormData } from "../../interfaces/";
+import { useNavigate } from "react-router-dom";
 import TalesOfMidEarth from "../../../src/public/lotrtome.png";
 import Magic from "../../../src/public/mtg-logo.png";
-import {
-  LoginFormData,
-  LoginResponseData,
-  ErrorResponseData,
-} from "../../interfaces/";
-import "./index.css";
+import "../LoginPage/index.css";
 
-const LoginPage = () => {
+const RegisterPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -17,7 +15,7 @@ const LoginPage = () => {
 
   const onSubmitHandler = async (
     event: React.FormEvent<HTMLFormElement>
-  ): Promise<LoginResponseData | ErrorResponseData> => {
+  ): Promise<void> => {
     //could add void instead- depends what we do with the data
     event.preventDefault();
     responseBody.username = email;
@@ -32,12 +30,28 @@ const LoginPage = () => {
       body: JSON.stringify(responseBody),
     };
 
-    const response = await fetch("http://localhost:3000/users/login", options);
-    const data = await response.json();
-    if (response.status === 200) {
-      window.location.reload();
+    const response = await fetch(
+      "http://localhost:3000/users/register",
+      options
+    );
+    await response.json();
+
+    if (response.status === 201) {
+      const options: RequestInit = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+        },
+        credentials: "include",
+        body: JSON.stringify(responseBody),
+      };
+      const response = await fetch(
+        "http://localhost:3000/users/login",
+        options
+      );
+      await response.json();
+      response.status === 200 ? navigate("/") : null;
     }
-    return data;
   };
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -54,7 +68,7 @@ const LoginPage = () => {
         <img className="sub-image" src={Magic} />
         <img className="main-image" src={TalesOfMidEarth} />
       </div>
-      <h2>Login</h2>
+      <h2>Register</h2>
       <InputForm
         onSubmit={onSubmitHandler}
         handleEmail={handleEmail}
@@ -64,4 +78,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
