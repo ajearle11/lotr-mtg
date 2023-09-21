@@ -2,8 +2,8 @@ interface ApiResponseData {
   name: string;
   id: number;
   image: string;
-  color: Array<string>;
-  flavorText: string;
+  color?: Array<string>;
+  flavorText?: string;
   rarity: string;
   text: string;
   type: string;

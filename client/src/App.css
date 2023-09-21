@@ -19,3 +19,26 @@
     flex-direction: column;
   }
 }
+
+.rarity-container {
+  margin: 20px 0 30px 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.symbol-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  border-radius: 50px;
+}
+
+.active-filter {
+  background-color: white;
+}

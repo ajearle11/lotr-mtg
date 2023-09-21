@@ -9,12 +9,12 @@ import { Button } from "../../components/";
 import {
   addToString,
   convertColor,
+  loadingAnimation,
 } from "../../helperFunctions/helperFunctions";
 import "./index.css";
 import { useAppContext } from "../../contexts/";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import OneRingLoad from "../../public/one-ring-load.gif";
 
 const IndividualCardPage = () => {
   const navigate = useNavigate();
@@ -147,28 +147,7 @@ const IndividualCardPage = () => {
   return (
     <>
       <div className="individual-card">
-        {cardData.length < 0 ? (
-          mapWholeScreen(cards)
-        ) : (
-          //import this elsewhere
-          <div
-            style={{
-              height: "calc(100vh - 150px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              style={{
-                width: "250px",
-                height: "250px",
-                borderRadius: "1000px",
-              }}
-              src={OneRingLoad}
-            />
-          </div>
-        )}
+        {cardData.length !== 0 ? mapWholeScreen(cards) : loadingAnimation()}
       </div>
     </>
   );

@@ -24,15 +24,20 @@ function App(): JSX.Element {
 
   return (
     <Routes>
-      <Route path="/" element={<Nav />}>
-        {/* <Route path="/register" element={<RegisterPage />} /> */}
-        <Route index element={isAuth ? <Homepage /> : <LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/:id"
-          element={isAuth ? <IndividualCardPage /> : <LoginPage />}
-        />
-      </Route>
+      {!isAuth ? (
+        <>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </>
+      ) : (
+        <>
+          <Route path="/" element={<Nav />}>
+            <Route index element={<Homepage />} />
+
+            <Route path="/:id" element={<IndividualCardPage />} />
+          </Route>
+        </>
+      )}
     </Routes>
   );
 }
