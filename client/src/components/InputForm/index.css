@@ -47,11 +47,11 @@
   cursor: pointer;
   position: relative;
 }
-.input-container input:focus ~ label,
+/* .input-container input:focus ~ label,
 .input-container input:valid ~ label {
   top: -12px;
   font-size: 12px;
-}
+} */
 
 /* for label click */
 /* .input-container label:focus ~ label,
