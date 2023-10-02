@@ -81,8 +81,45 @@ const attributeFilter = (
   }
 };
 
+const colorFilter = (
+  string: string | null,
+  cards: ApiResponseDataArray
+): ApiResponseDataArray => {
+  if (string === "/src/public/Multicolored.png") {
+    console.log("ya");
+    return cards.filter((card) => (card.color || []).length > 1);
+  } else if (string === "/src/public/B.png") {
+    return cards.filter((card) => (card.color || []).includes("B"));
+  } else if (string === "/src/public/W.png") {
+    return cards.filter((card) => (card.color || []).includes("W"));
+  } else if (string === "/src/public/U.png") {
+    return cards.filter((card) => (card.color || []).includes("U"));
+  } else if (string === "/src/public/G.png") {
+    return cards.filter((card) => (card.color || []).includes("G"));
+  } else if (string === "/src/public/R.png") {
+    return cards.filter((card) => (card.color || []).includes("R"));
+  } else if (string === "/src/public/Artifact.png") {
+    return cards.filter((card) => card.type.includes("Artifact"));
+  } else {
+    return cards.filter((card) => card.type.includes("Land"));
+  }
+};
+
 const checkActiveSymbolFilters = (): boolean[] => {
   const container = document.querySelectorAll(".symbol-circle");
+  const array: boolean[] = [];
+  container.forEach((element: Element): void => {
+    if (element.classList.contains("active-filter")) {
+      array.push(true);
+    } else {
+      array.push(false);
+    }
+  });
+  return array;
+};
+
+const checkActiveColorFilters = (): boolean[] => {
+  const container = document.querySelectorAll(".symbol-circle-colors");
   const array: boolean[] = [];
   container.forEach((element: Element): void => {
     if (element.classList.contains("active-filter")) {
@@ -103,6 +140,15 @@ const removeActiveSymbolFilters = (): void => {
   });
 };
 
+const removeActiveColorFilters = (): void => {
+  const container = document.querySelectorAll(".symbol-circle-colors");
+  container.forEach((element: Element): void => {
+    if (element.classList.contains("active-filter")) {
+      element.classList.remove("active-filter");
+    }
+  });
+};
+
 export {
   addToString,
   convertColor,
@@ -110,4 +156,7 @@ export {
   attributeFilter,
   checkActiveSymbolFilters,
   removeActiveSymbolFilters,
+  colorFilter,
+  checkActiveColorFilters,
+  removeActiveColorFilters,
 };

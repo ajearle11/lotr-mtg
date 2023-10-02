@@ -55,6 +55,16 @@
   border-radius: 50px;
 }
 
+.symbol-circle-colors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  border-radius: 50px;
+}
+
 .active-filter {
   background-color: white;
 }

@@ -7,6 +7,9 @@ import {
   attributeFilter,
   checkActiveSymbolFilters,
   removeActiveSymbolFilters,
+  colorFilter,
+  checkActiveColorFilters,
+  removeActiveColorFilters,
 } from "../../helperFunctions/helperFunctions";
 import Mythic from "../../public/ltr-m.png";
 import Rare from "../../public/ltr-r.png";
@@ -27,6 +30,8 @@ const Homepage = (): JSX.Element => {
     useState<ApiResponseDataArray>(cards);
   const [filterHave, setFilterHave] = useState<boolean>(false);
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
+  const [isActiveColor, setIsActiveColor] = useState<boolean>(false);
+  const [isActiveSymbol, setIsActiveSymbol] = useState<boolean>(false);
   const symbols = [Mythic, Rare, Uncommon, Common];
   const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
 
@@ -79,6 +84,11 @@ const Homepage = (): JSX.Element => {
     isUserAuth();
   }, []);
 
+  useEffect(() => {
+    console.log(isActiveSymbol);
+    console.log(isActiveColor);
+  }, [filteredCards]);
+
   const toggleActiveSymbol = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
     const parentNode = target.parentNode as HTMLButtonElement;
@@ -90,22 +100,76 @@ const Homepage = (): JSX.Element => {
       attributeValue = childNode.getAttribute("src");
 
       if (target.classList.contains("active-filter")) {
-        setFilteredCards(cards);
+        setIsActiveSymbol(false);
+        if (!isActiveColor && !isActiveSymbol) {
+          setFilteredCards(cards);
+        }
       } else {
         if (checkActiveSymbolFilters().includes(true)) {
           removeActiveSymbolFilters();
         }
         setFilteredCards(attributeFilter(attributeValue, cards));
+        setIsActiveSymbol(true);
       }
     } else {
       if (parentNode.classList.contains("active-filter")) {
-        setFilteredCards(cards);
+        setIsActiveSymbol(false);
+        if (!isActiveColor && !isActiveSymbol) {
+          setFilteredCards(cards);
+        }
       } else {
         attributeValue = target.getAttribute("src");
         if (checkActiveSymbolFilters().includes(true)) {
           removeActiveSymbolFilters();
         }
         setFilteredCards(attributeFilter(attributeValue, cards));
+        setIsActiveSymbol(true);
+      }
+    }
+
+    if (target.childNodes.length > 0) {
+      target.classList.toggle("active-filter");
+    } else {
+      parentNode.classList.toggle("active-filter");
+    }
+  };
+
+  const toggleActiveColor = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    const parentNode = target.parentNode as HTMLButtonElement;
+    const childNode = target.childNodes[0] as HTMLButtonElement;
+
+    let attributeValue: string | null = "";
+
+    if (target.getAttribute("src") === null) {
+      attributeValue = childNode.getAttribute("src");
+
+      if (target.classList.contains("active-filter")) {
+        setIsActiveColor(false);
+        if (!isActiveColor && !isActiveSymbol) {
+          setFilteredCards(cards);
+        }
+      } else {
+        if (checkActiveColorFilters().includes(true)) {
+          removeActiveColorFilters();
+        }
+        setFilteredCards(colorFilter(attributeValue, cards));
+        setIsActiveColor(true);
+      }
+    } else {
+      if (parentNode.classList.contains("active-filter")) {
+        setIsActiveColor(false);
+        console.log(isActiveColor);
+        if (!isActiveColor && !isActiveSymbol) {
+          setFilteredCards(cards);
+        }
+      } else {
+        attributeValue = target.getAttribute("src");
+        if (checkActiveColorFilters().includes(true)) {
+          removeActiveColorFilters();
+        }
+        setFilteredCards(colorFilter(attributeValue, cards));
+        setIsActiveColor(true);
       }
     }
 
@@ -139,8 +203,8 @@ const Homepage = (): JSX.Element => {
       return (
         <button
           key={image}
-          onClick={toggleActiveSymbol}
-          className="symbol-circle"
+          onClick={toggleActiveColor}
+          className="symbol-circle-colors"
         >
           <img src={image} />
         </button>
