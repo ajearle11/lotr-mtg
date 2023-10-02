@@ -3,11 +3,13 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  bottom: 20px;
+  bottom: 40px;
   left: 0;
-  width: calc(100% - 6px);
+  margin-left: 30px;
+  width: calc(100% - 66px);
   z-index: 1000;
-  border: white 3px solid;
+  border-left: white 10px solid;
+  animation: fadeInAnimation ease 1s;
 }
 
 .update-modal {
@@ -15,6 +17,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: black;
   width: 100%;
-  background-color: #0a2d27;
+  background: linear-gradient(#e4b45d, #b87316, #dd6e27);
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    left: -100vw;
+  }
+  100% {
+    left: 0;
+  }
 }

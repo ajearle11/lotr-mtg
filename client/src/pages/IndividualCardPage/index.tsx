@@ -4,7 +4,8 @@ import {
   ApiResponseData,
   getUserData,
 } from "../../interfaces/";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+// import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "../../components/";
 import {
   addToString,
@@ -17,7 +18,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const IndividualCardPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { cards, setCards, user, setUser } = useAppContext();
   let { id } = useParams();
   const [cardData, setCardData] = useState<ApiResponseDataArray>([]);
@@ -62,51 +63,52 @@ const IndividualCardPage = () => {
       (card: ApiResponseData, x: number): JSX.Element | undefined => {
         if (cardData[0].id === card.id) {
           return (
-            <div key={card.id}>
-              <h2 className="header-container">
-                {cardData[0].name} - #{addToString(cardData[0].id.toString())}
-                {user.cards.includes(x) ? (
-                  <CheckCircleOutlineIcon
-                    id="check"
-                    style={{ color: "#49b265" }}
-                  />
+            <>
+              <div key={card.id}>
+                <h2 className="header-container">
+                  {cardData[0].name} - #{addToString(cardData[0].id.toString())}
+                  {user.cards.includes(x) ? (
+                    <CheckCircleOutlineIcon
+                      id="check"
+                      style={{ color: "#49b265" }}
+                    />
+                  ) : (
+                    <CancelIcon id="cross" style={{ color: "#781f19" }} />
+                  )}
+                </h2>
+                <h3>
+                  {cardData[0].rarity} - {cardData[0].type}
+                </h3>
+                {cardData[0].color ? (
+                  <h3>{convertColor(cardData[0].color)}</h3>
                 ) : (
-                  <CancelIcon id="cross" style={{ color: "#781f19" }} />
+                  <h3>Colourless</h3>
                 )}
-              </h2>
-              <p>
-                {cardData[0].rarity} - {cardData[0].type}
-              </p>
-              {cardData[0].color ? (
-                <p>{convertColor(cardData[0].color)}</p>
-              ) : (
-                <p>Colourless</p>
-              )}
-              <div className="individual-card-image-container">
-                <img
-                  className={
-                    user.cards.includes(x)
-                      ? "individual-card-image"
-                      : "individual-card-image-greyscale"
-                  }
-                  src={cardData[0].image}
-                />
-                <div className="individual-card-image-stats-container">
-                  <p>{cardData[0].text}</p>
-                  <p>
-                    <em>{cardData[0].flavorText}</em>
-                  </p>
-                  <p>
-                    Artwork: <em>{cardData[0].artist}</em>
-                  </p>
+                <div className="individual-card-image-container">
+                  <img
+                    className={
+                      user.cards.includes(x)
+                        ? "individual-card-image"
+                        : "individual-card-image-greyscale"
+                    }
+                    src={cardData[0].image}
+                  />
+                  <div className="individual-card-image-stats-container">
+                    <p>{cardData[0].text}</p>
+                    <p>
+                      <em>{cardData[0].flavorText}</em>
+                    </p>
+                    <p>
+                      Artwork: <em>{cardData[0].artist}</em>
+                    </p>
+                  </div>
                 </div>
+                <Button
+                  text={user.cards.includes(x) ? "Remove -" : "Add +"}
+                  onClick={addCardToUser}
+                />
               </div>
-              <Button
-                text={user.cards.includes(x) ? "Remove" : "Add"}
-                onClick={addCardToUser}
-              />
-              <Button text="Home" onClick={() => navigate("/")} />
-            </div>
+            </>
           );
         }
       }
@@ -146,6 +148,13 @@ const IndividualCardPage = () => {
 
   return (
     <>
+      {/* <Button
+        text="Back"
+        backButton
+        backgroundColor="#0A2D27"
+        onClick={() => navigate("/")}
+      /> */}
+
       <div className="individual-card">
         {cardData.length !== 0 ? mapWholeScreen(cards) : loadingAnimation()}
       </div>

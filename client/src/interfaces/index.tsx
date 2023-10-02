@@ -18,6 +18,8 @@ interface ButtonProps {
   text: string;
   onClick?: React.MouseEventHandler;
   isClicked?: boolean;
+  backgroundColor?: string;
+  backButton?: boolean;
 }
 
 interface FormProps {

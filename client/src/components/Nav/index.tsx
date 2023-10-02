@@ -16,10 +16,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import TalesOfMidEarth from "../../../src/public/lotrtome.png";
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   mobWindow?: () => Window;
 }
 

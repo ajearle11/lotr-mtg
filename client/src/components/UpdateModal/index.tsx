@@ -29,12 +29,12 @@ const UpdateModal = () => {
   return (
     <div className="update-modal-container">
       <div className="update-modal">
-        <Button text="Update Cards" onClick={() => addCardsToUser()} />
-        <Button text="Reset Cards" onClick={() => setMultiClickArray([])} />
         <p>
           You have selected {multiClickArray.length}{" "}
           {multiClickArray.length === 1 ? "card" : "cards"}
         </p>
+        <Button text="Update Cards" onClick={() => addCardsToUser()} />
+        <Button text="Reset" onClick={() => setMultiClickArray([])} />
       </div>
     </div>
   );

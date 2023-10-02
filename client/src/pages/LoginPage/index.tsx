@@ -60,6 +60,10 @@ const LoginPage = () => {
         handleEmail={handleEmail}
         handlePassword={handlePassword}
       />
+      <p>
+        Don't have an account? Register{" "}
+        <a href="http://localhost:5173/register">here</a>
+      </p>
     </div>
   );
 };

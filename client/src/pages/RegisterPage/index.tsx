@@ -74,6 +74,9 @@ const RegisterPage = () => {
         handleEmail={handleEmail}
         handlePassword={handlePassword}
       />
+      <p>
+        Already have an account? Login <a href="http://localhost:5173/">here</a>
+      </p>
     </div>
   );
 };

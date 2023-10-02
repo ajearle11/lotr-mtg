@@ -12,6 +12,14 @@ import Mythic from "../../public/ltr-m.png";
 import Rare from "../../public/ltr-r.png";
 import Uncommon from "../../public/ltr-u.png";
 import Common from "../../public/ltr-c.png";
+import White from "../../public/W.png";
+import Blue from "../../public/U.png";
+import Black from "../../public/B.png";
+import Green from "../../public/G.png";
+import Red from "../../public/R.png";
+import Multi from "../../public/Multicolored.png";
+import Artifact from "../../public/Artifact.png";
+import Land from "../../public/Land.png";
 
 const Homepage = (): JSX.Element => {
   const { cards, setCards, user, setUser, multiClickArray } = useAppContext();
@@ -20,6 +28,7 @@ const Homepage = (): JSX.Element => {
   const [filterHave, setFilterHave] = useState<boolean>(false);
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
   const symbols = [Mythic, Rare, Uncommon, Common];
+  const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
 
   const grabData = async (): Promise<void> => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
@@ -123,6 +132,22 @@ const Homepage = (): JSX.Element => {
     });
   };
 
+  const mapColors = (
+    symbolImages: Array<string>
+  ): (JSX.Element | undefined)[] => {
+    return symbolImages.map((image: string) => {
+      return (
+        <button
+          key={image}
+          onClick={toggleActiveSymbol}
+          className="symbol-circle"
+        >
+          <img src={image} />
+        </button>
+      );
+    });
+  };
+
   return (
     <>
       {cards.length === 0 ? (
@@ -148,6 +173,7 @@ const Homepage = (): JSX.Element => {
             />
           </div>
           <div className="rarity-container">{mapSymbols(symbols)}</div>
+          <div className="color-container">{mapColors(colors)}</div>
           <CardGrid
             cards={filteredCards}
             collectedCardsArray={user.cards}
