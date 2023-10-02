@@ -84,10 +84,10 @@ const Homepage = (): JSX.Element => {
     isUserAuth();
   }, []);
 
-  useEffect(() => {
-    console.log(isActiveSymbol);
-    console.log(isActiveColor);
-  }, [filteredCards]);
+  // useEffect(() => {
+  //   console.log(isActiveSymbol);
+  //   console.log(isActiveColor);
+  // }, [filteredCards]);
 
   const toggleActiveSymbol = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
@@ -146,6 +146,7 @@ const Homepage = (): JSX.Element => {
 
       if (target.classList.contains("active-filter")) {
         setIsActiveColor(false);
+        console.log(isActiveColor);
         if (!isActiveColor && !isActiveSymbol) {
           setFilteredCards(cards);
         }
@@ -159,7 +160,7 @@ const Homepage = (): JSX.Element => {
     } else {
       if (parentNode.classList.contains("active-filter")) {
         setIsActiveColor(false);
-        console.log(isActiveColor);
+
         if (!isActiveColor && !isActiveSymbol) {
           setFilteredCards(cards);
         }
