@@ -85,8 +85,7 @@ const Homepage = (): JSX.Element => {
   }, []);
 
   // useEffect(() => {
-  //   console.log(isActiveSymbol);
-  //   console.log(isActiveColor);
+  //   console.log(filteredCards);
   // }, [filteredCards]);
 
   const toggleActiveSymbol = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -101,29 +100,79 @@ const Homepage = (): JSX.Element => {
 
       if (target.classList.contains("active-filter")) {
         setIsActiveSymbol(false);
-        if (!isActiveColor && !isActiveSymbol) {
+
+        if (!isActiveColor && isActiveSymbol) {
           setFilteredCards(cards);
+        } else {
+          let colorAlreadyFiltered = checkActiveColorFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let colorAlreadyFilteredValue = colorAlreadyFiltered[0];
+          setFilteredCards(colorFilter(colorAlreadyFilteredValue, cards));
         }
       } else {
+        setIsActiveSymbol(true);
         if (checkActiveSymbolFilters().includes(true)) {
           removeActiveSymbolFilters();
         }
-        setFilteredCards(attributeFilter(attributeValue, cards));
-        setIsActiveSymbol(true);
+        if (isActiveColor) {
+          let arr = [
+            ...filteredCards,
+            ...attributeFilter(attributeValue, cards),
+          ];
+          let newArr = [...new Set(arr)];
+
+          newArr.sort(function (a, b) {
+            return a.id - b.id;
+          });
+          let finalArr = attributeFilter(attributeValue, newArr);
+          let symbolAlreadyFiltered = checkActiveColorFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let finalArr2 = colorFilter(symbolAlreadyFiltered[0], finalArr);
+          setFilteredCards(finalArr2);
+        } else {
+          setFilteredCards(attributeFilter(attributeValue, cards));
+        }
       }
     } else {
       if (parentNode.classList.contains("active-filter")) {
         setIsActiveSymbol(false);
-        if (!isActiveColor && !isActiveSymbol) {
+
+        if (!isActiveColor && isActiveSymbol) {
           setFilteredCards(cards);
+        } else {
+          let colorAlreadyFiltered = checkActiveColorFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let colorAlreadyFilteredValue = colorAlreadyFiltered[0];
+          setFilteredCards(colorFilter(colorAlreadyFilteredValue, cards));
         }
       } else {
+        setIsActiveSymbol(true);
         attributeValue = target.getAttribute("src");
         if (checkActiveSymbolFilters().includes(true)) {
           removeActiveSymbolFilters();
         }
-        setFilteredCards(attributeFilter(attributeValue, cards));
-        setIsActiveSymbol(true);
+        if (isActiveColor) {
+          let arr = [
+            ...filteredCards,
+            ...attributeFilter(attributeValue, cards),
+          ];
+          let newArr = [...new Set(arr)];
+          newArr.sort(function (a, b) {
+            return a.id - b.id;
+          });
+
+          let finalArr = attributeFilter(attributeValue, newArr);
+          let symbolAlreadyFiltered = checkActiveColorFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let finalArr2 = colorFilter(symbolAlreadyFiltered[0], finalArr);
+          setFilteredCards(finalArr2);
+        } else {
+          setFilteredCards(attributeFilter(attributeValue, cards));
+        }
       }
     }
 
@@ -146,31 +195,75 @@ const Homepage = (): JSX.Element => {
 
       if (target.classList.contains("active-filter")) {
         setIsActiveColor(false);
-        console.log(isActiveColor);
-        if (!isActiveColor && !isActiveSymbol) {
+
+        if (isActiveColor && !isActiveSymbol) {
           setFilteredCards(cards);
+        } else {
+          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let symbolAlreadyFilteredValue = symbolAlreadyFiltered[0];
+          setFilteredCards(attributeFilter(symbolAlreadyFilteredValue, cards));
         }
       } else {
+        setIsActiveColor(true);
         if (checkActiveColorFilters().includes(true)) {
           removeActiveColorFilters();
         }
-        setFilteredCards(colorFilter(attributeValue, cards));
-        setIsActiveColor(true);
+
+        if (isActiveSymbol) {
+          let arr = [...filteredCards, ...colorFilter(attributeValue, cards)];
+          let newArr = [...new Set(arr)];
+
+          newArr.sort(function (a, b) {
+            return a.id - b.id;
+          });
+          let finalArr = colorFilter(attributeValue, newArr);
+          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let finalArr2 = attributeFilter(symbolAlreadyFiltered[0], finalArr);
+          setFilteredCards(finalArr2);
+        } else {
+          setFilteredCards(colorFilter(attributeValue, cards));
+        }
       }
     } else {
       if (parentNode.classList.contains("active-filter")) {
         setIsActiveColor(false);
 
-        if (!isActiveColor && !isActiveSymbol) {
+        if (isActiveColor && !isActiveSymbol) {
           setFilteredCards(cards);
+        } else {
+          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let symbolAlreadyFilteredValue = symbolAlreadyFiltered[0];
+          setFilteredCards(attributeFilter(symbolAlreadyFilteredValue, cards));
         }
       } else {
+        setIsActiveColor(true);
         attributeValue = target.getAttribute("src");
         if (checkActiveColorFilters().includes(true)) {
           removeActiveColorFilters();
         }
-        setFilteredCards(colorFilter(attributeValue, cards));
-        setIsActiveColor(true);
+
+        if (isActiveSymbol) {
+          let arr = [...filteredCards, ...colorFilter(attributeValue, cards)];
+          let newArr = [...new Set(arr)];
+
+          newArr.sort(function (a, b) {
+            return a.id - b.id;
+          });
+          let finalArr = colorFilter(attributeValue, newArr);
+          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+            (type) => typeof type === "string"
+          );
+          let finalArr2 = attributeFilter(symbolAlreadyFiltered[0], finalArr);
+          setFilteredCards(finalArr2);
+        } else {
+          setFilteredCards(colorFilter(attributeValue, cards));
+        }
       }
     }
 

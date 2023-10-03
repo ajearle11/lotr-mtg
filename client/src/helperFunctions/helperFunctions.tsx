@@ -67,7 +67,7 @@ const loadingAnimation = (): JSX.Element => {
 };
 
 const attributeFilter = (
-  string: string | null,
+  string: string | null | boolean,
   cards: ApiResponseDataArray
 ): ApiResponseDataArray => {
   if (string === "/src/public/ltr-m.png") {
@@ -82,11 +82,10 @@ const attributeFilter = (
 };
 
 const colorFilter = (
-  string: string | null,
+  string: string | null | boolean,
   cards: ApiResponseDataArray
 ): ApiResponseDataArray => {
   if (string === "/src/public/Multicolored.png") {
-    console.log("ya");
     return cards.filter((card) => (card.color || []).length > 1);
   } else if (string === "/src/public/B.png") {
     return cards.filter((card) => (card.color || []).includes("B"));
@@ -105,11 +104,13 @@ const colorFilter = (
   }
 };
 
-const checkActiveSymbolFilters = (): boolean[] => {
+const checkActiveSymbolFilters = (): (string | null | boolean)[] => {
   const container = document.querySelectorAll(".symbol-circle");
-  const array: boolean[] = [];
+  const array: (string | null | boolean)[] = [];
   container.forEach((element: Element): void => {
     if (element.classList.contains("active-filter")) {
+      let childNode = element.childNodes[0] as HTMLButtonElement;
+      array.push(childNode.getAttribute("src"));
       array.push(true);
     } else {
       array.push(false);
@@ -118,11 +119,13 @@ const checkActiveSymbolFilters = (): boolean[] => {
   return array;
 };
 
-const checkActiveColorFilters = (): boolean[] => {
+const checkActiveColorFilters = (): (string | null | boolean)[] => {
   const container = document.querySelectorAll(".symbol-circle-colors");
-  const array: boolean[] = [];
+  const array: (string | null | boolean)[] = [];
   container.forEach((element: Element): void => {
     if (element.classList.contains("active-filter")) {
+      let childNode = element.childNodes[0] as HTMLButtonElement;
+      array.push(childNode.getAttribute("src"));
       array.push(true);
     } else {
       array.push(false);
