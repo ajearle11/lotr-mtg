@@ -35,7 +35,6 @@ function App(): JSX.Element {
             <Route index element={<Homepage />} />
 
             <Route path="/:id" element={<IndividualCardPage />} />
-            <Route path="/register" element={<RegisterPage />} />
           </Route>
         </>
       )}

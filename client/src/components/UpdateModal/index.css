@@ -17,9 +17,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: black;
   width: 100%;
-  background: linear-gradient(#e4b45d, #b87316, #dd6e27);
+  background: linear-gradient(#17695b, #0e3f37, #0a2d27);
 }
 
 @keyframes fadeInAnimation {

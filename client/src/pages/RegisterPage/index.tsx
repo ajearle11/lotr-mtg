@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { InputForm } from "../../components/";
 import { LoginFormData } from "../../interfaces/";
-import { useNavigate } from "react-router-dom";
 import TalesOfMidEarth from "../../../src/public/lotrtome.png";
 import Magic from "../../../src/public/mtg-logo.png";
 import "../LoginPage/index.css";
 
 const RegisterPage = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -50,7 +48,9 @@ const RegisterPage = () => {
         options
       );
       await response.json();
-      response.status === 200 ? navigate("/") : null;
+      response.status === 200
+        ? (window.location.href = "http://localhost:5173/")
+        : null;
     }
   };
 

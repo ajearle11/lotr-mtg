@@ -84,10 +84,6 @@ const Homepage = (): JSX.Element => {
     isUserAuth();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(filteredCards);
-  // }, [filteredCards]);
-
   const toggleActiveSymbol = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
     const parentNode = target.parentNode as HTMLButtonElement;

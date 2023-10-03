@@ -18,7 +18,6 @@ const Card: React.FC<{
   const handleMultiClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLDivElement;
     if (target.classList.contains("card")) {
-      // target.classList.toggle("selected");
       if (!multiClickArray.includes(x)) {
         setMultiClickArray((multiClickArray) => [...multiClickArray, x]);
       } else {
