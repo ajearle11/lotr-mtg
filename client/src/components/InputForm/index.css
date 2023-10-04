@@ -17,8 +17,8 @@
   left: 0px;
   font-size: 16px;
   color: #fff;
-  transition: all 0.5s ease-in-out;
-  cursor: auto
+  transition: all 0.3s ease-in-out;
+  cursor: auto;
 }
 .input-container input {
   border: 0;

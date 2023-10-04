@@ -47,6 +47,7 @@ const Homepage = (): JSX.Element => {
       credentials: "include",
     });
     const data: getUserData = await response.json();
+    console.log(data);
     setUser(data);
   };
 
