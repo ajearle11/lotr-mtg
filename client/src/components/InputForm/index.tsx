@@ -29,6 +29,12 @@ const InputForm = ({ onSubmit, handleEmail, handlePassword }: FormProps) => {
       usernameField.style.fontSize = "12px";
     });
 
+    usernameField.addEventListener("click", () => {
+      usernameField.style.top = "-12px";
+      usernameField.style.fontSize = "12px";
+      usernameFieldFocus.focus();
+    });
+
     usernameFieldFocus.addEventListener("blur", () => {
       if (usernameFieldValue.value === "") {
         usernameField.style.position = "absolute";
@@ -40,6 +46,12 @@ const InputForm = ({ onSubmit, handleEmail, handlePassword }: FormProps) => {
     passwordFieldFocus.addEventListener("focus", () => {
       passwordField.style.top = "-12px";
       passwordField.style.fontSize = "12px";
+    });
+
+    passwordField.addEventListener("click", () => {
+      passwordField.style.top = "-12px";
+      passwordField.style.fontSize = "12px";
+      passwordFieldFocus.focus();
     });
 
     passwordFieldFocus.addEventListener("blur", () => {
