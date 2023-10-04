@@ -9,8 +9,7 @@ import { useAppContext } from "../../contexts/";
 const Card: React.FC<{
   card: ApiResponseData;
   hasGot: boolean;
-  x: number;
-}> = ({ card, hasGot, x }) => {
+}> = ({ card, hasGot }) => {
   const navigate = useNavigate();
   const { multiClickArray, setMultiClickArray } = useAppContext();
 
@@ -18,10 +17,10 @@ const Card: React.FC<{
   const handleMultiClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLDivElement;
     if (target.classList.contains("card")) {
-      if (!multiClickArray.includes(x)) {
-        setMultiClickArray((multiClickArray) => [...multiClickArray, x]);
+      if (!multiClickArray.includes(card)) {
+        setMultiClickArray((multiClickArray) => [...multiClickArray, card]);
       } else {
-        setMultiClickArray([...multiClickArray.filter((el) => el !== x)]);
+        setMultiClickArray([...multiClickArray.filter((el) => el !== card)]);
       }
     }
   };
@@ -29,7 +28,7 @@ const Card: React.FC<{
   return (
     <div
       onClick={handleMultiClick}
-      className={!multiClickArray.includes(x) ? "card" : " card selected"}
+      className={!multiClickArray.includes(card) ? "card" : " card selected"}
     >
       <h3>{card.name}</h3>
       <div className="name-container">

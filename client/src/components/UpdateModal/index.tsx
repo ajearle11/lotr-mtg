@@ -1,6 +1,7 @@
 import "./index.css";
 import { Button } from "../../components/";
 import { useAppContext } from "../../contexts/";
+import { ApiResponseDataArray } from "../../interfaces/";
 
 const UpdateModal = () => {
   const { multiClickArray, setMultiClickArray, user, setUser } =
@@ -20,7 +21,7 @@ const UpdateModal = () => {
       `http://localhost:3000/users/${user.username}`,
       options
     );
-    const data: Array<number> = await response.json();
+    const data: ApiResponseDataArray = await response.json();
     setUser({ ...user, cards: data });
 
     setMultiClickArray([]);

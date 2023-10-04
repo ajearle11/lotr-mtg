@@ -9,7 +9,7 @@ import "./index.css";
 
 const CardGrid: React.FC<{
   cards: ApiResponseDataArray;
-  collectedCardsArray: Array<number>;
+  collectedCardsArray: ApiResponseDataArray;
   filterHave: boolean;
   filterHaveNot: boolean;
 }> = ({ cards, collectedCardsArray, filterHave, filterHaveNot }) => {
@@ -22,25 +22,29 @@ const CardGrid: React.FC<{
     //   const y = 19;
     //if we wanted to treat it like a binder etc.
     // return cards.slice(x, y).map((card: ApiResponseData): JSX.Element => {
-    return cards.map(
-      (card: ApiResponseData, x: number): JSX.Element | undefined => {
-        if (!filterHave && !filterHaveNot) {
-          if (collectedCardsArray.includes(x)) {
-            return <Card key={card.id} x={x} card={card} hasGot={true} />;
-          } else {
-            return <Card key={card.id} x={x} card={card} hasGot={false} />;
-          }
-        } else if (filterHave) {
-          if (collectedCardsArray.includes(x)) {
-            return <Card key={card.id} x={x} card={card} hasGot={true} />;
-          }
+    return cards.map((card: ApiResponseData): JSX.Element | undefined => {
+      if (!filterHave && !filterHaveNot) {
+        if (
+          collectedCardsArray.filter((el) => el.id === card.id).length === 1
+        ) {
+          return <Card key={card.id} card={card} hasGot={true} />;
         } else {
-          if (!collectedCardsArray.includes(x)) {
-            return <Card key={card.id} x={x} card={card} hasGot={false} />;
-          }
+          return <Card key={card.id} card={card} hasGot={false} />;
+        }
+      } else if (filterHave) {
+        if (
+          collectedCardsArray.filter((el) => el.id === card.id).length === 1
+        ) {
+          return <Card key={card.id} card={card} hasGot={true} />;
+        }
+      } else {
+        if (
+          !(collectedCardsArray.filter((el) => el.id === card.id).length === 1)
+        ) {
+          return <Card key={card.id} card={card} hasGot={false} />;
         }
       }
-    );
+    });
   };
 
   return (

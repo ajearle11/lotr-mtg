@@ -48,7 +48,7 @@ interface getUserData {
   _id: string;
   username: string;
   password: string;
-  cards: Array<number>;
+  cards: ApiResponseDataArray;
   __v: number;
 }
 

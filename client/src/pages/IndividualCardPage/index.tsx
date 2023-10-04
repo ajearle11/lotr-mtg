@@ -59,72 +59,75 @@ const IndividualCardPage = () => {
   const mapWholeScreen = (
     cards: ApiResponseDataArray
   ): (JSX.Element | undefined)[] => {
-    return cards.map(
-      (card: ApiResponseData, x: number): JSX.Element | undefined => {
-        if (cardData[0].id === card.id) {
-          return (
-            <>
-              <div key={card.id}>
-                <h2 className="header-container">
-                  {cardData[0].name} - #{addToString(cardData[0].id.toString())}
-                  {user.cards.includes(x) ? (
-                    <CheckCircleOutlineIcon
-                      id="check"
-                      style={{ color: "#49b265" }}
-                    />
-                  ) : (
-                    <CancelIcon id="cross" style={{ color: "#781f19" }} />
-                  )}
-                </h2>
-                <h3>
-                  {cardData[0].rarity} - {cardData[0].type}
-                </h3>
-                {cardData[0].color ? (
-                  <h3>{convertColor(cardData[0].color)}</h3>
-                ) : (
-                  <h3>Colourless</h3>
-                )}
-                <div className="individual-card-image-container">
-                  <img
-                    className={
-                      user.cards.includes(x)
-                        ? "individual-card-image"
-                        : "individual-card-image-greyscale"
-                    }
-                    src={cardData[0].image}
+    return cards.map((card: ApiResponseData): JSX.Element | undefined => {
+      if (cardData[0].id === card.id) {
+        return (
+          <>
+            <div key={card.id}>
+              <h2 className="header-container">
+                {cardData[0].name} - #{addToString(cardData[0].id.toString())}
+                {user.cards.filter((el) => el.id === card.id).length === 1 ? (
+                  <CheckCircleOutlineIcon
+                    id="check"
+                    style={{ color: "#49b265" }}
                   />
-                  <div className="individual-card-image-stats-container">
-                    <p>{cardData[0].text}</p>
-                    <p>
-                      <em>{cardData[0].flavorText}</em>
-                    </p>
-                    <p>
-                      Artwork: <em>{cardData[0].artist}</em>
-                    </p>
-                  </div>
-                </div>
-                <Button
-                  text={user.cards.includes(x) ? "Remove -" : "Add +"}
-                  onClick={addCardToUser}
+                ) : (
+                  <CancelIcon id="cross" style={{ color: "#781f19" }} />
+                )}
+              </h2>
+              <h3>
+                {cardData[0].rarity} - {cardData[0].type}
+              </h3>
+              {cardData[0].color ? (
+                <h3>{convertColor(cardData[0].color)}</h3>
+              ) : (
+                <h3>Colourless</h3>
+              )}
+              <div className="individual-card-image-container">
+                <img
+                  className={
+                    user.cards.filter((el) => el.id === card.id).length === 1
+                      ? "individual-card-image"
+                      : "individual-card-image-greyscale"
+                  }
+                  src={cardData[0].image}
                 />
+                <div className="individual-card-image-stats-container">
+                  <p>{cardData[0].text}</p>
+                  <p>
+                    <em>{cardData[0].flavorText}</em>
+                  </p>
+                  <p>
+                    Artwork: <em>{cardData[0].artist}</em>
+                  </p>
+                </div>
               </div>
-            </>
-          );
-        }
+              <Button
+                text={
+                  user.cards.filter((el) => el.id === card.id).length === 1
+                    ? "Remove -"
+                    : "Add +"
+                }
+                onClick={addCardToUser}
+              />
+            </div>
+          </>
+        );
       }
-    );
+    });
   };
 
   const addCardToUser = async (): Promise<void> => {
-    let numberToSend;
+    // let numberToSend;
+    // console.log(cardData);
 
-    cards.forEach(
-      (card: ApiResponseData, x: number): void | number | undefined => {
-        if (cardData[0].id === card.id) {
-          numberToSend = x;
-        }
-      }
-    );
+    // cards.forEach(
+    //   (card: ApiResponseData, x: number): void | number | undefined => {
+    //     if (cardData[0].id === card.id) {
+    //       numberToSend = x;
+    //     }
+    //   }
+    // );
 
     const options: RequestInit = {
       method: "PATCH",
@@ -132,11 +135,11 @@ const IndividualCardPage = () => {
         "content-type": "application/json;charset=UTF-8",
       },
       credentials: "include",
-      body: JSON.stringify({ newCard: numberToSend }),
+      body: JSON.stringify({ newCard: cardData }),
     };
 
     const response = await fetch("http://localhost:3000/users/Alex", options);
-    const data: Array<number> = await response.json();
+    const data: ApiResponseDataArray = await response.json();
     setUser({ ...user, cards: data });
   };
 

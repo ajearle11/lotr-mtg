@@ -6,8 +6,10 @@ type AppContextType = {
   setCards: React.Dispatch<React.SetStateAction<ApiResponseDataArray>>;
   user: getUserData;
   setUser: React.Dispatch<React.SetStateAction<getUserData>>;
-  multiClickArray: Array<number>;
-  setMultiClickArray: React.Dispatch<React.SetStateAction<Array<number>>>;
+  multiClickArray: ApiResponseDataArray;
+  setMultiClickArray: React.Dispatch<
+    React.SetStateAction<ApiResponseDataArray>
+  >;
 };
 
 const iAppContextState = {
@@ -23,7 +25,9 @@ const AppContext = createContext<AppContextType>(iAppContextState);
 
 export const AppContextProvider = ({ children }: PropsWithChildren<{}>) => {
   const [cards, setCards] = useState<ApiResponseDataArray>([]);
-  const [multiClickArray, setMultiClickArray] = useState<Array<number>>([]);
+  const [multiClickArray, setMultiClickArray] = useState<ApiResponseDataArray>(
+    []
+  );
   const [user, setUser] = useState<getUserData>({
     _id: "",
     username: "",
