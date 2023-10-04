@@ -19,6 +19,7 @@ import Red from "../../public/R.png";
 import Multi from "../../public/Multicolored.png";
 import Artifact from "../../public/Artifact.png";
 import Land from "../../public/Land.png";
+import Store from "../../redux/";
 
 const Homepage = (): JSX.Element => {
   const { cards, setCards, user, setUser, multiClickArray } = useAppContext();
@@ -43,7 +44,6 @@ const Homepage = (): JSX.Element => {
       credentials: "include",
     });
     const data: getUserData = await response.json();
-    console.log(data);
     setUser(data);
   };
 
@@ -83,6 +83,10 @@ const Homepage = (): JSX.Element => {
     setFilterHave(false);
     setFilterHaveNot(false);
     isUserAuth();
+    Store.subscribe(() => console.log(Store.getState()));
+    console.log(Store.getState());
+    Store.dispatch({ type: "color-value", value: "red" });
+    console.log(Store.getState());
   }, []);
 
   const mapSymbols = (
@@ -100,7 +104,6 @@ const Homepage = (): JSX.Element => {
               filteredCards,
               cards,
               setFilteredCards,
-
               setIsActiveSymbol
             )
           }

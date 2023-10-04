@@ -247,6 +247,7 @@ const toggleActiveSymbol = (
         setFilteredCards(attributeFilter(attributeValue, cards));
       }
     }
+    console.log(attributeValue);
   }
 
   if (target.childNodes.length > 0) {
@@ -352,6 +353,7 @@ const toggleActiveColor = (
         setFilteredCards(colorFilter(attributeValue, cards));
       }
     }
+    console.log(attributeValue);
   }
   if (target.childNodes.length > 0) {
     target.classList.toggle("active-filter");

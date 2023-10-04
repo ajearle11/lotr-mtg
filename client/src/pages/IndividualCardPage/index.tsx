@@ -19,7 +19,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const IndividualCardPage = () => {
   // const navigate = useNavigate();
-  const { cards, setCards, user, setUser } = useAppContext();
+  const { cards, setCards, user, setUser, setMultiClickArray } =
+    useAppContext();
   let { id } = useParams();
   const [cardData, setCardData] = useState<ApiResponseDataArray>([]);
   //will be in the data you get from the api for individual users. Need redux or context
@@ -48,6 +49,7 @@ const IndividualCardPage = () => {
       const data = await response.json();
       setUser({ ...user, username: data.user.username });
       await grabUserData(data.user.username);
+      setMultiClickArray([]);
     }
   };
 
