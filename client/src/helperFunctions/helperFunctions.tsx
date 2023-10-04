@@ -152,6 +152,214 @@ const removeActiveColorFilters = (): void => {
   });
 };
 
+const toggleActiveSymbol = (
+  e: Event | undefined,
+  isActiveColor: boolean,
+  isActiveSymbol: boolean,
+  filteredCards: ApiResponseDataArray,
+  cards: ApiResponseDataArray,
+  setFilteredCards: React.Dispatch<React.SetStateAction<ApiResponseDataArray>>,
+
+  setIsActiveSymbol: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const target = e?.target as HTMLButtonElement;
+  const parentNode = target.parentNode as HTMLButtonElement;
+  const childNode = target.childNodes[0] as HTMLButtonElement;
+
+  let attributeValue: string | null = "";
+
+  if (target.getAttribute("src") === null) {
+    attributeValue = childNode.getAttribute("src");
+
+    if (target.classList.contains("active-filter")) {
+      setIsActiveSymbol(false);
+
+      if (!isActiveColor && isActiveSymbol) {
+        setFilteredCards(cards);
+      } else {
+        let colorAlreadyFiltered = checkActiveColorFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let colorAlreadyFilteredValue = colorAlreadyFiltered[0];
+        setFilteredCards(colorFilter(colorAlreadyFilteredValue, cards));
+      }
+    } else {
+      setIsActiveSymbol(true);
+      if (checkActiveSymbolFilters().includes(true)) {
+        removeActiveSymbolFilters();
+      }
+      if (isActiveColor) {
+        let arr = [...filteredCards, ...attributeFilter(attributeValue, cards)];
+        let newArr = [...new Set(arr)];
+
+        newArr.sort(function (a, b) {
+          return a.id - b.id;
+        });
+        let secondaryFilteredArray = attributeFilter(attributeValue, newArr);
+        let symbolAlreadyFiltered = checkActiveColorFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let fullyFilteredArray = colorFilter(
+          symbolAlreadyFiltered[0],
+          secondaryFilteredArray
+        );
+        setFilteredCards(fullyFilteredArray);
+      } else {
+        setFilteredCards(attributeFilter(attributeValue, cards));
+      }
+    }
+  } else {
+    if (parentNode.classList.contains("active-filter")) {
+      setIsActiveSymbol(false);
+
+      if (!isActiveColor && isActiveSymbol) {
+        setFilteredCards(cards);
+      } else {
+        let colorAlreadyFiltered = checkActiveColorFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let colorAlreadyFilteredValue = colorAlreadyFiltered[0];
+        setFilteredCards(colorFilter(colorAlreadyFilteredValue, cards));
+      }
+    } else {
+      setIsActiveSymbol(true);
+      attributeValue = target.getAttribute("src");
+      if (checkActiveSymbolFilters().includes(true)) {
+        removeActiveSymbolFilters();
+      }
+      if (isActiveColor) {
+        let arr = [...filteredCards, ...attributeFilter(attributeValue, cards)];
+        let newArr = [...new Set(arr)];
+        newArr.sort(function (a, b) {
+          return a.id - b.id;
+        });
+
+        let secondaryFilteredArray = attributeFilter(attributeValue, newArr);
+        let symbolAlreadyFiltered = checkActiveColorFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let fullyFilteredArray = colorFilter(
+          symbolAlreadyFiltered[0],
+          secondaryFilteredArray
+        );
+        setFilteredCards(fullyFilteredArray);
+      } else {
+        setFilteredCards(attributeFilter(attributeValue, cards));
+      }
+    }
+  }
+
+  if (target.childNodes.length > 0) {
+    target.classList.toggle("active-filter");
+  } else {
+    parentNode.classList.toggle("active-filter");
+  }
+};
+
+const toggleActiveColor = (
+  e: Event | undefined,
+  isActiveColor: boolean,
+  isActiveSymbol: boolean,
+  filteredCards: ApiResponseDataArray,
+  cards: ApiResponseDataArray,
+  setFilteredCards: React.Dispatch<React.SetStateAction<ApiResponseDataArray>>,
+  setIsActiveColor: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const target = e?.target as HTMLButtonElement;
+  const parentNode = target.parentNode as HTMLButtonElement;
+  const childNode = target.childNodes[0] as HTMLButtonElement;
+
+  let attributeValue: string | null = "";
+
+  if (target.getAttribute("src") === null) {
+    attributeValue = childNode.getAttribute("src");
+
+    if (target.classList.contains("active-filter")) {
+      setIsActiveColor(false);
+
+      if (isActiveColor && !isActiveSymbol) {
+        setFilteredCards(cards);
+      } else {
+        let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let symbolAlreadyFilteredValue = symbolAlreadyFiltered[0];
+        setFilteredCards(attributeFilter(symbolAlreadyFilteredValue, cards));
+      }
+    } else {
+      setIsActiveColor(true);
+      if (checkActiveColorFilters().includes(true)) {
+        removeActiveColorFilters();
+      }
+
+      if (isActiveSymbol) {
+        let arr = [...filteredCards, ...colorFilter(attributeValue, cards)];
+        let newArr = [...new Set(arr)];
+
+        newArr.sort(function (a, b) {
+          return a.id - b.id;
+        });
+        let secondaryFilteredArray = colorFilter(attributeValue, newArr);
+        let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let fullyFilteredArray = attributeFilter(
+          symbolAlreadyFiltered[0],
+          secondaryFilteredArray
+        );
+        setFilteredCards(fullyFilteredArray);
+      } else {
+        setFilteredCards(colorFilter(attributeValue, cards));
+      }
+    }
+  } else {
+    if (parentNode.classList.contains("active-filter")) {
+      setIsActiveColor(false);
+
+      if (isActiveColor && !isActiveSymbol) {
+        setFilteredCards(cards);
+      } else {
+        let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let symbolAlreadyFilteredValue = symbolAlreadyFiltered[0];
+        setFilteredCards(attributeFilter(symbolAlreadyFilteredValue, cards));
+      }
+    } else {
+      setIsActiveColor(true);
+      attributeValue = target.getAttribute("src");
+      if (checkActiveColorFilters().includes(true)) {
+        removeActiveColorFilters();
+      }
+
+      if (isActiveSymbol) {
+        let arr = [...filteredCards, ...colorFilter(attributeValue, cards)];
+        let newArr = [...new Set(arr)];
+
+        newArr.sort(function (a, b) {
+          return a.id - b.id;
+        });
+        let secondaryFilteredArray = colorFilter(attributeValue, newArr);
+        let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+          (type) => typeof type === "string"
+        );
+        let fullyFilteredArray = attributeFilter(
+          symbolAlreadyFiltered[0],
+          secondaryFilteredArray
+        );
+        setFilteredCards(fullyFilteredArray);
+      } else {
+        setFilteredCards(colorFilter(attributeValue, cards));
+      }
+    }
+  }
+  if (target.childNodes.length > 0) {
+    target.classList.toggle("active-filter");
+  } else {
+    parentNode.classList.toggle("active-filter");
+  }
+};
+
 export {
   addToString,
   convertColor,
@@ -162,4 +370,6 @@ export {
   colorFilter,
   checkActiveColorFilters,
   removeActiveColorFilters,
+  toggleActiveSymbol,
+  toggleActiveColor,
 };

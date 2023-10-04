@@ -90,8 +90,6 @@ const updateCards = async (req, res) => {
     const { newCard } = req.body;
     const user = await User.findOneByUsername(username);
 
-    console.log(newCard);
-
     if (newCard.length === 1) {
       if (user.cards.filter((el) => el.id === newCard[0].id).length === 1) {
         user.cards = user.cards.filter((id) => id.id !== newCard[0].id);

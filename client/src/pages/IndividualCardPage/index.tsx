@@ -42,10 +42,13 @@ const IndividualCardPage = () => {
     const response = await fetch("http://localhost:3000/users/isUserAuth", {
       credentials: "include",
     });
-    console.log(response);
-    const data = await response.json();
-    setUser({ ...user, username: data.user.username });
-    await grabUserData(data.user.username);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      const data = await response.json();
+      setUser({ ...user, username: data.user.username });
+      await grabUserData(data.user.username);
+    }
   };
 
   const grabUserData = async (username: string): Promise<void> => {

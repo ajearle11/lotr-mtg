@@ -4,12 +4,8 @@ import { ApiResponseDataArray, getUserData } from "../../interfaces/";
 import { useAppContext } from "../../contexts/";
 import {
   loadingAnimation,
-  attributeFilter,
-  checkActiveSymbolFilters,
-  removeActiveSymbolFilters,
-  colorFilter,
-  checkActiveColorFilters,
-  removeActiveColorFilters,
+  toggleActiveSymbol,
+  toggleActiveColor,
 } from "../../helperFunctions/helperFunctions";
 import Mythic from "../../public/ltr-m.png";
 import Rare from "../../public/ltr-r.png";
@@ -55,9 +51,13 @@ const Homepage = (): JSX.Element => {
     const response = await fetch("http://localhost:3000/users/isUserAuth", {
       credentials: "include",
     });
-    const data = await response.json();
-    setUser({ ...user, username: data.user.username });
-    await grabUserData(data.user.username);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      const data = await response.json();
+      setUser({ ...user, username: data.user.username });
+      await grabUserData(data.user.username);
+    }
   };
 
   const handleOwnedCardsFilter = (filterHave: boolean): void => {
@@ -85,192 +85,6 @@ const Homepage = (): JSX.Element => {
     isUserAuth();
   }, []);
 
-  const toggleActiveSymbol = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLButtonElement;
-    const parentNode = target.parentNode as HTMLButtonElement;
-    const childNode = target.childNodes[0] as HTMLButtonElement;
-
-    let attributeValue: string | null = "";
-
-    if (target.getAttribute("src") === null) {
-      attributeValue = childNode.getAttribute("src");
-
-      if (target.classList.contains("active-filter")) {
-        setIsActiveSymbol(false);
-
-        if (!isActiveColor && isActiveSymbol) {
-          setFilteredCards(cards);
-        } else {
-          let colorAlreadyFiltered = checkActiveColorFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let colorAlreadyFilteredValue = colorAlreadyFiltered[0];
-          setFilteredCards(colorFilter(colorAlreadyFilteredValue, cards));
-        }
-      } else {
-        setIsActiveSymbol(true);
-        if (checkActiveSymbolFilters().includes(true)) {
-          removeActiveSymbolFilters();
-        }
-        if (isActiveColor) {
-          let arr = [
-            ...filteredCards,
-            ...attributeFilter(attributeValue, cards),
-          ];
-          let newArr = [...new Set(arr)];
-
-          newArr.sort(function (a, b) {
-            return a.id - b.id;
-          });
-          let finalArr = attributeFilter(attributeValue, newArr);
-          let symbolAlreadyFiltered = checkActiveColorFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let finalArr2 = colorFilter(symbolAlreadyFiltered[0], finalArr);
-          setFilteredCards(finalArr2);
-        } else {
-          setFilteredCards(attributeFilter(attributeValue, cards));
-        }
-      }
-    } else {
-      if (parentNode.classList.contains("active-filter")) {
-        setIsActiveSymbol(false);
-
-        if (!isActiveColor && isActiveSymbol) {
-          setFilteredCards(cards);
-        } else {
-          let colorAlreadyFiltered = checkActiveColorFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let colorAlreadyFilteredValue = colorAlreadyFiltered[0];
-          setFilteredCards(colorFilter(colorAlreadyFilteredValue, cards));
-        }
-      } else {
-        setIsActiveSymbol(true);
-        attributeValue = target.getAttribute("src");
-        if (checkActiveSymbolFilters().includes(true)) {
-          removeActiveSymbolFilters();
-        }
-        if (isActiveColor) {
-          let arr = [
-            ...filteredCards,
-            ...attributeFilter(attributeValue, cards),
-          ];
-          let newArr = [...new Set(arr)];
-          newArr.sort(function (a, b) {
-            return a.id - b.id;
-          });
-
-          let finalArr = attributeFilter(attributeValue, newArr);
-          let symbolAlreadyFiltered = checkActiveColorFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let finalArr2 = colorFilter(symbolAlreadyFiltered[0], finalArr);
-          setFilteredCards(finalArr2);
-        } else {
-          setFilteredCards(attributeFilter(attributeValue, cards));
-        }
-      }
-    }
-
-    if (target.childNodes.length > 0) {
-      target.classList.toggle("active-filter");
-    } else {
-      parentNode.classList.toggle("active-filter");
-    }
-  };
-
-  const toggleActiveColor = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLButtonElement;
-    const parentNode = target.parentNode as HTMLButtonElement;
-    const childNode = target.childNodes[0] as HTMLButtonElement;
-
-    let attributeValue: string | null = "";
-
-    if (target.getAttribute("src") === null) {
-      attributeValue = childNode.getAttribute("src");
-
-      if (target.classList.contains("active-filter")) {
-        setIsActiveColor(false);
-
-        if (isActiveColor && !isActiveSymbol) {
-          setFilteredCards(cards);
-        } else {
-          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let symbolAlreadyFilteredValue = symbolAlreadyFiltered[0];
-          setFilteredCards(attributeFilter(symbolAlreadyFilteredValue, cards));
-        }
-      } else {
-        setIsActiveColor(true);
-        if (checkActiveColorFilters().includes(true)) {
-          removeActiveColorFilters();
-        }
-
-        if (isActiveSymbol) {
-          let arr = [...filteredCards, ...colorFilter(attributeValue, cards)];
-          let newArr = [...new Set(arr)];
-
-          newArr.sort(function (a, b) {
-            return a.id - b.id;
-          });
-          let finalArr = colorFilter(attributeValue, newArr);
-          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let finalArr2 = attributeFilter(symbolAlreadyFiltered[0], finalArr);
-          setFilteredCards(finalArr2);
-        } else {
-          setFilteredCards(colorFilter(attributeValue, cards));
-        }
-      }
-    } else {
-      if (parentNode.classList.contains("active-filter")) {
-        setIsActiveColor(false);
-
-        if (isActiveColor && !isActiveSymbol) {
-          setFilteredCards(cards);
-        } else {
-          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let symbolAlreadyFilteredValue = symbolAlreadyFiltered[0];
-          setFilteredCards(attributeFilter(symbolAlreadyFilteredValue, cards));
-        }
-      } else {
-        setIsActiveColor(true);
-        attributeValue = target.getAttribute("src");
-        if (checkActiveColorFilters().includes(true)) {
-          removeActiveColorFilters();
-        }
-
-        if (isActiveSymbol) {
-          let arr = [...filteredCards, ...colorFilter(attributeValue, cards)];
-          let newArr = [...new Set(arr)];
-
-          newArr.sort(function (a, b) {
-            return a.id - b.id;
-          });
-          let finalArr = colorFilter(attributeValue, newArr);
-          let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
-            (type) => typeof type === "string"
-          );
-          let finalArr2 = attributeFilter(symbolAlreadyFiltered[0], finalArr);
-          setFilteredCards(finalArr2);
-        } else {
-          setFilteredCards(colorFilter(attributeValue, cards));
-        }
-      }
-    }
-
-    if (target.childNodes.length > 0) {
-      target.classList.toggle("active-filter");
-    } else {
-      parentNode.classList.toggle("active-filter");
-    }
-  };
-
   const mapSymbols = (
     symbolImages: Array<string>
   ): (JSX.Element | undefined)[] => {
@@ -278,7 +92,18 @@ const Homepage = (): JSX.Element => {
       return (
         <button
           key={image}
-          onClick={toggleActiveSymbol}
+          onClick={() =>
+            toggleActiveSymbol(
+              event,
+              isActiveColor,
+              isActiveSymbol,
+              filteredCards,
+              cards,
+              setFilteredCards,
+
+              setIsActiveSymbol
+            )
+          }
           className="symbol-circle"
         >
           <img src={image} />
@@ -294,7 +119,17 @@ const Homepage = (): JSX.Element => {
       return (
         <button
           key={image}
-          onClick={toggleActiveColor}
+          onClick={() =>
+            toggleActiveColor(
+              event,
+              isActiveColor,
+              isActiveSymbol,
+              filteredCards,
+              cards,
+              setFilteredCards,
+              setIsActiveColor
+            )
+          }
           className="symbol-circle-colors"
         >
           <img src={image} />
