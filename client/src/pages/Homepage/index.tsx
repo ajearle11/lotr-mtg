@@ -26,8 +26,9 @@ import Multi from "../../public/Multicolored.png";
 import Artifact from "../../public/Artifact.png";
 import Land from "../../public/Land.png";
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators } from "../../action-creators/";
-import { bindActionCreators } from "redux";
+import { RootState } from "../../store";
+import { setSymbol } from "../../store/symbolsReducer";
+import { setColor } from "../../store/colorsReducer";
 
 const Homepage = (): JSX.Element => {
   const { cards, setCards, user, setUser, multiClickArray } = useAppContext();
@@ -39,10 +40,9 @@ const Homepage = (): JSX.Element => {
   const [isActiveSymbol, setIsActiveSymbol] = useState<boolean>(false);
   const symbols = [Mythic, Rare, Uncommon, Common];
   const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
-  const color = useSelector((state) => state.colors.color);
-  const symbol = useSelector((state) => state.symbols.symbol);
+  const color = useSelector((state: RootState) => state.colors.color);
+  const symbol = useSelector((state: RootState) => state.symbols.symbol);
   const dispatch = useDispatch();
-  const { setColor, setSymbol } = bindActionCreators(actionCreators, dispatch);
 
   const grabData = async (): Promise<void> => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
@@ -101,9 +101,9 @@ const Homepage = (): JSX.Element => {
 
       const target = e?.target as HTMLButtonElement;
       if (target.classList.contains("active-filter")) {
-        setColor("");
+        dispatch(setColor(""));
       } else {
-        setColor(colorToBeSet);
+        dispatch(setColor(colorToBeSet));
       }
     }
   };
@@ -118,9 +118,9 @@ const Homepage = (): JSX.Element => {
       let symbolToBeSet = convertSymbol(item).toLowerCase();
       const target = e?.target as HTMLButtonElement;
       if (target.classList?.contains("active-filter")) {
-        setSymbol("");
+        dispatch(setSymbol(""));
       } else {
-        setSymbol(symbolToBeSet);
+        dispatch(setSymbol(symbolToBeSet));
       }
     }
   };
@@ -133,8 +133,8 @@ const Homepage = (): JSX.Element => {
     setTimeout(() => {
       buttonColorSelector(color);
       buttonSymbolSelector(symbol);
-      setColor(color);
-      setSymbol(symbol);
+      dispatch(setColor(color));
+      dispatch(setSymbol(symbol));
     }, 500);
   }, []);
 
