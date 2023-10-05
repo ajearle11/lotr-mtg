@@ -30,13 +30,21 @@ const IndividualCardPage = () => {
       `https://magicapi-r777.onrender.com/cards/id/${id}`
     );
     const data: ApiResponseDataArray = await response.json();
-    setCardData(data);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      setCardData(data);
+    }
   };
 
   const grabAllCardData = async (): Promise<void> => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
-    setCards(data);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      setCards(data);
+    }
   };
 
   const isUserAuth = async (): Promise<void> => {
@@ -58,7 +66,11 @@ const IndividualCardPage = () => {
       credentials: "include",
     });
     const data: getUserData = await response.json();
-    setUser(data);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      setUser(data);
+    }
   };
 
   const mapWholeScreen = (

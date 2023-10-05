@@ -47,16 +47,24 @@ const Homepage = (): JSX.Element => {
   const grabData = async (): Promise<void> => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
-    setCards(data);
-    setFilteredCards(data);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      setCards(data);
+      setFilteredCards(data);
+    }
   };
 
   const grabUserData = async (username: string): Promise<void> => {
     const response = await fetch(`http://localhost:3000/users/${username}`, {
       credentials: "include",
     });
-    const data: getUserData = await response.json();
-    setUser(data);
+    if (response.status === 403) {
+      window.location.href = "http://localhost:5173/";
+    } else {
+      const data: getUserData = await response.json();
+      setUser(data);
+    }
   };
 
   const isUserAuth = async (): Promise<void> => {
