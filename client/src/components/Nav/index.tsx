@@ -36,9 +36,7 @@ export default function Nav(props: Props) {
       method: "DELETE",
       credentials: "include",
     });
-    const data = await response.json();
-    console.log(data);
-    console.log(response.status);
+
     if (response.status === 200) {
       window.location.reload();
     }

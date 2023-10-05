@@ -6,6 +6,12 @@ import {
   loadingAnimation,
   toggleActiveSymbol,
   toggleActiveColor,
+  checkActiveColorFilters,
+  checkActiveSymbolFilters,
+  convertColor,
+  buttonColorSelector,
+  buttonSymbolSelector,
+  convertSymbol,
 } from "../../helperFunctions/helperFunctions";
 import Mythic from "../../public/ltr-m.png";
 import Rare from "../../public/ltr-r.png";
@@ -19,7 +25,9 @@ import Red from "../../public/R.png";
 import Multi from "../../public/Multicolored.png";
 import Artifact from "../../public/Artifact.png";
 import Land from "../../public/Land.png";
-import Store from "../../redux/";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators } from "../../action-creators/";
+import { bindActionCreators } from "redux";
 
 const Homepage = (): JSX.Element => {
   const { cards, setCards, user, setUser, multiClickArray } = useAppContext();
@@ -31,6 +39,10 @@ const Homepage = (): JSX.Element => {
   const [isActiveSymbol, setIsActiveSymbol] = useState<boolean>(false);
   const symbols = [Mythic, Rare, Uncommon, Common];
   const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
+  const color = useSelector((state) => state.colors.color);
+  const symbol = useSelector((state) => state.symbols.symbol);
+  const dispatch = useDispatch();
+  const { setColor, setSymbol } = bindActionCreators(actionCreators, dispatch);
 
   const grabData = async (): Promise<void> => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
@@ -78,15 +90,52 @@ const Homepage = (): JSX.Element => {
     }
   };
 
+  const checkColor = (e: Event | undefined) => {
+    let colorAlreadyFiltered = checkActiveColorFilters().filter(
+      (type) => typeof type === "string"
+    );
+
+    if (typeof colorAlreadyFiltered[0] === "string") {
+      let item: string = colorAlreadyFiltered[0].substr(12)[0];
+      let colorToBeSet = convertColor(Array(item)).toLowerCase();
+
+      const target = e?.target as HTMLButtonElement;
+      if (target.classList.contains("active-filter")) {
+        setColor("");
+      } else {
+        setColor(colorToBeSet);
+      }
+    }
+  };
+
+  const checkSymbol = (e: Event | undefined) => {
+    let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+      (type) => typeof type === "string"
+    );
+
+    if (typeof symbolAlreadyFiltered[0] === "string") {
+      let item: string = symbolAlreadyFiltered[0].substr(16)[0];
+      let symbolToBeSet = convertSymbol(item).toLowerCase();
+      const target = e?.target as HTMLButtonElement;
+      if (target.classList?.contains("active-filter")) {
+        setSymbol("");
+      } else {
+        setSymbol(symbolToBeSet);
+      }
+    }
+  };
+
   useEffect(() => {
     grabData();
     setFilterHave(false);
     setFilterHaveNot(false);
     isUserAuth();
-    Store.subscribe(() => console.log(Store.getState()));
-    console.log(Store.getState());
-    Store.dispatch({ type: "color-value", value: "red" });
-    console.log(Store.getState());
+    setTimeout(() => {
+      buttonColorSelector(color);
+      buttonSymbolSelector(symbol);
+      setColor(color);
+      setSymbol(symbol);
+    }, 500);
   }, []);
 
   const mapSymbols = (
@@ -96,7 +145,7 @@ const Homepage = (): JSX.Element => {
       return (
         <button
           key={image}
-          onClick={() =>
+          onClick={() => {
             toggleActiveSymbol(
               event,
               isActiveColor,
@@ -105,8 +154,9 @@ const Homepage = (): JSX.Element => {
               cards,
               setFilteredCards,
               setIsActiveSymbol
-            )
-          }
+            );
+            checkSymbol(event);
+          }}
           className="symbol-circle"
         >
           <img src={image} />
@@ -122,7 +172,7 @@ const Homepage = (): JSX.Element => {
       return (
         <button
           key={image}
-          onClick={() =>
+          onClick={() => {
             toggleActiveColor(
               event,
               isActiveColor,
@@ -131,8 +181,9 @@ const Homepage = (): JSX.Element => {
               cards,
               setFilteredCards,
               setIsActiveColor
-            )
-          }
+            );
+            checkColor(event);
+          }}
           className="symbol-circle-colors"
         >
           <img src={image} />

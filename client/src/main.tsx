@@ -3,11 +3,15 @@ import { BrowserRouter } from "react-router-dom";
 import { AppContextProvider } from "./contexts/";
 import App from "./App.tsx";
 import "./index.css";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <AppContextProvider>
-      <App />
-    </AppContextProvider>
+    <Provider store={store}>
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
+    </Provider>
   </BrowserRouter>
 );

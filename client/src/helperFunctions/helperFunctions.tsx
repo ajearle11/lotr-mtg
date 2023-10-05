@@ -33,8 +33,17 @@ const convertColor = (value: Array<string>): string => {
       case "G":
         color = "Green";
         break;
+      case "M":
+        color = "multicolored";
+        break;
+      case "A":
+        color = "artifact";
+        break;
+      case "L":
+        color = "land";
+        break;
       default:
-        color = "Colourless";
+        color = "colorless";
         break;
     }
 
@@ -42,6 +51,28 @@ const convertColor = (value: Array<string>): string => {
   });
 
   return valueToPrint.trimEnd();
+};
+
+const convertSymbol = (symbol: string): string => {
+  switch (symbol) {
+    case "m":
+      symbol = "mythic";
+      break;
+    case "r":
+      symbol = "rare";
+      break;
+    case "u":
+      symbol = "uncommon";
+      break;
+    case "c":
+      symbol = "common";
+      break;
+    default:
+      symbol = "";
+      break;
+  }
+
+  return symbol;
 };
 
 const loadingAnimation = (): JSX.Element => {
@@ -247,7 +278,6 @@ const toggleActiveSymbol = (
         setFilteredCards(attributeFilter(attributeValue, cards));
       }
     }
-    console.log(attributeValue);
   }
 
   if (target.childNodes.length > 0) {
@@ -353,12 +383,55 @@ const toggleActiveColor = (
         setFilteredCards(colorFilter(attributeValue, cards));
       }
     }
-    console.log(attributeValue);
   }
   if (target.childNodes.length > 0) {
     target.classList.toggle("active-filter");
   } else {
     parentNode.classList.toggle("active-filter");
+  }
+};
+
+const buttonColorSelector = (color: string) => {
+  const colorContainerElements = document.querySelectorAll(
+    ".symbol-circle-colors"
+  ) as NodeListOf<HTMLButtonElement>;
+
+  if (color === "white") {
+    colorContainerElements[0].click();
+  } else if (color === "blue") {
+    colorContainerElements[1].click();
+  } else if (color === "black") {
+    colorContainerElements[2].click();
+  } else if (color === "green") {
+    colorContainerElements[3].click();
+  } else if (color === "red") {
+    colorContainerElements[4].click();
+  } else if (color === "multicolored") {
+    colorContainerElements[5].click();
+  } else if (color === "artifact") {
+    colorContainerElements[6].click();
+  } else if (color === "land") {
+    colorContainerElements[7].click();
+  } else {
+    null;
+  }
+};
+
+const buttonSymbolSelector = (symbol: string) => {
+  const symbolContainerElements = document.querySelectorAll(
+    ".symbol-circle"
+  ) as NodeListOf<HTMLButtonElement>;
+
+  if (symbol === "mythic") {
+    symbolContainerElements[0].click();
+  } else if (symbol === "rare") {
+    symbolContainerElements[1].click();
+  } else if (symbol === "uncommon") {
+    symbolContainerElements[2].click();
+  } else if (symbol === "common") {
+    symbolContainerElements[3].click();
+  } else {
+    null;
   }
 };
 
@@ -374,4 +447,7 @@ export {
   removeActiveColorFilters,
   toggleActiveSymbol,
   toggleActiveColor,
+  buttonColorSelector,
+  buttonSymbolSelector,
+  convertSymbol,
 };
