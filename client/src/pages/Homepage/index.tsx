@@ -141,8 +141,8 @@ const Homepage = (): JSX.Element => {
     setTimeout(() => {
       buttonColorSelector(color);
       buttonSymbolSelector(symbol);
-      dispatch(setColor(color));
-      dispatch(setSymbol(symbol));
+      // dispatch(setColor(color));
+      // dispatch(setSymbol(symbol));
     }, 500);
   }, []);
 
