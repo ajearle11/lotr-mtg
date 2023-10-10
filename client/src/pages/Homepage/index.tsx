@@ -31,7 +31,7 @@ import { setSymbol } from "../../store/symbolsReducer";
 import { setColor } from "../../store/colorsReducer";
 
 const Homepage = (): JSX.Element => {
-  const { cards, setCards, user, setUser, multiClickArray } = useAppContext();
+  const { cards, setCards, user, setUser } = useAppContext();
   const [filteredCards, setFilteredCards] =
     useState<ApiResponseDataArray>(cards);
   const [filterHave, setFilterHave] = useState<boolean>(false);
@@ -42,6 +42,9 @@ const Homepage = (): JSX.Element => {
   const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
   const color = useSelector((state: RootState) => state.colors.color);
   const symbol = useSelector((state: RootState) => state.symbols.symbol);
+  const multiClick = useSelector(
+    (state: RootState) => state.multiClick.multiClick
+  );
   const dispatch = useDispatch();
 
   const grabData = async (): Promise<void> => {
@@ -103,15 +106,35 @@ const Homepage = (): JSX.Element => {
       (type) => typeof type === "string"
     );
 
+    const target = e?.target as HTMLButtonElement;
+    const parentNode = target.parentNode as HTMLButtonElement;
+
     if (typeof colorAlreadyFiltered[0] === "string") {
       let item: string = colorAlreadyFiltered[0].substr(12)[0];
       let colorToBeSet = convertColor(Array(item)).toLowerCase();
 
-      const target = e?.target as HTMLButtonElement;
-      if (target.classList.contains("active-filter")) {
-        dispatch(setColor(""));
+      if (target.classList?.contains("symbol-circle-colors")) {
+        if (target.classList?.contains("active-filter")) {
+          dispatch(setColor(colorToBeSet));
+        } else {
+          dispatch(setColor(""));
+        }
       } else {
-        dispatch(setColor(colorToBeSet));
+        if (parentNode.classList?.contains("active-filter")) {
+          dispatch(setColor(colorToBeSet));
+        } else {
+          dispatch(setColor(""));
+        }
+      }
+    } else {
+      if (target.classList?.contains("symbol-circle-colors")) {
+        if (!target.classList?.contains("active-filter")) {
+          dispatch(setColor(""));
+        }
+      } else {
+        if (!parentNode.classList?.contains("active-filter")) {
+          dispatch(setColor(""));
+        }
       }
     }
   };
@@ -120,15 +143,34 @@ const Homepage = (): JSX.Element => {
     let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
       (type) => typeof type === "string"
     );
+    const target = e?.target as HTMLButtonElement;
+    const parentNode = target.parentNode as HTMLButtonElement;
 
     if (typeof symbolAlreadyFiltered[0] === "string") {
       let item: string = symbolAlreadyFiltered[0].substr(16)[0];
       let symbolToBeSet = convertSymbol(item).toLowerCase();
-      const target = e?.target as HTMLButtonElement;
-      if (target.classList?.contains("active-filter")) {
-        dispatch(setSymbol(""));
+      if (target.classList?.contains("symbol-circle")) {
+        if (target.classList?.contains("active-filter")) {
+          dispatch(setSymbol(symbolToBeSet));
+        } else {
+          dispatch(setSymbol(""));
+        }
       } else {
-        dispatch(setSymbol(symbolToBeSet));
+        if (parentNode.classList?.contains("active-filter")) {
+          dispatch(setSymbol(symbolToBeSet));
+        } else {
+          dispatch(setSymbol(""));
+        }
+      }
+    } else {
+      if (target.classList?.contains("symbol-circle")) {
+        if (!target.classList?.contains("active-filter")) {
+          dispatch(setSymbol(""));
+        }
+      } else {
+        if (!parentNode.classList?.contains("active-filter")) {
+          dispatch(setSymbol(""));
+        }
       }
     }
   };
@@ -141,8 +183,6 @@ const Homepage = (): JSX.Element => {
     setTimeout(() => {
       buttonColorSelector(color);
       buttonSymbolSelector(symbol);
-      // dispatch(setColor(color));
-      // dispatch(setSymbol(symbol));
     }, 500);
   }, []);
 
@@ -207,7 +247,7 @@ const Homepage = (): JSX.Element => {
       ) : (
         <>
           <h3>{user.username}'s collection</h3>
-          {multiClickArray.length === 0 ? null : <UpdateModal />}
+          {multiClick.length === 0 ? null : <UpdateModal />}
           <h3>
             Cards owned: {user.cards.length}/{cards.length}
           </h3>

@@ -5,7 +5,6 @@ import {
   getUserData,
 } from "../../interfaces/";
 import { useParams } from "react-router-dom";
-// import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "../../components/";
 import {
   addToString,
@@ -19,8 +18,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const IndividualCardPage = () => {
   // const navigate = useNavigate();
-  const { cards, setCards, user, setUser, setMultiClickArray } =
-    useAppContext();
+  const { cards, setCards, user, setUser } = useAppContext();
   let { id } = useParams();
   const [cardData, setCardData] = useState<ApiResponseDataArray>([]);
   //will be in the data you get from the api for individual users. Need redux or context
@@ -57,7 +55,6 @@ const IndividualCardPage = () => {
       const data = await response.json();
       setUser({ ...user, username: data.user.username });
       await grabUserData(data.user.username);
-      setMultiClickArray([]);
     }
   };
 
@@ -168,13 +165,6 @@ const IndividualCardPage = () => {
 
   return (
     <>
-      {/* <Button
-        text="Back"
-        backButton
-        backgroundColor="#0A2D27"
-        onClick={() => navigate("/")}
-      /> */}
-
       <div className="individual-card">
         {cardData.length !== 0 ? mapWholeScreen(cards) : loadingAnimation()}
       </div>

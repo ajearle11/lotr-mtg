@@ -4,23 +4,29 @@ import { addToString } from "../../helperFunctions/helperFunctions";
 import "./index.css";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useAppContext } from "../../contexts/";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { setMultiClick } from "../../store/multiClickReducer";
 
 const Card: React.FC<{
   card: ApiResponseData;
   hasGot: boolean;
 }> = ({ card, hasGot }) => {
   const navigate = useNavigate();
-  const { multiClickArray, setMultiClickArray } = useAppContext();
+  const multiClick = useSelector(
+    (state: RootState) => state.multiClick.multiClick
+  );
+  const dispatch = useDispatch();
 
   //some logic for multiclicking
   const handleMultiClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLDivElement;
     if (target.classList.contains("card")) {
-      if (!multiClickArray.includes(card)) {
-        setMultiClickArray((multiClickArray) => [...multiClickArray, card]);
+      if (!multiClick.includes(card)) {
+        console.log("waoig");
+        dispatch(setMultiClick([...multiClick, card]));
       } else {
-        setMultiClickArray([...multiClickArray.filter((el) => el !== card)]);
+        dispatch(setMultiClick([...multiClick.filter((el) => el !== card)]));
       }
     }
   };
@@ -28,7 +34,7 @@ const Card: React.FC<{
   return (
     <div
       onClick={handleMultiClick}
-      className={!multiClickArray.includes(card) ? "card" : " card selected"}
+      className={!multiClick.includes(card) ? "card" : " card selected"}
     >
       <h3>{card.name}</h3>
       <div className="name-container">
