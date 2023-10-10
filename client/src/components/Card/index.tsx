@@ -22,11 +22,20 @@ const Card: React.FC<{
   const handleMultiClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLDivElement;
     if (target.classList.contains("card")) {
-      if (!multiClick.includes(card)) {
-        console.log("waoig");
+      if (!check()) {
         dispatch(setMultiClick([...multiClick, card]));
       } else {
-        dispatch(setMultiClick([...multiClick.filter((el) => el !== card)]));
+        dispatch(
+          setMultiClick([...multiClick.filter((el) => el.id !== card.id)])
+        );
+      }
+    }
+  };
+
+  const check = () => {
+    for (let i = 0; i < multiClick.length; i++) {
+      if (multiClick[i].id === card.id) {
+        return true;
       }
     }
   };
@@ -34,7 +43,7 @@ const Card: React.FC<{
   return (
     <div
       onClick={handleMultiClick}
-      className={!multiClick.includes(card) ? "card" : " card selected"}
+      className={!check() ? "card" : "card selected"}
     >
       <h3>{card.name}</h3>
       <div className="name-container">
