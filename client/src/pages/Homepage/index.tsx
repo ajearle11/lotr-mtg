@@ -31,13 +31,14 @@ import { setSymbol } from "../../store/symbolsReducer";
 import { setColor } from "../../store/colorsReducer";
 
 const Homepage = (): JSX.Element => {
-  const { cards, setCards, user, setUser } = useAppContext();
+  const { cards, setCards, user, setUser, animation } = useAppContext();
   const [filteredCards, setFilteredCards] =
     useState<ApiResponseDataArray>(cards);
   const [filterHave, setFilterHave] = useState<boolean>(false);
   const [filterHaveNot, setFilterHaveNot] = useState<boolean>(false);
   const [isActiveColor, setIsActiveColor] = useState<boolean>(false);
   const [isActiveSymbol, setIsActiveSymbol] = useState<boolean>(false);
+
   const symbols = [Mythic, Rare, Uncommon, Common];
   const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
   const color = useSelector((state: RootState) => state.colors.color);
@@ -253,7 +254,13 @@ const Homepage = (): JSX.Element => {
         <>
           <div className="header-container-home">
             <h3>{user.username}'s collection</h3>
-            {multiClick.length === 0 ? null : <UpdateModal />}
+            {/* {multiClick.length === 0 ? null : <UpdateModal  />} */}
+            <UpdateModal
+              className={
+                multiClick.length === 0 ? animation : "update-modal-container"
+              }
+            />
+
             <h3>
               Cards owned: {user.cards.length}/{cards.length}
             </h3>

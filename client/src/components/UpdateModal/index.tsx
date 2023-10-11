@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setMultiClick } from "../../store/multiClickReducer";
 
-const UpdateModal = () => {
+const UpdateModal: React.FC<{ className: string }> = ({ className }) => {
   const { user, setUser } = useAppContext();
   const multiClick = useSelector(
     (state: RootState) => state.multiClick.multiClick
@@ -34,7 +34,7 @@ const UpdateModal = () => {
   };
 
   return (
-    <div className="update-modal-container">
+    <div className={className}>
       <div className="update-modal">
         <p>
           You have selected {multiClick.length}{" "}

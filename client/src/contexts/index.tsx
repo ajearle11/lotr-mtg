@@ -6,6 +6,8 @@ type AppContextType = {
   setCards: React.Dispatch<React.SetStateAction<ApiResponseDataArray>>;
   user: getUserData;
   setUser: React.Dispatch<React.SetStateAction<getUserData>>;
+  animation: string;
+  setAnimation: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const iAppContextState = {
@@ -13,13 +15,15 @@ const iAppContextState = {
   setCards: () => {},
   user: { _id: "", username: "", password: "", cards: [], __v: 0 },
   setUser: () => {},
+  animation: "hidden",
+  setAnimation: () => {},
 };
 
 const AppContext = createContext<AppContextType>(iAppContextState);
 
 export const AppContextProvider = ({ children }: PropsWithChildren<{}>) => {
   const [cards, setCards] = useState<ApiResponseDataArray>([]);
-
+  const [animation, setAnimation] = useState<string>("hidden");
   const [user, setUser] = useState<getUserData>({
     _id: "",
     username: "",
@@ -35,6 +39,8 @@ export const AppContextProvider = ({ children }: PropsWithChildren<{}>) => {
         setCards,
         user,
         setUser,
+        animation,
+        setAnimation,
       }}
     >
       {children}

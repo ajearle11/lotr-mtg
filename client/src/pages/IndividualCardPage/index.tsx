@@ -18,7 +18,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const IndividualCardPage = () => {
   // const navigate = useNavigate();
-  const { cards, setCards, user, setUser } = useAppContext();
+  const { cards, setCards, user, setUser, setAnimation } = useAppContext();
   let { id } = useParams();
   const [cardData, setCardData] = useState<ApiResponseDataArray>([]);
   //will be in the data you get from the api for individual users. Need redux or context
@@ -161,6 +161,7 @@ const IndividualCardPage = () => {
     grabData(id);
     grabAllCardData();
     isUserAuth();
+    setAnimation("hidden");
   }, []);
 
   return (

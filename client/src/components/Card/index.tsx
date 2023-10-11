@@ -7,6 +7,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setMultiClick } from "../../store/multiClickReducer";
+import { useAppContext } from "../../contexts/";
 
 const Card: React.FC<{
   card: ApiResponseData;
@@ -17,6 +18,7 @@ const Card: React.FC<{
     (state: RootState) => state.multiClick.multiClick
   );
   const dispatch = useDispatch();
+  const { setAnimation } = useAppContext();
 
   //some logic for multiclicking
   const handleMultiClick = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -24,10 +26,12 @@ const Card: React.FC<{
     if (target.classList.contains("card")) {
       if (!check()) {
         dispatch(setMultiClick([...multiClick, card]));
+        setAnimation("fade-out");
       } else {
         dispatch(
           setMultiClick([...multiClick.filter((el) => el.id !== card.id)])
         );
+        setAnimation("fade-out");
       }
     }
   };

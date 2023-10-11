@@ -12,6 +12,24 @@
   animation: fadeInAnimation ease 1s;
 }
 
+.fade-out {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 40px;
+  left: -100vw;
+  margin-left: 30px;
+  width: calc(100% - 66px);
+  z-index: 1000;
+  border-left: white 10px solid;
+  animation: fadeOutAnimation ease 1s;
+}
+
+.hidden {
+  display: none;
+}
+
 .update-modal {
   display: flex;
   flex-direction: column;
@@ -29,5 +47,14 @@
   }
   100% {
     left: 0;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100vw;
   }
 }
