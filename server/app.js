@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://lotr-mtg-collection.onrender.com",
+    origin: "https://lotr-mtg-collection.onrender.com/",
     credentials: true,
   })
 );
