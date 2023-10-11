@@ -251,7 +251,7 @@ const Homepage = (): JSX.Element => {
         loadingAnimation()
       ) : (
         <>
-          <div className="header-container">
+          <div className="header-container-home">
             <h3>{user.username}'s collection</h3>
             {multiClick.length === 0 ? null : <UpdateModal />}
             <h3>
