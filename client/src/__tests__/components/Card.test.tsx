@@ -2,8 +2,25 @@ import { describe, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Card } from "../../components/";
 import { BrowserRouter } from "react-router-dom";
+import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { store } from "../../store";
+
+const mockStore = configureStore([]);
+
+const store = mockStore({
+  multiClick: {
+    multiClick: [],
+  },
+  symbols: {
+    symbol: "",
+  },
+  colors: {
+    color: "",
+  },
+  searchValue: {
+    searchValue: "",
+  },
+});
 
 const fakeCard = {
   name: "card",
