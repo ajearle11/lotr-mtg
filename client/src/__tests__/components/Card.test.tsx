@@ -21,6 +21,7 @@ const store = mockStore({
     searchValue: "",
   },
 });
+// const data = useSelector(state => state.yourReducer.data);
 
 const fakeCard = {
   name: "card",
