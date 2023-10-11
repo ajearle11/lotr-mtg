@@ -35,7 +35,7 @@ app.use(
       // expires: new Date(Date.now() + 10000),
       sameSite: "lax",
       // httpOnly: false,
-      secure: false,
+      secure: true,
     },
   })
 );
