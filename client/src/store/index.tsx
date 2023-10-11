@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import symbolsReducer from "./symbolsReducer";
 import colorsReducer from "./colorsReducer";
 import multiClickReducer from "./multiClickReducer";
+import searchValueReducer from "./searchValueReducer";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   symbols: symbolsReducer,
   colors: colorsReducer,
   multiClick: multiClickReducer,
+  searchValue: searchValueReducer,
 });
 
 const persistConfig = {

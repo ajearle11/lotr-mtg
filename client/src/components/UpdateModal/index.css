@@ -18,6 +18,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   background: linear-gradient(#17695b, #0e3f37, #0a2d27);
 }
 

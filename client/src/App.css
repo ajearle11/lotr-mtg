@@ -7,6 +7,19 @@
   overflow-x: hidden;
 }
 
+.header-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 40px 0;
+  border-radius: 10px;
+  background: linear-gradient(#0a2d27, #0e3f37);
+}
+
+.header-container h3 {
+  margin: 15px 0;
+  padding: 0;
+}
+
 .button-container {
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CardGrid, Button, UpdateModal } from "../../components/";
+import { CardGrid, Button, UpdateModal, Search } from "../../components/";
 import { ApiResponseDataArray, getUserData } from "../../interfaces/";
 import { useAppContext } from "../../contexts/";
 import {
@@ -42,6 +42,9 @@ const Homepage = (): JSX.Element => {
   const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
   const color = useSelector((state: RootState) => state.colors.color);
   const symbol = useSelector((state: RootState) => state.symbols.symbol);
+  const searchValue = useSelector(
+    (state: RootState) => state.searchValue.searchValue
+  );
   const multiClick = useSelector(
     (state: RootState) => state.multiClick.multiClick
   );
@@ -54,7 +57,9 @@ const Homepage = (): JSX.Element => {
       window.location.href = "http://localhost:5173/";
     } else {
       setCards(data);
-      setFilteredCards(data);
+      if (searchValue === "") {
+        setFilteredCards(data);
+      }
     }
   };
 
@@ -246,12 +251,15 @@ const Homepage = (): JSX.Element => {
         loadingAnimation()
       ) : (
         <>
-          <h3>{user.username}'s collection</h3>
-          {multiClick.length === 0 ? null : <UpdateModal />}
-          <h3>
-            Cards owned: {user.cards.length}/{cards.length}
-          </h3>
-          <h3>Cards left to collect: {cards.length - user.cards.length}</h3>
+          <div className="header-container">
+            <h3>{user.username}'s collection</h3>
+            {multiClick.length === 0 ? null : <UpdateModal />}
+            <h3>
+              Cards owned: {user.cards.length}/{cards.length}
+            </h3>
+            <h3>Cards left to collect: {cards.length - user.cards.length}</h3>
+          </div>
+          <Search cards={cards} setFilteredCards={setFilteredCards} />
           <div className="button-container">
             <Button
               text="Owned Cards"
