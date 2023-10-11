@@ -29,7 +29,7 @@ const IndividualCardPage = () => {
     );
     const data: ApiResponseDataArray = await response.json();
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       setCardData(data);
     }
@@ -39,18 +39,21 @@ const IndividualCardPage = () => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       setCards(data);
     }
   };
 
   const isUserAuth = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/isUserAuth", {
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://lotr-mtg-collector.onrender.com/users/isUserAuth",
+      {
+        credentials: "include",
+      }
+    );
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       const data = await response.json();
       setUser({ ...user, username: data.user.username });
@@ -59,12 +62,15 @@ const IndividualCardPage = () => {
   };
 
   const grabUserData = async (username: string): Promise<void> => {
-    const response = await fetch(`http://localhost:3000/users/${username}`, {
-      credentials: "include",
-    });
+    const response = await fetch(
+      `https://lotr-mtg-collector.onrender.com/users/${username}`,
+      {
+        credentials: "include",
+      }
+    );
     const data: getUserData = await response.json();
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       setUser(data);
     }
@@ -152,7 +158,10 @@ const IndividualCardPage = () => {
       body: JSON.stringify({ newCard: cardData }),
     };
 
-    const response = await fetch("http://localhost:3000/users/Alex", options);
+    const response = await fetch(
+      "https://lotr-mtg-collector.onrender.com/users/Alex",
+      options
+    );
     const data: ApiResponseDataArray = await response.json();
     setUser({ ...user, cards: data });
   };

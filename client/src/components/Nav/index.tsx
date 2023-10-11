@@ -32,10 +32,13 @@ export default function Nav(props: Props) {
   };
 
   const logUserOut = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/logout", {
-      method: "DELETE",
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://lotr-mtg-collector.onrender.com/users/logout",
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
 
     if (response.status === 200) {
       window.location.reload();

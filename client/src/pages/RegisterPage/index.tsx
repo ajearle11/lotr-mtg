@@ -29,7 +29,7 @@ const RegisterPage = () => {
     };
 
     const response = await fetch(
-      "http://localhost:3000/users/register",
+      "https://lotr-mtg-collector.onrender.com/users/register",
       options
     );
     await response.json();
@@ -44,12 +44,12 @@ const RegisterPage = () => {
         body: JSON.stringify(responseBody),
       };
       const response = await fetch(
-        "http://localhost:3000/users/login",
+        "https://lotr-mtg-collector.onrender.com/users/login",
         options
       );
       await response.json();
       response.status === 200
-        ? (window.location.href = "http://localhost:5173/")
+        ? (window.location.href = "https://lotr-mtg-collection.onrender.com/")
         : null;
     }
   };
@@ -75,7 +75,8 @@ const RegisterPage = () => {
         handlePassword={handlePassword}
       />
       <p>
-        Already have an account? Login <a href="http://localhost:5173/">here</a>
+        Already have an account? Login{" "}
+        <a href="https://lotr-mtg-collection.onrender.com/">here</a>
       </p>
     </div>
   );

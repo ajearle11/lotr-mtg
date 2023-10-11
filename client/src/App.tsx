@@ -12,9 +12,12 @@ import "./App.css";
 function App(): JSX.Element {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const checkAuth = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/isUserAuth", {
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://lotr-mtg-collector.onrender.com/users/isUserAuth",
+      {
+        credentials: "include",
+      }
+    );
     response.status === 200 ? setIsAuth(true) : setIsAuth(false);
   };
 

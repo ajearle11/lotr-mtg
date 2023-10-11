@@ -55,7 +55,7 @@ const Homepage = (): JSX.Element => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       setCards(data);
       if (searchValue === "") {
@@ -65,11 +65,14 @@ const Homepage = (): JSX.Element => {
   };
 
   const grabUserData = async (username: string): Promise<void> => {
-    const response = await fetch(`http://localhost:3000/users/${username}`, {
-      credentials: "include",
-    });
+    const response = await fetch(
+      `https://lotr-mtg-collector.onrender.com/users/${username}`,
+      {
+        credentials: "include",
+      }
+    );
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       const data: getUserData = await response.json();
       setUser(data);
@@ -77,11 +80,14 @@ const Homepage = (): JSX.Element => {
   };
 
   const isUserAuth = async (): Promise<void> => {
-    const response = await fetch("http://localhost:3000/users/isUserAuth", {
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://lotr-mtg-collector.onrender.com/users/isUserAuth",
+      {
+        credentials: "include",
+      }
+    );
     if (response.status === 403) {
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "https://lotr-mtg-collection.onrender.com/";
     } else {
       const data = await response.json();
       setUser({ ...user, username: data.user.username });

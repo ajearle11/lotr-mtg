@@ -32,7 +32,10 @@ const LoginPage = () => {
       body: JSON.stringify(responseBody),
     };
 
-    const response = await fetch("http://localhost:3000/users/login", options);
+    const response = await fetch(
+      "https://lotr-mtg-collector.onrender.com/users/login",
+      options
+    );
     const data = await response.json();
     if (response.status === 200) {
       window.location.reload();
@@ -62,7 +65,7 @@ const LoginPage = () => {
       />
       <p>
         Don't have an account? Register{" "}
-        <a href="http://localhost:5173/register">here</a>
+        <a href="https://lotr-mtg-collection.onrender.com/register">here</a>
       </p>
     </div>
   );
