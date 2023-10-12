@@ -98,7 +98,7 @@ describe("Card", () => {
     expect(clickableDiv).toHaveClass("card")
   });
 
-  it("renders Card component with prop hasGot set to false", () => {
+  it("Clicks the card image", () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
