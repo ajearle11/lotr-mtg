@@ -1,9 +1,9 @@
-import { describe, it, expect} from "vitest";
+import { describe, it, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Card } from "../../components/";
 import { BrowserRouter } from "react-router-dom";
 import configureStore from "redux-mock-store";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 
 const mockStore = configureStore([]);
 
@@ -34,7 +34,6 @@ const store = mockStore({
   },
 });
 
-
 describe("Card", () => {
   it("renders Card component", () => {
     render(
@@ -46,7 +45,7 @@ describe("Card", () => {
     );
     screen.debug();
   });
-  
+
   it("renders Card component with prop hasGot set to false", () => {
     render(
       <BrowserRouter>
@@ -66,9 +65,9 @@ describe("Card", () => {
         </Provider>
       </BrowserRouter>
     );
-    const clickableDiv = screen.getByRole("card-element")
-    fireEvent.click(clickableDiv)
-    expect(clickableDiv).toHaveClass("selected")
+    const clickableDiv = screen.getByRole("card-element");
+    fireEvent.click(clickableDiv);
+    expect(clickableDiv).toHaveClass("selected");
   });
 
   it("provides the correct classname on the card when one doesn't exists", () => {
@@ -93,9 +92,9 @@ describe("Card", () => {
         </Provider>
       </BrowserRouter>
     );
-    const clickableDiv = screen.getByRole("card-element")
-    fireEvent.click(clickableDiv)
-    expect(clickableDiv).toHaveClass("card")
+    const clickableDiv = screen.getByRole("card-element");
+    fireEvent.click(clickableDiv);
+    expect(clickableDiv).toHaveClass("card");
   });
 
   it("Clicks the card image", () => {
@@ -106,8 +105,8 @@ describe("Card", () => {
         </Provider>
       </BrowserRouter>
     );
-    const clickableImage = screen.getByRole("card-image")
-    fireEvent.click(clickableImage)
-    expect(clickableImage).toHaveClass("card-image")
+    const clickableImage = screen.getByRole("card-image");
+    fireEvent.click(clickableImage);
+    expect(clickableImage).toHaveClass("card-image");
   });
 });
