@@ -1,9 +1,10 @@
-import { describe, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, vi } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { UpdateModal } from "../../components/";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
+import userEvent from "@testing-library/user-event";
 
 const mockStore = configureStore([]);
 const fakeCardArray = [
@@ -35,14 +36,11 @@ const store = mockStore({
   multiClick: {
     multiClick: fakeCardArray,
   },
-  symbols: {
-    symbol: "",
-  },
-  colors: {
-    color: "",
-  },
-  searchValue: {
-    searchValue: "",
+});
+
+const secondStore = mockStore({
+  multiClick: {
+    multiClick: [fakeCardArray[0]],
   },
 });
 
@@ -67,6 +65,21 @@ describe("Card", () => {
       </BrowserRouter>
     );
     screen.debug();
+    const cardAmount = screen.getByRole("card-amount");
+    expect(cardAmount).toHaveTextContent("You have selected 2 cards");
+  });
+
+  it("renders updateModal with update-modal-container class with one card", () => {
+    render(
+      <BrowserRouter>
+        <Provider store={secondStore}>
+          <UpdateModal className="update-modal-container" />
+        </Provider>
+      </BrowserRouter>
+    );
+    screen.debug();
+    const cardAmount = screen.getByRole("card-amount");
+    expect(cardAmount).toHaveTextContent("You have selected 1 card");
   });
 
   it("renders updateModal with hidden class", () => {
@@ -77,6 +90,24 @@ describe("Card", () => {
         </Provider>
       </BrowserRouter>
     );
+
     screen.debug();
+  });
+
+  it("it should call addCardsToUser", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <UpdateModal className="hidden" />
+        </Provider>
+      </BrowserRouter>
+    );
+
+    const clickableItem = screen.getAllByRole("button-to-click");
+    const user = userEvent.setup();
+    await user.click(clickableItem[0]);
+
+    // const cardAmount = screen.getByRole("card-amount");
+    // expect(cardAmount).toHaveTextContent("You have selected 0 cards");
   });
 });

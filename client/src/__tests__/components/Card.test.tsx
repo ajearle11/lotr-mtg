@@ -4,6 +4,7 @@ import { Card } from "../../components/";
 import { BrowserRouter } from "react-router-dom";
 import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
+import userEvent from "@testing-library/user-event";
 
 const mockStore = configureStore([]);
 
@@ -57,7 +58,7 @@ describe("Card", () => {
     screen.debug();
   });
 
-  it("provides the correct classname on the card when one exists", () => {
+  it("provides the correct classname on the card when multiclick is length > 0", () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
@@ -70,7 +71,7 @@ describe("Card", () => {
     expect(clickableDiv).toHaveClass("selected");
   });
 
-  it("provides the correct classname on the card when one doesn't exists", () => {
+  it("provides the correct classname on the card when multiclick is length 0", async () => {
     const secondStore = mockStore({
       multiClick: {
         multiClick: [],
@@ -93,11 +94,13 @@ describe("Card", () => {
       </BrowserRouter>
     );
     const clickableDiv = screen.getByRole("card-element");
-    fireEvent.click(clickableDiv);
+    const user = userEvent.setup();
+    await user.click(clickableDiv);
     expect(clickableDiv).toHaveClass("card");
+    expect(clickableDiv).not.toHaveClass("selected");
   });
 
-  it("Clicks the card image", () => {
+  it("Clicks the card image", async () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
@@ -106,7 +109,8 @@ describe("Card", () => {
       </BrowserRouter>
     );
     const clickableImage = screen.getByRole("card-image");
-    fireEvent.click(clickableImage);
+    const user = userEvent.setup();
+    await user.click(clickableImage);
     expect(clickableImage).toHaveClass("card-image");
   });
 });

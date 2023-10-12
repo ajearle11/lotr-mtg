@@ -11,6 +11,7 @@ const Button = ({
   return (
     <>
       <button
+        role="button-to-click"
         style={{
           backgroundColor: backgroundColor,
           border: backButton ? "white solid 1px" : undefined,

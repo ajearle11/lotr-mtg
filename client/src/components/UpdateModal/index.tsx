@@ -36,7 +36,7 @@ const UpdateModal: React.FC<{ className: string }> = ({ className }) => {
   return (
     <div className={className}>
       <div className="update-modal">
-        <p>
+        <p role="card-amount">
           You have selected {multiClick.length}{" "}
           {multiClick.length === 1 ? "card" : "cards"}
         </p>

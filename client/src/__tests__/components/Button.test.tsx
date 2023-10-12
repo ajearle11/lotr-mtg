@@ -1,8 +1,14 @@
-import { describe, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, vi, afterEach } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "../../components/";
 
+const fn = vi.fn();
+
 describe("Button", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("renders Button component", () => {
     render(<Button text="hi" onClick={() => null} isClicked />);
     screen.debug();
@@ -18,5 +24,16 @@ describe("Button", () => {
       <Button text="hi" onClick={() => null} isClicked={false} backButton />
     );
     screen.debug();
+  });
+
+  it("clicks the button then runs the onClick", () => {
+    render(
+      <Button text="hi" onClick={() => fn("hi")} isClicked={false} backButton />
+    );
+
+    const clickableButton = screen.getByRole("button-to-click");
+    fireEvent.click(clickableButton);
+
+    expect(fn.mock.calls[0]).toEqual(["hi"]);
   });
 });
