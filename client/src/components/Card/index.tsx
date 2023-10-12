@@ -46,6 +46,7 @@ const Card: React.FC<{
 
   return (
     <div
+    role="card-element"
       onClick={handleMultiClick}
       className={!check() ? "card" : "card selected"}
     >
@@ -59,6 +60,7 @@ const Card: React.FC<{
         )}
       </div>
       <img
+      role="card-image"
         onClick={() => navigate(`${card.id}`)}
         className={hasGot ? "card-image" : "card-image-greyscale"}
         src={card.image}
