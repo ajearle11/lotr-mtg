@@ -33,7 +33,7 @@ app.use(
       // maxAge: 3600000,
       // expires: new Date(Date.now() + 3600000 * 48),
       // expires: new Date(Date.now() + 10000),
-      sameSite: "lax",
+      sameSite: "none",
       // httpOnly: false,
       secure: true,
     },
