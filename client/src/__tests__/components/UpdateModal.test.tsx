@@ -1,10 +1,11 @@
-import { describe, it, vi } from "vitest";
+import { describe, it, vi, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { UpdateModal } from "../../components/";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import userEvent from "@testing-library/user-event";
+import { store } from "../../store";
 
 const mockStore = configureStore([]);
 const fakeCardArray = [
@@ -32,7 +33,7 @@ const fakeCardArray = [
   },
 ];
 
-const store = mockStore({
+const fakeStore = mockStore({
   multiClick: {
     multiClick: fakeCardArray,
   },
@@ -48,7 +49,7 @@ describe("Card", () => {
   it("renders updateModal with fade-out class", () => {
     render(
       <BrowserRouter>
-        <Provider store={store}>
+        <Provider store={fakeStore}>
           <UpdateModal className="fade-out" />
         </Provider>
       </BrowserRouter>
@@ -59,7 +60,7 @@ describe("Card", () => {
   it("renders updateModal with update-modal-container class", () => {
     render(
       <BrowserRouter>
-        <Provider store={store}>
+        <Provider store={fakeStore}>
           <UpdateModal className="update-modal-container" />
         </Provider>
       </BrowserRouter>
@@ -104,10 +105,11 @@ describe("Card", () => {
     );
 
     const clickableItem = screen.getAllByRole("button-to-click");
+    const cardAmount = screen.getByRole("card-amount");
+  
     const user = userEvent.setup();
     await user.click(clickableItem[0]);
 
-    // const cardAmount = screen.getByRole("card-amount");
-    // expect(cardAmount).toHaveTextContent("You have selected 0 cards");
+    expect(cardAmount).toHaveTextContent("You have selected 0 cards");
   });
 });
