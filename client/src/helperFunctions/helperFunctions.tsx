@@ -131,6 +131,7 @@ const colorFilter = (
   } else if (string === "/src/public/Artifact.png") {
     return cards.filter((card) => card.type.includes("Artifact"));
   } else {
+    console.log(string)
     return cards.filter((card) => card.type.includes("Land"));
   }
 };
