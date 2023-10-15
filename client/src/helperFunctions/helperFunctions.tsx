@@ -53,6 +53,7 @@ const convertColor = (value: Array<string>): string => {
   return valueToPrint.trimEnd();
 };
 
+//FIX THIS TO BE THE NEW URLS
 const convertSymbol = (symbol: string): string => {
   switch (symbol) {
     case "m":
