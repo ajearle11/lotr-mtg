@@ -56,7 +56,6 @@ const RegisterPage = () => {
         window.location.href = "http://localhost:5173/";
       } else {
         dispatch(setAuth(false));
-        window.location.href = "http://localhost:5173/";
       }
     }
   };
@@ -70,20 +69,23 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="image-container">
-        <img className="sub-image" src={Magic} />
-        <img className="main-image" src={TalesOfMidEarth} />
+    <div className="flex-container">
+      <div className="main-container">
+        <div className="image-container">
+          <img className="sub-image" src={Magic} />
+          <img className="main-image" src={TalesOfMidEarth} />
+        </div>
+        <h2>Register</h2>
+        <InputForm
+          onSubmit={onSubmitHandler}
+          handleEmail={handleEmail}
+          handlePassword={handlePassword}
+        />
+        <p>
+          Already have an account? Login{" "}
+          <a href="http://localhost:5173/">here</a>
+        </p>
       </div>
-      <h2>Register</h2>
-      <InputForm
-        onSubmit={onSubmitHandler}
-        handleEmail={handleEmail}
-        handlePassword={handlePassword}
-      />
-      <p>
-        Already have an account? Login <a href="http://localhost:5173/">here</a>
-      </p>
     </div>
   );
 };

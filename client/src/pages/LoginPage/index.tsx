@@ -2,6 +2,7 @@ import { useState } from "react";
 import { InputForm } from "../../components/";
 import TalesOfMidEarth from "../../../src/public/lotrtome.png";
 import Magic from "../../../src/public/mtg-logo.png";
+
 import {
   LoginFormData,
   LoginResponseData,
@@ -42,7 +43,6 @@ const LoginPage = () => {
       window.location.reload();
     } else {
       dispatch(setAuth(false));
-      window.location.reload();
     }
     return data;
   };
@@ -56,22 +56,26 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="image-container">
-        <img className="sub-image" src={Magic} />
-        <img className="main-image" src={TalesOfMidEarth} />
+    <>
+      <div className="flex-container">
+        <div className="main-container">
+          <div className="image-container">
+            <img className="sub-image" src={Magic} />
+            <img className="main-image" src={TalesOfMidEarth} />
+          </div>
+          <h2>Login</h2>
+          <InputForm
+            onSubmit={onSubmitHandler}
+            handleEmail={handleEmail}
+            handlePassword={handlePassword}
+          />
+          <p>
+            Don't have an account? Register{" "}
+            <a href="http://localhost:5173/register">here</a>
+          </p>
+        </div>
       </div>
-      <h2>Login</h2>
-      <InputForm
-        onSubmit={onSubmitHandler}
-        handleEmail={handleEmail}
-        handlePassword={handlePassword}
-      />
-      <p>
-        Don't have an account? Register{" "}
-        <a href="http://localhost:5173/register">here</a>
-      </p>
-    </div>
+    </>
   );
 };
 
