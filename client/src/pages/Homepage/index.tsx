@@ -128,15 +128,15 @@ const Homepage = (): JSX.Element => {
 
       if (target.classList?.contains("symbol-circle-colors")) {
         if (target.classList?.contains("active-filter")) {
-          dispatch(setColor(colorToBeSet));
-        } else {
           dispatch(setColor(""));
+        } else {
+          dispatch(setColor(colorToBeSet));
         }
       } else {
         if (parentNode.classList?.contains("active-filter")) {
-          dispatch(setColor(colorToBeSet));
-        } else {
           dispatch(setColor(""));
+        } else {
+          dispatch(setColor(colorToBeSet));
         }
       }
     } else {
@@ -163,16 +163,15 @@ const Homepage = (): JSX.Element => {
       let symbolToBeSet = convertSymbol(symbolAlreadyFiltered[0]).toLowerCase();
       if (target.classList?.contains("symbol-circle")) {
         if (target.classList?.contains("active-filter")) {
-          dispatch(setSymbol(symbolToBeSet));
+          dispatch(setSymbol(""));
         } else {
           dispatch(setSymbol(symbolToBeSet));
-          // dispatch(setSymbol(""));
         }
       } else {
         if (parentNode.classList?.contains("active-filter")) {
-          dispatch(setSymbol(symbolToBeSet));
-        } else {
           dispatch(setSymbol(""));
+        } else {
+          dispatch(setSymbol(symbolToBeSet));
         }
       }
     } else {
