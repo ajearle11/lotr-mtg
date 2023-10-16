@@ -122,8 +122,9 @@ const Homepage = (): JSX.Element => {
     const parentNode = target.parentNode as HTMLButtonElement;
 
     if (typeof colorAlreadyFiltered[0] === "string") {
-      let item: string = colorAlreadyFiltered[0].substr(12)[0];
-      let colorToBeSet = convertColor(Array(item)).toLowerCase();
+      let colorToBeSet = convertColor(
+        Array(colorAlreadyFiltered[0])
+      ).toLowerCase();
 
       if (target.classList?.contains("symbol-circle-colors")) {
         if (target.classList?.contains("active-filter")) {
@@ -159,8 +160,7 @@ const Homepage = (): JSX.Element => {
     const parentNode = target.parentNode as HTMLButtonElement;
 
     if (typeof symbolAlreadyFiltered[0] === "string") {
-      let item: string = symbolAlreadyFiltered[0].substr(16)[0];
-      let symbolToBeSet = convertSymbol(item).toLowerCase();
+      let symbolToBeSet = convertSymbol(symbolAlreadyFiltered[0]).toLowerCase();
       if (target.classList?.contains("symbol-circle")) {
         if (target.classList?.contains("active-filter")) {
           dispatch(setSymbol(symbolToBeSet));
