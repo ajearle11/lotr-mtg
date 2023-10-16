@@ -3,6 +3,7 @@ import symbolsReducer from "./symbolsReducer";
 import colorsReducer from "./colorsReducer";
 import multiClickReducer from "./multiClickReducer";
 import searchValueReducer from "./searchValueReducer";
+import authReducer from "./authReducer";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   colors: colorsReducer,
   multiClick: multiClickReducer,
   searchValue: searchValueReducer,
+  auth: authReducer,
 });
 
 const persistConfig = {

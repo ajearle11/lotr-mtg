@@ -29,6 +29,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setSymbol } from "../../store/symbolsReducer";
 import { setColor } from "../../store/colorsReducer";
+import { setAuth } from "../../store/authReducer";
 
 const Homepage = (): JSX.Element => {
   const { cards, setCards, user, setUser, animation } = useAppContext();
@@ -55,7 +56,8 @@ const Homepage = (): JSX.Element => {
     const response = await fetch("https://magicapi-r777.onrender.com/cards");
     const data: ApiResponseDataArray = await response.json();
     if (response.status === 403) {
-      window.location.href = "https://lotr-mtg-collection.onrender.com/";
+      dispatch(setAuth(false));
+      window.location.href = "http://localhost:5173/";
     } else {
       setCards(data);
       if (searchValue === "") {
@@ -65,14 +67,12 @@ const Homepage = (): JSX.Element => {
   };
 
   const grabUserData = async (username: string): Promise<void> => {
-    const response = await fetch(
-      `https://lotr-mtg-collector.onrender.com/users/${username}`,
-      {
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`http://localhost:3000/users/${username}`, {
+      credentials: "include",
+    });
     if (response.status === 403) {
-      window.location.href = "https://lotr-mtg-collection.onrender.com/";
+      dispatch(setAuth(false));
+      window.location.href = "http://localhost:5173/";
     } else {
       const data: getUserData = await response.json();
       setUser(data);
@@ -80,14 +80,12 @@ const Homepage = (): JSX.Element => {
   };
 
   const isUserAuth = async (): Promise<void> => {
-    const response = await fetch(
-      "https://lotr-mtg-collector.onrender.com/users/isUserAuth",
-      {
-        credentials: "include",
-      }
-    );
+    const response = await fetch("http://localhost:3000/users/isUserAuth", {
+      credentials: "include",
+    });
     if (response.status === 403) {
-      window.location.href = "https://lotr-mtg-collection.onrender.com/";
+      dispatch(setAuth(false));
+      window.location.href = "http://localhost:5173/";
     } else {
       const data = await response.json();
       setUser({ ...user, username: data.user.username });
@@ -176,10 +174,11 @@ const Homepage = (): JSX.Element => {
     setFilterHave(false);
     setFilterHaveNot(false);
     isUserAuth();
-    setTimeout(() => {
+
+    addEventListener("DOMContentLoaded", () => {
       buttonColorSelector(color);
       buttonSymbolSelector(symbol);
-    }, 500);
+    });
   }, []);
 
   const mapSymbols = (

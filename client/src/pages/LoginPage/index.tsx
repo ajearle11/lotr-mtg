@@ -8,8 +8,11 @@ import {
   ErrorResponseData,
 } from "../../interfaces/";
 import "./index.css";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../../store/authReducer";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -32,12 +35,13 @@ const LoginPage = () => {
       body: JSON.stringify(responseBody),
     };
 
-    const response = await fetch(
-      "https://lotr-mtg-collector.onrender.com/users/login",
-      options
-    );
+    const response = await fetch("http://localhost:3000/users/login", options);
     const data = await response.json();
     if (response.status === 200) {
+      dispatch(setAuth(true));
+      window.location.reload();
+    } else {
+      dispatch(setAuth(false));
       window.location.reload();
     }
     return data;
@@ -65,7 +69,7 @@ const LoginPage = () => {
       />
       <p>
         Don't have an account? Register{" "}
-        <a href="https://lotr-mtg-collection.onrender.com/register">here</a>
+        <a href="http://localhost:5173/register">here</a>
       </p>
     </div>
   );

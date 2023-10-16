@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://lotr-mtg-collection.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -33,9 +33,9 @@ app.use(
       // maxAge: 3600000,
       // expires: new Date(Date.now() + 3600000 * 48),
       // expires: new Date(Date.now() + 10000),
-      sameSite: "none",
+      sameSite: "lax",
       // httpOnly: false,
-      secure: true,
+      secure: false,
     },
   })
 );

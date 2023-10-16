@@ -4,8 +4,11 @@ import { LoginFormData } from "../../interfaces/";
 import TalesOfMidEarth from "../../../src/public/lotrtome.png";
 import Magic from "../../../src/public/mtg-logo.png";
 import "../LoginPage/index.css";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../../store/authReducer";
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -29,7 +32,7 @@ const RegisterPage = () => {
     };
 
     const response = await fetch(
-      "https://lotr-mtg-collector.onrender.com/users/register",
+      "http://localhost:3000/users/register",
       options
     );
     await response.json();
@@ -44,13 +47,17 @@ const RegisterPage = () => {
         body: JSON.stringify(responseBody),
       };
       const response = await fetch(
-        "https://lotr-mtg-collector.onrender.com/users/login",
+        "http://localhost:3000/users/login",
         options
       );
       await response.json();
-      response.status === 200
-        ? (window.location.href = "https://lotr-mtg-collection.onrender.com/")
-        : null;
+      if (response.status === 200) {
+        dispatch(setAuth(true));
+        window.location.href = "http://localhost:5173/";
+      } else {
+        dispatch(setAuth(false));
+        window.location.href = "http://localhost:5173/";
+      }
     }
   };
 
@@ -75,8 +82,7 @@ const RegisterPage = () => {
         handlePassword={handlePassword}
       />
       <p>
-        Already have an account? Login{" "}
-        <a href="https://lotr-mtg-collection.onrender.com/">here</a>
+        Already have an account? Login <a href="http://localhost:5173/">here</a>
       </p>
     </div>
   );

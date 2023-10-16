@@ -24,7 +24,7 @@ const UpdateModal: React.FC<{ className: string }> = ({ className }) => {
     };
 
     const response = await fetch(
-      `https://lotr-mtg-collector.onrender.com/users/${user.username}`,
+      `http://localhost:3000/users/${user.username}`,
       options
     );
     const data: ApiResponseDataArray = await response.json();
