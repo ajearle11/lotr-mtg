@@ -165,7 +165,8 @@ const Homepage = (): JSX.Element => {
         if (target.classList?.contains("active-filter")) {
           dispatch(setSymbol(symbolToBeSet));
         } else {
-          dispatch(setSymbol(""));
+          dispatch(setSymbol(symbolToBeSet));
+          // dispatch(setSymbol(""));
         }
       } else {
         if (parentNode.classList?.contains("active-filter")) {
