@@ -6,6 +6,9 @@ import "./index.css";
 //for example,
 //if you were to destrcuture:
 // const CardGrid = ({ stringVarProp, numberVarProp, booleanVarProp }: SomeInterfaceType) => {
+  //or declare the props as a type 
+  //const CardGrid: React.FC<Props> = (props)
+  //then you just use props.cards etc...
 
 const CardGrid: React.FC<{
   cards: ApiResponseDataArray;
