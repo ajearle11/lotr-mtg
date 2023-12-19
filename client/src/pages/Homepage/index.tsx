@@ -4,10 +4,8 @@ import { ApiResponseDataArray, getUserData } from "../../interfaces/";
 import { useAppContext } from "../../contexts/";
 import {
   loadingAnimation,
-  toggleActiveSymbol,
-  toggleActiveColor,
-  checkActiveColorFilters,
-  checkActiveSymbolFilters,
+  toggleActive,
+  checkActiveFilters,
   convertColor,
   buttonColorSelector,
   buttonSymbolSelector,
@@ -40,8 +38,22 @@ const Homepage = (): JSX.Element => {
   const [isActiveColor, setIsActiveColor] = useState<boolean>(false);
   const [isActiveSymbol, setIsActiveSymbol] = useState<boolean>(false);
 
-  const symbols = [Mythic, Rare, Uncommon, Common];
-  const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
+  const symbols = [
+    { name: "mythic", image: Mythic },
+    { name: "rare", image: Rare },
+    { name: "uncommon", image: Uncommon },
+    { name: "common", image: Common },
+  ];
+  const colors = [
+    { name: "white", image: White },
+    { name: "blue", image: Blue },
+    { name: "black", image: Black },
+    { name: "green", image: Green },
+    { name: "red", image: Red },
+    { name: "multi", image: Multi },
+    { name: "artifact", image: Artifact },
+    { name: "land", image: Land },
+  ];
   const color = useSelector((state: RootState) => state.colors.color);
   const symbol = useSelector((state: RootState) => state.symbols.symbol);
   const searchValue = useSelector(
@@ -112,9 +124,9 @@ const Homepage = (): JSX.Element => {
   };
 
   const checkColor = (e: Event | undefined) => {
-    let colorAlreadyFiltered = checkActiveColorFilters().filter(
-      (type) => typeof type === "string"
-    );
+    let colorAlreadyFiltered = checkActiveFilters(
+      ".symbol-circle-colors"
+    ).filter((type) => typeof type === "string");
 
     const target = e?.target as HTMLButtonElement;
     const parentNode = target.parentNode as HTMLButtonElement;
@@ -143,7 +155,7 @@ const Homepage = (): JSX.Element => {
   };
 
   const checkSymbol = (e: Event | undefined) => {
-    let symbolAlreadyFiltered = checkActiveSymbolFilters().filter(
+    let symbolAlreadyFiltered = checkActiveFilters(".symbol-circle").filter(
       (type) => typeof type === "string"
     );
     const target = e?.target as HTMLButtonElement;
@@ -181,55 +193,46 @@ const Homepage = (): JSX.Element => {
     });
   }, []);
 
-  const mapSymbols = (
-    symbolImages: Array<string>
+  const mapButtons = (
+    symbolImages: Array<{ name: string; image: string }>
   ): (JSX.Element | undefined)[] => {
-    return symbolImages.map((image: string) => {
+    return symbolImages.map((image: { name: string; image: string }) => {
       return (
         <button
-          key={image}
-          onClick={() => {
-            toggleActiveSymbol(
-              event,
-              isActiveColor,
-              isActiveSymbol,
-              filteredCards,
-              cards,
-              setFilteredCards,
-              setIsActiveSymbol
-            );
-            checkSymbol(event);
-          }}
-          className="symbol-circle"
+          key={image.name}
+          onClick={
+            image.name == "mythic" ||
+            image.name == "rare" ||
+            image.name == "uncommon" ||
+            image.name == "common"
+              ? () => {
+                  toggleActive(
+                    event,
+                    isActiveSymbol,
+                    filteredCards,
+                    cards,
+                    setFilteredCards,
+                    setIsActiveSymbol,
+                    "symbol"
+                  );
+                  checkSymbol(event);
+                }
+              : () => {
+                  toggleActive(
+                    event,
+                    isActiveColor,
+                    filteredCards,
+                    cards,
+                    setFilteredCards,
+                    setIsActiveColor,
+                    "color"
+                  );
+                  checkColor(event);
+                }
+          }
+          className={`symbol-circle ${image.name}`}
         >
-          <img src={image} />
-        </button>
-      );
-    });
-  };
-
-  const mapColors = (
-    symbolImages: Array<string>
-  ): (JSX.Element | undefined)[] => {
-    return symbolImages.map((image: string) => {
-      return (
-        <button
-          key={image}
-          onClick={() => {
-            toggleActiveColor(
-              event,
-              isActiveColor,
-              isActiveSymbol,
-              filteredCards,
-              cards,
-              setFilteredCards,
-              setIsActiveColor
-            );
-            checkColor(event);
-          }}
-          className="symbol-circle-colors"
-        >
-          <img src={image} />
+          <img className={image.name} src={image.image} />
         </button>
       );
     });
@@ -268,8 +271,8 @@ const Homepage = (): JSX.Element => {
               isClicked={filterHaveNot}
             />
           </div>
-          <div className="rarity-container">{mapSymbols(symbols)}</div>
-          <div className="color-container">{mapColors(colors)}</div>
+          <div className="rarity-container">{mapButtons(symbols)}</div>
+          <div className="color-container">{mapButtons(colors)}</div>
           <CardGrid
             cards={filteredCards}
             collectedCardsArray={user.cards}
