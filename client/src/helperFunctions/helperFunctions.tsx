@@ -11,6 +11,29 @@ const addToString = (string: string): string => {
   }
 };
 
+const filterColors = (
+  arr: Array<string | boolean | null>
+): Array<string | boolean | null> => {
+  const validColors = [
+    "white",
+    "blue",
+    "black",
+    "green",
+    "red",
+    "multi",
+    "artifact",
+    "land",
+  ];
+  return arr.filter((color) => validColors.includes(color));
+};
+
+const filterSymbols = (
+  arr: Array<string | boolean | null>
+): Array<string | boolean | null> => {
+  const validSymbols = ["mythic", "rare", "uncommon", "common"];
+  return arr.filter((symbol) => validSymbols.includes(symbol));
+};
+
 //In generic format for my own reference. Not truly generic. Where string is would be type T, but the logic in the function causes the issue for what I want
 // const convertColor = <T,>(value: Array<T>): T => {
 const convertColor = (value: Array<string>): string => {
@@ -238,25 +261,25 @@ const toggleActive = (
 
 const buttonColorSelector = (color: string) => {
   const colorContainerElements = document.querySelectorAll(
-    ".symbol-circle-colors"
+    ".symbol-circle"
   ) as NodeListOf<HTMLButtonElement>;
 
   if (color === "white") {
-    colorContainerElements[0].click();
-  } else if (color === "blue") {
-    colorContainerElements[1].click();
-  } else if (color === "black") {
-    colorContainerElements[2].click();
-  } else if (color === "green") {
-    colorContainerElements[3].click();
-  } else if (color === "red") {
     colorContainerElements[4].click();
-  } else if (color === "multicolored") {
+  } else if (color === "blue") {
     colorContainerElements[5].click();
-  } else if (color === "artifact") {
+  } else if (color === "black") {
     colorContainerElements[6].click();
-  } else if (color === "land") {
+  } else if (color === "green") {
     colorContainerElements[7].click();
+  } else if (color === "red") {
+    colorContainerElements[8].click();
+  } else if (color === "multicolored") {
+    colorContainerElements[9].click();
+  } else if (color === "artifact") {
+    colorContainerElements[10].click();
+  } else if (color === "land") {
+    colorContainerElements[11].click();
   } else {
     null;
   }
@@ -291,4 +314,6 @@ export {
   buttonColorSelector,
   buttonSymbolSelector,
   convertSymbol,
+  filterColors,
+  filterSymbols,
 };

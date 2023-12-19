@@ -10,6 +10,8 @@ import {
   buttonColorSelector,
   buttonSymbolSelector,
   convertSymbol,
+  filterColors,
+  filterSymbols,
 } from "../../helperFunctions/helperFunctions";
 import Mythic from "../../public/ltr-m.png";
 import Rare from "../../public/ltr-r.png";
@@ -127,8 +129,6 @@ const Homepage = (): JSX.Element => {
     let alreadyFiltered = checkActiveFilters(`.symbol-circle`).filter(
       (type) => typeof type === "string"
     );
-    console.log(alreadyFiltered);
-    //need a new conversion function for colors and a way of differentiating between the two when we get the information
 
     const target = e?.target as HTMLButtonElement;
     const parentNode = target.parentNode as HTMLButtonElement;
@@ -136,8 +136,8 @@ const Homepage = (): JSX.Element => {
     if (typeof alreadyFiltered[0] === "string") {
       let attributeToBeSet =
         type === "color"
-          ? convertColor(alreadyFiltered[0])
-          : convertSymbol(alreadyFiltered[0]);
+          ? convertColor(filterColors(alreadyFiltered))
+          : convertSymbol(filterSymbols(alreadyFiltered)[0]);
       attributeToBeSet = attributeToBeSet.toLowerCase();
 
       if (target.classList?.contains(`symbol-circle`)) {
