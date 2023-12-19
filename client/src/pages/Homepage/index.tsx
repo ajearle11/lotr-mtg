@@ -97,7 +97,7 @@ const Homepage = (): JSX.Element => {
     });
     if (response.status === 403) {
       dispatch(setAuth(false));
-      window.location.href = "http://localhost:5173/";
+      // window.location.href = "http://localhost:5173/";
     } else {
       const data = await response.json();
       setUser({ ...user, username: data.user.username });
@@ -123,59 +123,43 @@ const Homepage = (): JSX.Element => {
     }
   };
 
-  const checkColor = (e: Event | undefined) => {
-    let colorAlreadyFiltered = checkActiveFilters(
-      ".symbol-circle-colors"
-    ).filter((type) => typeof type === "string");
-
-    const target = e?.target as HTMLButtonElement;
-    const parentNode = target.parentNode as HTMLButtonElement;
-
-    if (typeof colorAlreadyFiltered[0] === "string") {
-      let colorToBeSet = convertColor(
-        Array(colorAlreadyFiltered[0])
-      ).toLowerCase();
-
-      if (target.classList?.contains("symbol-circle-colors")) {
-        dispatch(setColor(colorToBeSet));
-      } else {
-        dispatch(setColor(colorToBeSet));
-      }
-    } else {
-      if (target.classList?.contains("symbol-circle-colors")) {
-        if (!target.classList?.contains("active-filter")) {
-          dispatch(setColor(""));
-        }
-      } else {
-        if (!parentNode.classList?.contains("active-filter")) {
-          dispatch(setColor(""));
-        }
-      }
-    }
-  };
-
-  const checkSymbol = (e: Event | undefined) => {
-    let symbolAlreadyFiltered = checkActiveFilters(".symbol-circle").filter(
+  const checkAttribute = (e: Event | undefined, type: "color" | "symbol") => {
+    let alreadyFiltered = checkActiveFilters(`.symbol-circle`).filter(
       (type) => typeof type === "string"
     );
+    console.log(alreadyFiltered);
+    //need a new conversion function for colors and a way of differentiating between the two when we get the information
+
     const target = e?.target as HTMLButtonElement;
     const parentNode = target.parentNode as HTMLButtonElement;
 
-    if (typeof symbolAlreadyFiltered[0] === "string") {
-      let symbolToBeSet = convertSymbol(symbolAlreadyFiltered[0]).toLowerCase();
-      if (target.classList?.contains("symbol-circle")) {
-        dispatch(setSymbol(symbolToBeSet));
+    if (typeof alreadyFiltered[0] === "string") {
+      let attributeToBeSet =
+        type === "color"
+          ? convertColor(alreadyFiltered[0])
+          : convertSymbol(alreadyFiltered[0]);
+      attributeToBeSet = attributeToBeSet.toLowerCase();
+
+      if (target.classList?.contains(`symbol-circle`)) {
+        type === "color"
+          ? dispatch(setColor(attributeToBeSet))
+          : dispatch(setSymbol(attributeToBeSet));
+        type === "color"
+          ? dispatch(setColor(attributeToBeSet))
+          : dispatch(setSymbol(attributeToBeSet));
       } else {
-        dispatch(setSymbol(symbolToBeSet));
+        type === "color"
+          ? dispatch(setColor(attributeToBeSet))
+          : dispatch(setSymbol(attributeToBeSet));
       }
     } else {
-      if (target.classList?.contains("symbol-circle")) {
+      if (target.classList?.contains(`symbol-circle`)) {
         if (!target.classList?.contains("active-filter")) {
-          dispatch(setSymbol(""));
+          type === "color" ? dispatch(setColor("")) : dispatch(setSymbol(""));
         }
       } else {
         if (!parentNode.classList?.contains("active-filter")) {
-          dispatch(setSymbol(""));
+          type === "color" ? dispatch(setColor("")) : dispatch(setSymbol(""));
         }
       }
     }
@@ -215,7 +199,7 @@ const Homepage = (): JSX.Element => {
                     setIsActiveSymbol,
                     "symbol"
                   );
-                  checkSymbol(event);
+                  checkAttribute(event, "symbol");
                 }
               : () => {
                   toggleActive(
@@ -227,7 +211,7 @@ const Homepage = (): JSX.Element => {
                     setIsActiveColor,
                     "color"
                   );
-                  checkColor(event);
+                  checkAttribute(event, "color");
                 }
           }
           className={`symbol-circle ${image.name}`}

@@ -53,7 +53,6 @@ const convertColor = (value: Array<string>): string => {
   return valueToPrint.trimEnd();
 };
 
-//FIX THIS TO BE THE NEW URLS
 const convertSymbol = (symbol: string): string => {
   switch (symbol) {
     case "mythic":
@@ -164,43 +163,74 @@ const toggleActive = (
   const parentNode = target.parentNode as HTMLButtonElement;
   const childNode = target.childNodes[0] as HTMLButtonElement;
 
-  let attributeValue: string | null =
-    target.getAttribute("src") || childNode.getAttribute("src");
-  const activeFilterElement = target.getAttribute("src") ? parentNode : target;
-  let filterType = type === "color" ? "-colors" : "";
+  let attributeValue: string | null = target.getAttribute("class");
+  attributeValue.includes("symbol-circle")
+    ? (attributeValue = childNode.getAttribute("class"))
+    : target.getAttribute("class");
+
+  let activeFilterElement;
+  target.tagName === "BUTTON"
+    ? (activeFilterElement = target)
+    : (activeFilterElement = parentNode);
 
   if (activeFilterElement.classList.contains("active-filter")) {
     setIsActive(false);
     if (isActive) {
       setFilteredCards(cards);
     } else {
-      let alreadyFiltered = checkActiveFilters(
-        `.symbol-circle${filterType}`
-      ).filter((type) => typeof type === "string");
+      let alreadyFiltered = checkActiveFilters(`.symbol-circle`).filter(
+        (type) => typeof type === "string"
+      );
+
       let alreadyFilteredValue = alreadyFiltered[0];
       setFilteredCards(attributeFilter(alreadyFilteredValue, cards));
     }
   } else {
     setIsActive(true);
-    if (checkActiveFilters(`.symbol-circle${filterType}`).includes(true)) {
-      removeActiveFilters(`.symbol-circle${filterType}`);
+    //need to check whether the current filters array contains another attribute value
+    let filteredAttributes = checkActiveFilters(`.symbol-circle`);
+
+    for (let i = 0; i < filteredAttributes.length; i++) {
+      if (
+        type === "color" &&
+        (filteredAttributes[i] === "mythic" ||
+          filteredAttributes[i] === "rare" ||
+          filteredAttributes[i] === "uncommon" ||
+          filteredAttributes[i] === "common")
+      ) {
+        null;
+      } else if (
+        type === "symbol" &&
+        (filteredAttributes[i] === "white" ||
+          filteredAttributes[i] === "blue" ||
+          filteredAttributes[i] === "black" ||
+          filteredAttributes[i] === "green" ||
+          filteredAttributes[i] === "red" ||
+          filteredAttributes[i] === "multi" ||
+          filteredAttributes[i] === "artifact" ||
+          filteredAttributes[i] === "land")
+      ) {
+        null;
+      } else if (filteredAttributes[i] !== false) {
+        removeActiveFilters(`.symbol-circle`);
+      }
     }
 
-    let arr = [...filteredCards, ...attributeFilter(attributeValue, cards)];
-    let newArr = [...new Set(arr)];
+    // let arr = [...filteredCards, ...attributeFilter(attributeValue, cards)];
+    // let newArr = [...new Set(arr)];
 
-    newArr.sort(function (a, b) {
-      return a.id - b.id;
-    });
-    let secondaryFilteredArray = attributeFilter(attributeValue, newArr);
-    let alreadyFiltered = checkActiveFilters(
-      `.symbol-circle${filterType}`
-    ).filter((type) => typeof type === "string");
-    let fullyFilteredArray = attributeFilter(
-      alreadyFiltered[0],
-      secondaryFilteredArray
-    );
-    setFilteredCards(fullyFilteredArray);
+    // newArr.sort(function (a, b) {
+    //   return a.id - b.id;
+    // });
+    // let secondaryFilteredArray = attributeFilter(attributeValue, newArr);
+    // let alreadyFiltered = checkActiveFilters(`.symbol-circle`).filter(
+    //   (type) => typeof type === "string"
+    // );
+    // let fullyFilteredArray = attributeFilter(
+    //   alreadyFiltered[0],
+    //   secondaryFilteredArray
+    // );
+    setFilteredCards(attributeFilter(attributeValue, cards));
   }
 
   activeFilterElement.classList.toggle("active-filter");
