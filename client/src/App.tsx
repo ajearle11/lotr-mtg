@@ -10,37 +10,29 @@ import { Nav } from "./components/";
 import "./App.css";
 
 function App(): JSX.Element {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const checkAuth = async (): Promise<void> => {
-    const response = await fetch(
-      "https://lotr-mtg-collector.onrender.com/users/isUserAuth",
-      {
-        credentials: "include",
-      }
-    );
-    response.status === 200 ? setIsAuth(true) : setIsAuth(false);
-  };
+  // const [isAuth, setIsAuth] = useState<boolean>(false);
+  // const checkAuth = async (): Promise<void> => {
+  //   const response = await fetch(
+  //     "https://lotr-mtg-collector.onrender.com/users/isUserAuth",
+  //     {
+  //       credentials: "include",
+  //     }
+  //   );
+  //   response.status === 200 ? setIsAuth(true) : setIsAuth(false);
+  // };
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   return (
     <Routes>
-      {!isAuth ? (
+     
         <>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<RegisterPage />} />
         </>
-      ) : (
-        <>
-          <Route path="/" element={<Nav />}>
-            <Route index element={<Homepage />} />
-
-            <Route path="/:id" element={<IndividualCardPage />} />
-          </Route>
-        </>
-      )}
+    
     </Routes>
   );
 }

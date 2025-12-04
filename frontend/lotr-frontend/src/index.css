@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+@font-face {
+  font-family: "MiddleEarth";
+  src: url("/fonts/Middleearth-ao6m.ttf");
+}
+
+html {
+  font-family: "MiddleEarth", Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+}

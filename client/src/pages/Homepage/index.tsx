@@ -238,9 +238,7 @@ const Homepage = (): JSX.Element => {
 
   return (
     <>
-      {cards.length === 0 ? (
-        loadingAnimation()
-      ) : (
+      
         <>
           <div className="header-container-home">
             <h3>{user.username}'s collection</h3>
@@ -278,7 +276,7 @@ const Homepage = (): JSX.Element => {
             filterHaveNot={filterHaveNot}
           />
         </>
-      )}
+      
     </>
   );
 };
