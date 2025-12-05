@@ -1,41 +1,21 @@
 import { Card } from ".";
+import type { TCard } from "../types";
 
-const CardGrid = () => {
-  const data = [
-    {
-      title: "the one ring",
-      id: "000",
-      collected: true,
-      imageSrc: "https://www.mtgpics.com/pics/big/uni/044.jpg",
-    },
-    {
-      title: "the one ring",
-      id: "000",
-      collected: true,
-      imageSrc: "https://www.mtgpics.com/pics/big/uni/045.jpg",
-    },
-    {
-      title: "the one ring",
-      id: "000",
-      collected: true,
-      imageSrc: "https://www.mtgpics.com/pics/big/uni/046.jpg",
-    },
-    {
-      title: "the one ring",
-      id: "000",
-      collected: true,
-      imageSrc: "https://www.mtgpics.com/pics/big/uni/047.jpg",
-    },
-  ];
+interface ICardGrid {
+  data: Array<TCard>;
+}
 
+const CardGrid = ({data}: ICardGrid) => {
   return (
     <div className="flex flex-wrap justify-center gap-4 px-5 pt-5">
       {data?.map((item) => (
         <Card
-          title={item.title}
-          number={item.id}
-          collected={item.collected}
-          imageSrc={item.imageSrc}
+          key={item.id}
+          name={item.name}
+          id={item.id}
+          type={item.type}
+          collected={true}
+          imageSrc={item.image}
         />
       ))}
     </div>

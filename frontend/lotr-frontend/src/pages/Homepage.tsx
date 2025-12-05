@@ -1,7 +1,20 @@
-import { CardGrid } from "../components";
+import { CardGrid, ButtonFilter } from "../components";
+import { use } from "react";
+import { rarityButtonFilters, typeButtonFilters } from "../utils/buttonFilters";
 
+const grabAllData = fetch("https://magicapi-r777.onrender.com/cards").then(
+  (r) => r.json()
+);
 const Homepage = () => {
-  return <CardGrid />;
+  const cards = use(grabAllData);
+
+  return (
+    <>
+      <ButtonFilter filters={rarityButtonFilters} />
+      <ButtonFilter filters={typeButtonFilters} />
+      <CardGrid data={cards} />
+    </>
+  );
 };
 
 export default Homepage;

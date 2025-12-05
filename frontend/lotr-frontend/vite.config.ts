@@ -1,6 +1,7 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import pluginChecker from "vite-plugin-checker";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
+    pluginChecker({ typescript: true }),
   ],
   server: {
     port: 3003,

@@ -1,25 +1,24 @@
-type TCard = {
-  title: string;
-  number: string;
+interface ICard {
+  name: string;
+  id: number;
   collected: boolean;
-  type?: string;
+  type: string;
   imageSrc: string;
-};
+}
 
-const Card = ({title, number, collected, type, imageSrc}: TCard) => {
+const Card = ({ name, id, collected, type, imageSrc }: ICard) => {
   return (
-    <div className="flex flex-col items-center justify-center card bg-base-100 w-96 shadow-sm border-1 pb-5">
+    <div className="flex flex-col items-center text-center justify-center card bg-base-100 h-110 w-80 shadow-sm border-1 pb-5">
       <div className="card-body">
-        <h2 className="card-title">{title} - {type}</h2>
+        <h2 className="card-title flex flex-col justify-between flex-grow h-full">
+          {name}
+        </h2>
         <p>
-          #{number} - {collected}
+          #{id} - {collected}
         </p>
       </div>
       <figure>
-        <img
-          src={imageSrc}
-          alt={title}
-        />
+        <img className="w-[200px] rounded-[10px]" src={imageSrc} alt={name} />
       </figure>
     </div>
   );
