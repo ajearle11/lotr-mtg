@@ -1,5 +1,3 @@
-import type { MouseEventHandler } from "react";
-
 export type TCard = {
   name: string;
   id: number;
@@ -14,5 +12,6 @@ export type TCard = {
 
 export type TButtonFilter = {
   src: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  filterBy: "color" | "rarity";
+  value: string;
 };

@@ -1,53 +1,67 @@
-export const rarityButtonFilters = [
+import type { TButtonFilter } from "../types";
+
+export const rarityButtonFilters: TButtonFilter[] = [
   {
     src: "/ltr-c.png",
-    onClick: () => {},
+    filterBy: "rarity",
+    value: "Common",
   },
   {
     src: "/ltr-m.png",
-    onClick: () => {},
+    filterBy: "rarity",
+    value: "Mythic",
   },
   {
     src: "/ltr-r.png",
-    onClick: () => {},
+    filterBy: "rarity",
+    value: "Rare",
   },
   {
     src: "/ltr-u.png",
-    onClick: () => {},
+    filterBy: "rarity",
+    value: "Uncommon",
   },
 ];
 
-export const typeButtonFilters = [
+export const typeButtonFilters: TButtonFilter[] = [
   {
     src: "/Artifact.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
   {
     src: "/B.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
   {
+    filterBy: "color",
     src: "/G.png",
-    onClick: () => {},
+    value: "",
   },
   {
     src: "/Land.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
   {
     src: "/Multicolored.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
   {
     src: "/R.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
   {
     src: "/U.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
   {
     src: "/W.png",
-    onClick: () => {},
+    filterBy: "color",
+    value: "",
   },
 ];
