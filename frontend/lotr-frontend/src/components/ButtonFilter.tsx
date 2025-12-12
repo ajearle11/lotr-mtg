@@ -19,6 +19,7 @@ const ButtonFilter = ({ filters }: IButtonFilter) => {
             setFilteredCards(
               cards.filter((card) => card.rarity.includes(filter.value))
             );
+            setFilteredCards(filter.value)
           }}
         >
           <img src={filter.src} />
