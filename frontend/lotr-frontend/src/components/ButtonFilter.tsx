@@ -1,4 +1,4 @@
-import { useCardStore } from "../store/useAppStore";
+import { useFilterStore } from "../store/useAppStore";
 import type { TButtonFilter } from "../types";
 
 interface IButtonFilter {
@@ -6,8 +6,7 @@ interface IButtonFilter {
 }
 
 const ButtonFilter = ({ filters }: IButtonFilter) => {
-  const cards = useCardStore((state) => state.cards);
-  const setFilteredCards = useCardStore((state) => state.setFilteredCards);
+  const setFilters = useFilterStore((state) => state.setFilters);
 
   const mapSymbols = (filters: Array<TButtonFilter>) => {
     return filters.map((filter: TButtonFilter, i: number) => {
@@ -16,10 +15,7 @@ const ButtonFilter = ({ filters }: IButtonFilter) => {
           className={`btn btn-circle`}
           key={i}
           onClick={() => {
-            setFilteredCards(
-              cards.filter((card) => card.rarity.includes(filter.value))
-            );
-            setFilteredCards(filter.value)
+            setFilters(filter.value)
           }}
         >
           <img src={filter.src} />

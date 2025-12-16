@@ -45,6 +45,14 @@ export const useFilterStore = create<TFiltersState>()(
         { name: "Mythic", isSet: false },
         { name: "Rare", isSet: false },
         { name: "Uncommon", isSet: false },
+        { name: "A", isSet: false },
+        { name: "B", isSet: false },
+        { name: "G", isSet: false },
+        { name: "U", isSet: false },
+        { name: "L", isSet: false },
+        { name: "M", isSet: false },
+        { name: "R", isSet: false },
+        { name: "W", isSet: false },
       ],
       setFilters: (name) =>
         set((state) => ({

@@ -27,41 +27,41 @@ export const typeButtonFilters: TButtonFilter[] = [
   {
     src: "/Artifact.png",
     filterBy: "color",
-    value: "",
+    value: "A",
   },
   {
     src: "/B.png",
     filterBy: "color",
-    value: "",
+    value: "B",
   },
   {
     filterBy: "color",
     src: "/G.png",
-    value: "",
+    value: "G",
   },
   {
     src: "/Land.png",
     filterBy: "color",
-    value: "",
+    value: "L",
   },
   {
     src: "/Multicolored.png",
     filterBy: "color",
-    value: "",
+    value: "M",
   },
   {
     src: "/R.png",
     filterBy: "color",
-    value: "",
+    value: "R",
   },
   {
     src: "/U.png",
     filterBy: "color",
-    value: "",
+    value: "U",
   },
   {
     src: "/W.png",
     filterBy: "color",
-    value: "",
+    value: "W",
   },
 ];
