@@ -20,23 +20,50 @@ const Homepage = () => {
   }, [cardGrab]);
 
   useEffect(() => {
-    const selectedColors = filters
-      .filter((f) => f.isSet).map(f => f.name)
-      console.log(selectedColors)
+    const selectedFilters = filters.filter((f) => f.isSet).map((f) => f.name);
+    console.log(selectedFilters);
 
     setFilteredCards(
       cards.filter((card) => {
-        if (selectedColors.length === 0) return true;
+        if (selectedFilters.length === 0) return true;
 
-        const cardColors = card.color ?? [];
-        // if (selectedColors.includes("L") )
-        if (cardColors.length > 1 && selectedColors.includes("M")) return card
-        if (!card.color) return card
-        return selectedColors.some((c) => cardColors.includes(c));
+        const cardRarity = card.rarity ?? [];
+        const cardColor = card.color ?? [];
+
+        const rarities = ["Common", "Uncommon", "Mythic", "Rare"];
+
+        const hasRaritySelected = selectedFilters.some((f) =>
+          rarities.includes(f)
+        );
+
+        const rarityCheck = selectedFilters.some((c) => cardRarity.includes(c));
+        const colorCheck = selectedFilters.some((c) => cardColor.includes(c));
+
+        if (hasRaritySelected) {
+          if (
+            rarityCheck &&
+            cardColor.length > 1 &&
+            selectedFilters.includes("M")
+          )
+            return true;
+          if (rarityCheck && !card.color) return true;
+          if (rarityCheck && selectedFilters.includes("L") && card.id === 251)
+            return true;
+          //254 -281
+
+          return rarityCheck;
+        }
+
+        if (colorCheck && cardColor.length > 1 && selectedFilters.includes("M"))
+          return true;
+        if (colorCheck && !card.color) return true;
+        if (selectedFilters.includes("L") && card.id === 251)
+          return true;
+
+        return colorCheck;
       })
     );
   }, [filters]);
-
 
   return (
     <div className="w-full flex flex-col items-center">
