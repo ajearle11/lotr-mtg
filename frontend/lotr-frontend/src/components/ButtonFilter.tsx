@@ -7,15 +7,20 @@ interface IButtonFilter {
 
 const ButtonFilter = ({ filters }: IButtonFilter) => {
   const setFilters = useFilterStore((state) => state.setFilters);
+  const stateFilters = useFilterStore((state) => state.filters);
 
   const mapSymbols = (filters: Array<TButtonFilter>) => {
     return filters.map((filter: TButtonFilter, i: number) => {
+      const checkFilterIsOn = (): boolean => {
+        return stateFilters.some((f) => f.name === filter.value && f.isSet);
+      };
+
       return (
         <button
-          className={`btn btn-circle`}
+          className={`btn btn-circle ${checkFilterIsOn() ? "bg-white" : ""}`}
           key={i}
           onClick={() => {
-            setFilters(filter.value)
+            setFilters(filter.value);
           }}
         >
           <img src={filter.src} />
