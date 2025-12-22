@@ -1,10 +1,8 @@
-import { CardGrid, ButtonFilter, Search } from "../components";
+import { CardGrid, ButtonFilter, Search, Toast } from "../components";
 import { use, useEffect } from "react";
 import { rarityButtonFilters, typeButtonFilters } from "../utils/buttonFilters";
 import { useCardStore, useFilterStore } from "../store/useAppStore";
-import {
-  filtererForAllCards
-} from "../utils/helpers";
+import { filtererForAllCards } from "../utils/helpers";
 
 const grabAllData = fetch("https://magicapi-r777.onrender.com/cards").then(
   (r) => r.json()
@@ -15,7 +13,9 @@ const Homepage = () => {
   const setCards = useCardStore((state) => state.setCards);
   const setFilteredCards = useCardStore((state) => state.setFilteredCards);
   const filteredCards = useCardStore((state) => state.filteredCards);
-  const setFilteredByFilteredCards = useCardStore((state) => state.setFilteredByFilteredCards);
+  const setFilteredByFilteredCards = useCardStore(
+    (state) => state.setFilteredByFilteredCards
+  );
   const filters = useFilterStore((state) => state.filters);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const filtered = filtererForAllCards(cards, filters);
-    setFilteredByFilteredCards(filtered)
+    setFilteredByFilteredCards(filtered);
     setFilteredCards(filtered);
   }, [filters]);
 
@@ -35,6 +35,7 @@ const Homepage = () => {
       <ButtonFilter filters={rarityButtonFilters} />
       <ButtonFilter filters={typeButtonFilters} />
       <CardGrid data={filteredCards} />
+      <Toast type="alert-success"/>
     </div>
   );
 };
