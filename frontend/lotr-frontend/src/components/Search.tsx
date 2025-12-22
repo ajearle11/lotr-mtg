@@ -1,7 +1,7 @@
 import { useCardStore } from "../store/useAppStore";
 
 const Search = () => {
-  const cards = useCardStore((state) => state.cards);
+  const filteredByFiltersCards = useCardStore((state) => state.filteredByFiltersCards);
   const setFilteredCards = useCardStore((state) => state.setFilteredCards);
 
   return (
@@ -25,7 +25,7 @@ const Search = () => {
       <input
         onChange={(e) =>
           setFilteredCards(
-            cards.filter((card) =>
+            filteredByFiltersCards.filter((card) =>
               card.name?.toLowerCase().includes(e.target.value.toLowerCase().trim())
             )
           )

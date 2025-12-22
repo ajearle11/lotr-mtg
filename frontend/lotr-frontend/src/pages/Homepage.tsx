@@ -2,7 +2,9 @@ import { CardGrid, ButtonFilter, Search } from "../components";
 import { use, useEffect } from "react";
 import { rarityButtonFilters, typeButtonFilters } from "../utils/buttonFilters";
 import { useCardStore, useFilterStore } from "../store/useAppStore";
-import { filterChecker } from "../utils/helpers";
+import {
+  filtererForAllCards
+} from "../utils/helpers";
 
 const grabAllData = fetch("https://magicapi-r777.onrender.com/cards").then(
   (r) => r.json()
@@ -13,6 +15,7 @@ const Homepage = () => {
   const setCards = useCardStore((state) => state.setCards);
   const setFilteredCards = useCardStore((state) => state.setFilteredCards);
   const filteredCards = useCardStore((state) => state.filteredCards);
+  const setFilteredByFilteredCards = useCardStore((state) => state.setFilteredByFilteredCards);
   const filters = useFilterStore((state) => state.filters);
 
   useEffect(() => {
@@ -21,13 +24,9 @@ const Homepage = () => {
   }, [cardGrab]);
 
   useEffect(() => {
-    const selectedFilters = filters.filter((f) => f.isSet).map((f) => f.name);
-
-    setFilteredCards(
-      cards.filter((card) => {
-        return filterChecker(selectedFilters, card)
-      })
-    );
+    const filtered = filtererForAllCards(cards, filters);
+    setFilteredByFilteredCards(filtered)
+    setFilteredCards(filtered);
   }, [filters]);
 
   return (

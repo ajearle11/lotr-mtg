@@ -13,18 +13,18 @@ import {
   buttonSymbolSelector,
   convertSymbol,
 } from "../../helperFunctions/helperFunctions";
-import Mythic from "../../public/ltr-m.png";
-import Rare from "../../public/ltr-r.png";
-import Uncommon from "../../public/ltr-u.png";
-import Common from "../../public/ltr-c.png";
-import White from "../../public/W.png";
-import Blue from "../../public/U.png";
-import Black from "../../public/B.png";
-import Green from "../../public/G.png";
-import Red from "../../public/R.png";
-import Multi from "../../public/Multicolored.png";
-import Artifact from "../../public/Artifact.png";
-import Land from "../../public/Land.png";
+// import Mythic from "../../public/ltr-m.png";
+// import Rare from "../../public/ltr-r.png";
+// import Uncommon from "../../public/ltr-u.png";
+// import Common from "../../public/ltr-c.png";
+// import White from "../../public/W.png";
+// import Blue from "../../public/U.png";
+// import Black from "../../public/B.png";
+// import Green from "../../public/G.png";
+// import Red from "../../public/R.png";
+// import Multi from "../../public/Multicolored.png";
+// import Artifact from "../../public/Artifact.png";
+// import Land from "../../public/Land.png";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setSymbol } from "../../store/symbolsReducer";
@@ -39,8 +39,8 @@ const Homepage = (): JSX.Element => {
   const [isActiveColor, setIsActiveColor] = useState<boolean>(false);
   const [isActiveSymbol, setIsActiveSymbol] = useState<boolean>(false);
 
-  const symbols = [Mythic, Rare, Uncommon, Common];
-  const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
+  // const symbols = [Mythic, Rare, Uncommon, Common];
+  // const colors = [White, Blue, Black, Green, Red, Multi, Artifact, Land];
   const color = useSelector((state: RootState) => state.colors.color);
   const symbol = useSelector((state: RootState) => state.symbols.symbol);
   const searchValue = useSelector(
@@ -267,8 +267,8 @@ const Homepage = (): JSX.Element => {
               isClicked={filterHaveNot}
             />
           </div>
-          <div className="rarity-container">{mapSymbols(symbols)}</div>
-          <div className="color-container">{mapColors(colors)}</div>
+          {/* <div className="rarity-container">{mapSymbols(symbols)}</div>
+          <div className="color-container">{mapColors(colors)}</div> */}
           <CardGrid
             cards={filteredCards}
             collectedCardsArray={user.cards}

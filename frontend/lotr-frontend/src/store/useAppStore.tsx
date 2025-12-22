@@ -5,6 +5,8 @@ import type { TCard } from "../types";
 type TFilteredCardState = {
   cards: Array<TCard>;
   setCards: (values: Array<TCard>) => void;
+  filteredByFiltersCards: Array<TCard>;
+  setFilteredByFilteredCards: (values: Array<TCard>) => void;
   filteredCards: Array<TCard>;
   setFilteredCards: (values: Array<TCard>) => void;
   _hasHydrated: boolean;
@@ -16,6 +18,8 @@ export const useCardStore = create<TFilteredCardState>()(
     (set) => ({
       cards: [],
       setCards: (values) => set(() => ({ cards: [...values] })),
+      filteredByFiltersCards: [],
+      setFilteredByFilteredCards: (values) => set(() => ({ filteredByFiltersCards: [...values] })),
       filteredCards: [],
       setFilteredCards: (values) => set(() => ({ filteredCards: [...values] })),
       _hasHydrated: false,

@@ -7,9 +7,9 @@ export const rarityButtonFilters: TButtonFilter[] = [
     value: "Common",
   },
   {
-    src: "/ltr-m.png",
+    src: "/ltr-u.png",
     filterBy: "rarity",
-    value: "Mythic",
+    value: "Uncommon",
   },
   {
     src: "/ltr-r.png",
@@ -17,9 +17,9 @@ export const rarityButtonFilters: TButtonFilter[] = [
     value: "Rare",
   },
   {
-    src: "/ltr-u.png",
+    src: "/ltr-m.png",
     filterBy: "rarity",
-    value: "Uncommon",
+    value: "Mythic",
   },
 ];
 
@@ -30,29 +30,14 @@ export const typeButtonFilters: TButtonFilter[] = [
     value: "A",
   },
   {
-    src: "/B.png",
-    filterBy: "color",
-    value: "B",
-  },
-  {
-    filterBy: "color",
-    src: "/G.png",
-    value: "G",
-  },
-  {
     src: "/Land.png",
     filterBy: "color",
     value: "L",
   },
   {
-    src: "/Multicolored.png",
+    src: "/W.png",
     filterBy: "color",
-    value: "M",
-  },
-  {
-    src: "/R.png",
-    filterBy: "color",
-    value: "R",
+    value: "W",
   },
   {
     src: "/U.png",
@@ -60,8 +45,23 @@ export const typeButtonFilters: TButtonFilter[] = [
     value: "U",
   },
   {
-    src: "/W.png",
+    src: "/B.png",
     filterBy: "color",
-    value: "W",
+    value: "B",
+  },
+  {
+    src: "/R.png",
+    filterBy: "color",
+    value: "R",
+  },
+  {
+    filterBy: "color",
+    src: "/G.png",
+    value: "G",
+  },
+  {
+    src: "/Multicolored.png",
+    filterBy: "color",
+    value: "M",
   },
 ];
