@@ -15,3 +15,14 @@ export type TButtonFilter = {
   filterBy: "color" | "rarity";
   value: string;
 };
+
+export type TField = {
+  label: string;
+  type: string;
+  placeholder: string;
+};
+
+export type TFormButton = {
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  title: string;
+};

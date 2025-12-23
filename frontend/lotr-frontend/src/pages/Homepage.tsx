@@ -30,13 +30,13 @@ const Homepage = () => {
   }, [filters]);
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <>
       <Search />
       <ButtonFilter filters={rarityButtonFilters} />
       <ButtonFilter filters={typeButtonFilters} />
       <CardGrid data={filteredCards} />
       <Toast type="alert-success"/>
-    </div>
+    </>
   );
 };
 
