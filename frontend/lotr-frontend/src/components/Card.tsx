@@ -1,3 +1,5 @@
+import { useCardStore } from "../store/useAppStore";
+
 interface ICard {
   name: string;
   id: number;
@@ -7,8 +9,19 @@ interface ICard {
 }
 
 const Card = ({ name, id, collected, type, imageSrc }: ICard) => {
+  const setSelectedCards = useCardStore((state) => state.setSelectedCards);
+  const selectedCards = useCardStore((state) => state.selectedCards);
+
   return (
-    <div className="flex flex-col items-center justify-center card bg-base-100 h-125 w-80 shadow-sm border-1">
+    <div
+      onClick={() => setSelectedCards(id)}
+      className="hover:cursor-pointer flex flex-col items-center justify-center card bg-base-100 h-125 w-80 shadow-sm border-1"
+    >
+      <input
+        checked={selectedCards.includes(id) && true}
+        type="checkbox"
+        className="checkbox absolute top-1 left-1"
+      />
       <div className="card-body flex flex-col items-center justify-center text-center">
         <h2
           className="text-lg cursor-pointer underline hover:text-[#bbb]"

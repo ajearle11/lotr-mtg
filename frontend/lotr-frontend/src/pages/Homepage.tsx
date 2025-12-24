@@ -1,5 +1,5 @@
 import { CardGrid, ButtonFilter, Search, Toast } from "../components";
-import { use, useEffect } from "react";
+import { Activity, use, useEffect } from "react";
 import { rarityButtonFilters, typeButtonFilters } from "../utils/buttonFilters";
 import { useCardStore, useFilterStore } from "../store/useAppStore";
 import { filtererForAllCards } from "../utils/helpers";
@@ -17,6 +17,7 @@ const Homepage = () => {
     (state) => state.setFilteredByFilteredCards
   );
   const filters = useFilterStore((state) => state.filters);
+  const selectedCards = useCardStore((state) => state.selectedCards);
 
   useEffect(() => {
     setCards(cardGrab);
@@ -35,7 +36,9 @@ const Homepage = () => {
       <ButtonFilter filters={rarityButtonFilters} />
       <ButtonFilter filters={typeButtonFilters} />
       <CardGrid data={filteredCards} />
-      <Toast type="alert-success"/>
+      <Activity mode={selectedCards.length === 0 ? "hidden" : "visible"}>
+        <Toast selectedCards={selectedCards} type="alert-info" />
+      </Activity>
     </>
   );
 };

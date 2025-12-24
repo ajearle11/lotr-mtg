@@ -9,6 +9,8 @@ type TFilteredCardState = {
   setFilteredByFilteredCards: (values: Array<TCard>) => void;
   filteredCards: Array<TCard>;
   setFilteredCards: (values: Array<TCard>) => void;
+  selectedCards: number[];
+  setSelectedCards: (value: number) => void;
   _hasHydrated: boolean;
   setHasHydrated: (value: boolean) => void;
 };
@@ -19,9 +21,18 @@ export const useCardStore = create<TFilteredCardState>()(
       cards: [],
       setCards: (values) => set(() => ({ cards: [...values] })),
       filteredByFiltersCards: [],
-      setFilteredByFilteredCards: (values) => set(() => ({ filteredByFiltersCards: [...values] })),
+      setFilteredByFilteredCards: (values) =>
+        set(() => ({ filteredByFiltersCards: [...values] })),
       filteredCards: [],
       setFilteredCards: (values) => set(() => ({ filteredCards: [...values] })),
+      selectedCards: [],
+      setSelectedCards: (id) =>
+        set((state) => ({
+          selectedCards: state.selectedCards.includes(id)
+            ? state.selectedCards.filter((x) => x !== id)
+            : [...state.selectedCards, id],
+        })),
+
       _hasHydrated: false,
       setHasHydrated: (value) => set({ _hasHydrated: value }),
     }),
