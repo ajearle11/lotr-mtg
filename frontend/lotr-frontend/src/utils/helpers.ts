@@ -152,3 +152,59 @@ export const filtererForAllCards = (
   const sorted = [...deduped].sort((a, b) => a.id - b.id);
   return sorted;
 };
+
+export const switchHelperForRarityImage = (rarity: string) => {
+  switch (rarity) {
+    case "Common":
+      return "/ltr-c.png";
+    case "Uncommon":
+      return "/ltr-u.png";
+    case "Rare":
+      return "/ltr-r.png";
+    case "Mythic":
+      return "/ltr-m.png";
+  }
+};
+
+export const switchHelperForColorImage = (color: string[]) => {
+  const imagesArray = [];
+
+  color.forEach((c) => {
+    switch (c) {
+      case "W":
+        imagesArray.push("/W.png");
+        break;
+      case "U":
+        imagesArray.push("/U.png");
+        break;
+      case "B":
+        imagesArray.push("/B.png");
+        break;
+      case "R":
+        imagesArray.push("/R.png");
+        break;
+      case "G":
+        imagesArray.push("/G.png");
+        break;
+    }
+  });
+
+  if (color.length > 1) {
+    imagesArray.push("/Multicolored.png");
+  }
+  return imagesArray;
+};
+
+export const numberPrinter = (id: number) => {
+  let stringedNumber = id.toString();
+
+  if (stringedNumber.length === 1) {
+    return `00` + stringedNumber;
+  }
+
+  if (stringedNumber.length === 2) {
+    return `0` + stringedNumber;
+  }
+
+  return id;
+};

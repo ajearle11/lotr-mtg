@@ -1,4 +1,5 @@
 import { useCardStore } from "../store/useAppStore";
+import { numberPrinter } from "../utils/helpers";
 
 interface ICard {
   name: string;
@@ -23,14 +24,18 @@ const Card = ({ name, id, collected, type, imageSrc }: ICard) => {
         className="checkbox absolute top-1 left-1"
       />
       <div className="card-body flex flex-col items-center justify-center text-center">
-        <h2
-          className="text-lg cursor-pointer underline hover:text-[#bbb]"
-          onClick={() => console.log(`${name} clicked`)}
-        >
-          {name} {collected}
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2
+            className="text-lg cursor-pointer underline hover:text-[#bbb]"
+            onClick={() => console.log(`${name} clicked`)}
+          >
+            {name}
+          </h2>
+          {collected ? "✅" : "❌"}
+        </div>
+
         <h2 className="text-sm">
-          #{id} - {type}
+          #{numberPrinter(id)} - {type}
         </h2>
       </div>
 

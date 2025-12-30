@@ -7,7 +7,7 @@ export type TCard = {
   type: string;
   text: string;
   artist: string;
-  flavorText: string;
+  flavorText?: string;
 };
 
 export type TButtonFilter = {
