@@ -30,6 +30,13 @@ const Homepage = () => {
     setFilteredCards(filtered);
   }, [filters]);
 
+  useEffect(() => {
+    const saved = sessionStorage.getItem("scrollPos");
+    if (saved) {
+      window.scrollTo(0, Number(saved));
+    }
+  }, []);
+
   return (
     <>
       <Search />

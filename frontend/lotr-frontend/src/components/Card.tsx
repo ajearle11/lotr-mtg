@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { useCardStore } from "../store/useAppStore";
 import { numberPrinter } from "../utils/helpers";
 
@@ -12,6 +13,7 @@ interface ICard {
 const Card = ({ name, id, collected, type, imageSrc }: ICard) => {
   const setSelectedCards = useCardStore((state) => state.setSelectedCards);
   const selectedCards = useCardStore((state) => state.selectedCards);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -27,7 +29,11 @@ const Card = ({ name, id, collected, type, imageSrc }: ICard) => {
         <div className="flex items-center gap-2">
           <h2
             className="text-lg cursor-pointer underline hover:text-[#bbb]"
-            onClick={() => console.log(`${name} clicked`)}
+            onClick={(e) => {
+              e.stopPropagation();
+              sessionStorage.setItem("scrollPos", String(window.scrollY));
+              navigate(`/cards/${id}`);
+            }}
           >
             {name}
           </h2>
